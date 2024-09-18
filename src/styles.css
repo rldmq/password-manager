@@ -1,0 +1,31 @@
+/* 
+    Use SMACSS:
+    https://smacss.com/book/categorizing/
+
+    Base: Base style of an element (eg: base style for inputs)
+
+    Layout: Divide the page into sections
+
+    Module: Modular elements (eg: callouts, sidebar, product lists)
+
+    State: How modules or layouts look in specific states (eg: active vs inactive, large vs small screen)
+
+    Theme: Similar to state in that they describe how modules or layouts might look (note that most sites don't need a theme layer)
+*/
+
+/* 
+    RESET
+*/
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    border: 1px solid red;
+}
+
+/* 
+    BASE
+*/
+body{
+    background-color: whitesmoke;
+}
