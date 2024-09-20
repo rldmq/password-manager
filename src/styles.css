@@ -1,19 +1,4 @@
 /* 
-    Use SMACSS:
-    https://smacss.com/book/categorizing/
-
-    Base: Base style of an element (eg: base style for inputs)
-
-    Layout: Divide the page into sections
-
-    Module: Modular elements (eg: callouts, sidebar, product lists)
-
-    State: How modules or layouts look in specific states (eg: active vs inactive, large vs small screen)
-
-    Theme: Similar to state in that they describe how modules or layouts might look (note that most sites don't need a theme layer)
-*/
-
-/* 
     RESET
 */
 *{
@@ -23,6 +8,8 @@
     color: whitesmoke;
     font-family: Roboto, sans-serif;
     font-size: 1rem;
+    line-height: 1.5rem;
+    font-weight: 400;
     /* border: 1px solid red; */
 }
 
@@ -33,6 +20,11 @@ body{
     /* background-color: whitesmoke; */
     background-color: rgb(25, 25, 35);
     /* padding: 1em 2em; */
+}
+
+.main *{
+    animation: 1s ease-in-out 0s fadeIn;
+
 }
 
 /* 
@@ -99,19 +91,15 @@ body{
 }
 
 /* 
-    MAIN CONTENT
-*/
-.main{
-    margin: 4.875em 2em; /*3.875em + 1em for the header*/
-}
-
-/* 
     FOOTER
 */
 .footer{
     text-align: center;
     padding: 2em;
     background-color:rgb(24 ,24, 30);
+    /* position: absolute;
+    width: 100vw;
+    bottom: 0; */
 }
 
 /* 

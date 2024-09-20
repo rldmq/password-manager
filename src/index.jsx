@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
 import collapsedMenuIcon from './assets/images/icons8-menu-50.png'
 import expandedMenuIcon from './assets/images/icons8-collapse-24.png'
 import './styles.css'
+import './assets/styles/home.css'
 
 import Home from './pages/Home'
 import About from './pages/About'
