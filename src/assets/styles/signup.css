@@ -1,0 +1,103 @@
+/* SIGNUP STYLES */
+
+.main__signup{
+    display: flex;
+    gap: 2em;
+    justify-content: center;
+    align-items: center;
+    margin-top: calc(100vh - 50vh - 215px - 1.5em);
+}
+
+.signup__img{
+    display: none;
+}
+
+.signup__form{
+    display: grid;
+
+    /* grid-template-areas:
+    "firstnamelabel lastnamelabel"
+    "firstname lastname"
+    "emaillabel emaillabel"
+    "email email"
+    "signupbtn signupbtn"
+    ; */
+
+    grid-template-areas:
+    "signupheading"
+    "signuptext"
+    "firstnamelabel"
+    "firstname"
+    "lastnamelabel"
+    "lastname"
+    "emaillabel"
+    "email"
+    "signupbtn";
+
+    width: 100%;
+    padding: 0 2em;
+    gap: 0.25em;
+}
+
+#first-name,
+#last-name,
+#email{
+    padding: 0.5em 1em;
+    border-radius: 0.5em;
+    border: none;
+}
+
+.signup__label_lastname,
+.signup__label_firstname,
+.signup__label_email,
+.signup__btn{
+    margin-top: 1.5em;
+}
+
+.signup__heading{
+    grid-area: signupheading;
+}
+
+.signup__text{
+    grid-area: signuptext;
+}
+
+.signup__label_firstname{
+    grid-area: firstnamelabel;
+}
+
+.signup__label_lastname{
+    grid-area: lastnamelabel;
+}
+
+#first-name{
+    grid-area: firstname;
+}
+
+#last-name{
+    grid-area: lastname;
+}
+
+.signup__label_email{
+    grid-area: emaillabel;
+}
+
+#email{
+    grid-area: email;
+}
+
+.signup__btn{
+    grid-area: signupbtn;
+    background: var(--dark-mode-btn);
+    padding: 0.5em 1em;
+    font-weight: 500;
+    border-radius: 0.5em;
+    border: none;
+    cursor: pointer;
+}
+
+@media screen and (min-width: 500px){
+    .signup__img{
+        display: block;
+    }
+}

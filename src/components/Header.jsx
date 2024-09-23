@@ -9,7 +9,7 @@ export default function Header(){
                 <ul>
                     <li><Link to='/about'>About</Link></li>
                     <li><Link to='/signup'>Sign up</Link></li>
-                    <li><Link to='/login'>Log in</Link></li>
+                    <li><Link to='/login'>Login</Link></li>
                 </ul>
             </nav>
         </header>

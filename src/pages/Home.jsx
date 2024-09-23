@@ -8,7 +8,7 @@ import peaceOfMindSymbolDark from '../assets/images/icons8-spa-flower-100_dark.p
 
 export default function Home(){
     return (
-        <main className="main">
+        <main className="main main__home">
             <section className="hero">
                 <h1 className="hero__textcontainer">
                     <span className="hero__text hero__text_top">Secure.</span>

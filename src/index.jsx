@@ -4,8 +4,12 @@ import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
 
 import collapsedMenuIcon from './assets/images/icons8-menu-50.png'
 import expandedMenuIcon from './assets/images/icons8-collapse-24.png'
+
 import './styles.css'
 import './assets/styles/home.css'
+import './assets/styles/about.css'
+import './assets/styles/login.css'
+import './assets/styles/signup.css'
 
 import Home from './pages/Home'
 import About from './pages/About'
@@ -46,7 +50,7 @@ function App(){
                 <Link 
                 to='/login' 
                 onClick={()=>setMobileCollapsedMenu(true)}>
-                    Log in
+                    Login
                 </Link>
             </li>
             <li className='menu_item'>

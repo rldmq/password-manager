@@ -1,0 +1,79 @@
+/* ABOUT PAGE STYLES */
+.main__about{
+    padding: 0 2em;
+    margin: auto;
+}
+
+.story,
+.team{
+    margin-top: 2em;
+}
+
+.mission__heading,
+.story__heading,
+.team__heading{
+    font-size: 2rem;
+    line-height: 3rem;
+}
+
+.mission__img,
+.mission__text,
+.story__img,
+.story__text,
+.team__member{
+    margin-top: 1em;
+}
+
+.mission__img,
+.story__img{
+    float: inline-start;
+    padding: 0 10px 5px 0;
+    width: 90px;
+}
+
+.team{
+    margin-bottom: 3em;
+}
+
+.team__member{
+    display: flex;
+    gap: 1.5em;
+}
+
+.team__img{
+    width: 100px;
+    border-radius: 50%;
+    box-shadow: 0px 0px 6px 1px lightgrey;
+}
+
+.team__details{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    column-gap: 1em;
+}
+
+.team__name,
+.team__role{
+    width: 100%;
+}
+
+.team__name{
+    font-size: 1.35rem;
+    font-weight: 500;
+}
+
+.team__links_img{
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+}
+
+/* 
+    MEDIA QUERIES
+*/
+@media screen and (max-width: 500px){
+    .main__about{
+        margin-top: 4.875em; /*3.875em + 1em for the header*/
+    }
+}

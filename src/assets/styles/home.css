@@ -1,13 +1,4 @@
-/* HOME STYLES */
-
-/* 
-    MAIN CONTENT
-*/
-.main{
-    margin: 4.875em 0 0 0; /*3.875em + 1em for the header*/
-}
-
-/* HOME */
+/* HOME PAGE STYLES */
 .hero,
 .reputation,
 .offerings{
@@ -32,7 +23,7 @@
     position: absolute;
     content: "";
     /* background: rgb(36, 36, 45); */
-    background: #1BD16A;
+    background: var(--dark-mode-green);
     height: 0.1em;
     z-index: -1;
     left: 0;
@@ -63,7 +54,7 @@
     margin-top: 2em;
     padding-top: 2em;
     padding-bottom: 2em;
-    background-color: rgb(38, 38, 52);
+    background-color: var(--dark-mode-secondary-background);
     text-align: center;
 }
 
@@ -106,14 +97,10 @@
     width: 50px;
 }
 
-.offerings__item_img:hover{
-    /* animation: shake 0.5s; */
-}
-
 .signup{
     /* margin-top: 2em; */
     padding: 2em;
-    background-color: rgb(38, 38, 52);
+    background-color: var(--dark-mode-secondary-background);
     text-align: center;
 }
 
@@ -125,8 +112,8 @@
     display: block;
     text-decoration: none;
     padding: 0.5em 1em;
-    background: #1BD16A;
-    color: black;
+    background: var(--dark-mode-btn);
+    color: whitesmoke;
     font-weight: 600;
     font-size: 1.25rem;
     border-radius: 0.5em;
@@ -146,6 +133,15 @@
     }
 }
 
+@keyframes leftSlideLargeScreen{
+    0%{
+        left: -100%;
+    }
+    100%{
+        left: calc((100vw - 1000px)/2.08);
+    }
+}
+
 @keyframes fadeIn{
     0%{
         opacity: 0;
@@ -155,48 +151,25 @@
     }
 }
 
-@keyframes shake{
-}
-
-/* @keyframes translateLeftSlide{
-    0%{
-        transform: translateX(-100%);
-    }
-    100%{
-        transform: translateX(-1em);
-    }
-} */
-
 /* 
     MEDIA QUERIES
     Mobile devices: range from 360×640 to 414×896
     Tablets: range from 601×962 to 1280×800
     Desktop screens: range from 1024×768 to 1920×1080
 */
-
-/* @media screen and (max-width: 1024px){
-    .main{
+@media screen and (min-width: 550px){
+    .main__home{
         display: flex;
         flex-wrap: wrap;
     }
-} */
+}
 
 @media screen and (min-width: 550px){
-    .main{
-        display: flex;
-        /* flex-direction: row; */
-        flex-wrap: wrap;
-    }
-
     .hero{
         width: 50%;
         display: flex;
         flex-direction: column;
         justify-content: space-around;
-    }
-
-    .hero__text{
-        /* font-size: 4rem; */
     }
 
     .hero__text_top:before,
@@ -216,14 +189,12 @@
     }
 
     .offerings{
-        background-color: rgb(38, 38, 52);
-        /* width: 100%; */
+        background-color: var(--dark-mode-secondary-background);
         flex-grow: 1;
     }
 
     .signup{
         background-color: transparent;
-        /* width: 100%; */
         flex-grow: 1;
     }
 }
@@ -231,5 +202,37 @@
 @media screen and (min-width: 800px){
     .hero__text{
         font-size: 4rem;
+        line-height: 6rem;
+    }
+}
+
+@media screen and (min-width: 1000px){
+    .hero__text_top:before,
+    .hero__text_middle:before,
+    .hero__text_bottom:before{
+        left: calc((100vw - 1000px)/2.08);
+        animation: 1s ease-in-out 0s leftSlideLargeScreen;
+    }
+    .offerings{
+        height: 20em;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .offerings:before{
+        content: "";
+        position: absolute;
+        z-index: -1;
+        left: 0;
+        right: 0;
+        height: 320px;
+        background: var(--dark-mode-secondary-background);
+    }
+    .signup{
+        height: 20em;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 0;
     }
 }
