@@ -1,10 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-import vaultImage from '../assets/images/secure-vault-tilted.png'
-import securitySymbolDark from '../assets/images/icons8-grand-master-key-100_dark.png'
-import crossPlatformSymbolDark from '../assets/images/icons8-internet-of-things-64_dark.png'
-import peaceOfMindSymbolDark from '../assets/images/icons8-spa-flower-100_dark.png'
+import vaultImage from '../assets/images/home/secure-vault-tilted.png'
+import securitySymbolDark from '../assets/images/home/icons8-grand-master-key-100_dark.png'
+import crossPlatformSymbolDark from '../assets/images/home/icons8-internet-of-things-64_dark.png'
+import peaceOfMindSymbolDark from '../assets/images/home/icons8-spa-flower-100_dark.png'
 
 export default function Home(){
     return (

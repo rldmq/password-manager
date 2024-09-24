@@ -1,7 +1,9 @@
 /* ABOUT PAGE STYLES */
 .main__about{
     padding: 0 2em;
-    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .story,
@@ -72,8 +74,8 @@
 /* 
     MEDIA QUERIES
 */
-@media screen and (max-width: 500px){
+@media screen and (min-height: 720px){
     .main__about{
-        margin-top: 4.875em; /*3.875em + 1em for the header*/
+        /* margin-top: calc(100vh - 50vh - 274px - 1.5em); */
     }
 }

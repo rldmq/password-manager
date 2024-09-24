@@ -1,9 +1,12 @@
 import React from 'react'
 
+// for testing only
+import { Link } from 'react-router-dom'
+
 export default function Footer(){
     return (
-        <footer>
-            This is the footer
-        </footer>
+    <footer className='footer'>
+        &copy; FDN <Link to='/testing'>{':)'}</Link>
+    </footer>
     )
 }

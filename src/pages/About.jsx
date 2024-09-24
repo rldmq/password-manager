@@ -1,11 +1,11 @@
 import React from 'react'
-import missionImgDarkMode from '../assets/images/icons8-target-96_dark.png'
-import storyImgDarkMode from '../assets/images/icons8-volunteering-64_dark.png'
+import missionImgDarkMode from '../assets/images/about/icons8-target-96_dark.png'
+import storyImgDarkMode from '../assets/images/about/icons8-volunteering-64_dark.png'
 
-import githubDark from '../assets/images/team/github-mark_dark.png'
-import linkedinDark from '../assets/images/team/icons8-linkedin-32_dark.png'
+import githubDark from '../assets/images/about/team/github-mark_dark.png'
+import linkedinDark from '../assets/images/about/team/icons8-linkedin-32_dark.png'
 
-import rqHeadshot from '../assets/images/team/Headshot_RQuiambao.jpg'
+import rqHeadshot from '../assets/images/about/team/Headshot_RQuiambao.jpg'
 
 export default function About(){
     return (
@@ -66,6 +66,7 @@ export default function About(){
                     </div>
                 </div>
             </section>
+
         </main>
     )
 }

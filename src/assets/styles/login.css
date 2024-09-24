@@ -6,10 +6,11 @@
 }
 
 .main__login{
-    /* margin: auto; 3.875em + 1em for the header */
-    margin-top: calc(100vh - 50vh - 176px - 1.5em);
-    margin-left: auto;
-    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2em;
 }
 
 .main__form{
@@ -60,9 +61,10 @@
     transform: translate(1px, 1px);
 }
 
-/* @media screen and (min-width: 500px){
+/* @media screen and (orientation:portrait){
     .main__login{
         margin: 4.875em auto 2em auto;
         3.875em + 1em for the header
+        margin-top: calc(100vh - 50vh - 176px - 1.5em);
     }
 } */

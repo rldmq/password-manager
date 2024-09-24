@@ -1,0 +1,4 @@
+1. When you have the menu expanded (mobile mode) then you click on a link, the expanded menu does not collapse and stays expanded.
+
+2. Team images: Has to be moved to a hosting site to avoid having to import every image.
+

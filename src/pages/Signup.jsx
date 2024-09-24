@@ -1,5 +1,7 @@
 import React from 'react'
 
+import signupImage from '../assets/images/signup/secure-vault-portrait.png'
+
 export default function Signup(){
 
     const firstNameInput = React.useRef()
@@ -12,11 +14,16 @@ export default function Signup(){
 
     return (
         <main className="main main__signup">
-            <img
-            src=''
-            alt='Sign up for Password Manager'
-            className='signup__img'
-            />
+            <div className='signup__hero'>
+                <p className='signup__heading signup__heading_top'>Protect What's Important</p>
+                <img
+                src={signupImage}
+                alt='Sign up for Password Manager'
+                className='signup__img'
+                />
+                <p className='signup__heading signup__heading_bottom'>Sign up today!</p>
+            </div>
+
             <form
             className='signup__form'
             >
@@ -66,11 +73,9 @@ export default function Signup(){
                 onClick={(e)=>handleSignupSubmit(e)}
                 className='signup__btn'
                 >
-                    Submit
+                    Sign up
                 </button>
-
             </form>
-
         </main>
     )
 }

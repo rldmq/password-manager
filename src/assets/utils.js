@@ -11,6 +11,7 @@ const firebaseConfig = {
   storageBucket: "password-manager-4e071.appspot.com",
 //   messagingSenderId: "714651573878",
 //   appId: "1:714651573878:web:bd7fd462e86e5b7fda0957"
+  databaseURL: "https://password-manager-4e071-default-rtdb.firebaseio.com/"
 };
 
 // Initialize Firebase

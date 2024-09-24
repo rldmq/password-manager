@@ -44,6 +44,7 @@ body{
 
 .main{
     margin: 4.875em 0 0 0; /*3.875em + 1em for the header*/
+    flex-grow: 1;
 }
 
 /* 
