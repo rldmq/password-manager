@@ -1,24 +1,31 @@
 import React from 'react'
-import { Link, Outlet } from 'react-router-dom'
+import { NavLink, Outlet } from 'react-router-dom'
 
 import data from '../assets/sample-data.js'
 
 export default function Testing(){
 
+    const activeStyle = {
+        backgroundColor : 'var(--dark-mode-green',
+        // color : 'var(--dark-mode-green)',
+        fontWeight : '600'
+    }
+
     const dataRender = data[0].storage.map((e,i) => {
 
         // use nested routing for the accounts
         return (
-        <Link
+        <NavLink
         key={i}
         to={`./${e.account}`}
         className='test__account'
+        style={({isActive})=>isActive?activeStyle:null}
         aria-label={`View account details for ${e.account}`}
         >
             <div>
                 <p>{e.account}</p>
             </div>
-        </Link>
+        </NavLink>
         )
     })
 

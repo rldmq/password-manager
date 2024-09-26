@@ -25,10 +25,11 @@ function App(){
             <Routes>
                 <Route element={<Layout />}>
                     <Route path='/' element={<Home />}/>
-                    <Route path='/about' element={<About />}/>
-                    <Route path='/login' element={<Login />}/>
-                    <Route path='/signup' element={<Signup />}/>
-                    <Route path='/testing' element={<Testing />}>
+                    <Route path='about' element={<About />}/>
+                    <Route path='login' element={<Login />}/>
+                    <Route path='signup' element={<Signup />}/>
+                    <Route path='testing' element={<Testing />}>
+                        {/* <Route index element={<ElementHere />} /> */}
                         <Route path=':id' element={<TestingDetails />}/>
                     </Route>
                 </Route>

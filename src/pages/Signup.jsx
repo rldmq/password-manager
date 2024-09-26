@@ -6,10 +6,77 @@ export default function Signup(){
 
     const firstNameInput = React.useRef()
 
+    const [passwordless, setPasswordless] = React.useState(false)
+
+    // const [password, setPassword] = React.useState('')
+
+    // const [passwordConfirm, setPasswordConfirm] = React.useState('')
+
+    const [signupFormData, setSignupFormData] = React.useState({
+        firstname: '',
+        lastname: '',
+        email: '',
+        password: '',
+        confirmpassword: ''
+    })
+
+    function handleSignupFormChanges(e){
+        const {name,value} = e.target
+        setSignupFormData(prev => ({
+            ...prev,
+            [name]:value,
+        }))
+    }
+
+    function handleSignupSubmit(e){
+        e.preventDefault()
+        if(signupFormData.password !== signupFormData.confirmpassword){
+            console.log("passwords do not match")
+        }else{
+            console.log('signed up! You will receive an email to set up your account.')
+        }
+    }
+
+    const passwordInputsRender = (
+        <>
+            <label
+            htmlFor='account-password'
+            className='signup__label_password'
+            >
+                Password
+            </label>
+            <input
+            type='password'
+            id='account-password'
+            placeholder='Enter password'
+            name='password'
+            onChange={handleSignupFormChanges}
+            />
+
+            <label
+            htmlFor='account-password-confirm'
+            className='signup__label_passwordconfirm'
+            >
+                Confirm Password
+            </label>
+            <input
+            type='password'
+            id='account-password-confirm'
+            placeholder='Confirm password'
+            name='confirmpassword'
+            onChange={handleSignupFormChanges}
+            />
+        </>
+    )
+
     React.useEffect(()=>{
         setTimeout(()=>{
             firstNameInput.current.focus()
         }, 500)
+    },[])
+
+    React.useEffect(()=>{
+
     },[])
 
     return (
@@ -32,7 +99,6 @@ export default function Signup(){
                 <label
                 htmlFor='first-name'
                 className='signup__label_firstname'
-                ref={firstNameInput}
                 >
                     First Name
                 </label>
@@ -41,6 +107,9 @@ export default function Signup(){
                 type='text'
                 id='first-name'
                 placeholder='First name'
+                ref={firstNameInput}
+                name='firstname'
+                onChange={handleSignupFormChanges}
                 />
 
                 <label
@@ -54,6 +123,8 @@ export default function Signup(){
                 type='text'
                 id='last-name'
                 placeholder='Last name'
+                name='lastname'
+                onChange={handleSignupFormChanges}
                 />
 
                 <label
@@ -67,7 +138,29 @@ export default function Signup(){
                 type='email'
                 id='email'
                 placeholder='firstname.lastname@example.com'
+                name='email'
+                onChange={handleSignupFormChanges}
                 />
+
+                <input 
+                type='checkbox'
+                id='passwordless-toggle'
+                onClick={() => setPasswordless(v => !v)}
+                data-info='info'
+                />
+                <label
+                htmlFor='passwordless-toggle'
+                className='signup__label_passwordless'
+                data-info='info'
+                >
+                    Use Passwordless E-mail Authentication
+                    <div className='tooltip'>
+                        When logging in, instead of using a password, an e-mail will be sent to you containing a link that will give you access to your account.
+                    </div>
+                </label>
+
+                        
+                {!passwordless ? passwordInputsRender : null }
 
                 <button
                 onClick={(e)=>handleSignupSubmit(e)}
@@ -80,7 +173,3 @@ export default function Signup(){
     )
 }
 
-function handleSignupSubmit(e){
-    e.preventDefault()
-    console.log('signed up! You will receive an email to set up your account.')
-}

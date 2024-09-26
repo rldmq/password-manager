@@ -1,0 +1,1 @@
+add 'end' render prop to NavLink if you get the activeStyle issue where multiple links are being highlighted due to the matching paths.

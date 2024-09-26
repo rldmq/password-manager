@@ -93,20 +93,20 @@ body{
     column-gap: 2em;
 }
 
-.menu_item{
+.menu__item{
     list-style-type: none;
     text-align: right;
     text-decoration: none;
     /* padding: 0 2em 0; */
 }
 
-.menu_item a{
+.menu__item a{
     text-decoration: none;
     /* text-transform: capitalize; */
 }
 
-.menu_item a:hover,
-.menu_item a:active{
+.menu__item a:hover,
+.menu__item a:active{
     color: var(--dark-mode-green);
     font-weight: 600;
 }
