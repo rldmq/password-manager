@@ -1,0 +1,7 @@
+1. Show/hide password
+2. Redirection for sign update
+3. Error handling for firebase user creation
+4. Test sign in link login (once redirection is complete)
+5. Login page + error handling
+6. When logged in, signup becomes sign out
+7. Login: forgot password link

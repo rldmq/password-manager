@@ -35,8 +35,10 @@
     "toggle togglelabel"
     "accountpasswordlabel accountpasswordlabel"
     "accountpassword accountpassword"
+    "pass-err pass-err"
     "accountpasswordconfirmlabel accountpasswordconfirmlabel"
     "accountpasswordconfirm accountpasswordconfirm"
+    "pass-confirm-err pass-confirm-err"
     "signupbtn signupbtn";
 
     grid-template-columns: 1em auto;
@@ -64,6 +66,15 @@
 .signup__label_passwordconfirm,
 .signup__btn{
     margin-top: 1.25em;
+}
+
+.signup__label_lastname,
+.signup__label_firstname,
+.signup__label_email,
+.signup__label_password,
+.signup__label_passwordconfirm{
+    display: flex;
+    justify-content: space-between;
 }
 
 .signup__heading{
@@ -126,7 +137,7 @@
     border-radius: 0.5em;
     padding: 0.75em;
     opacity: 0;
-    transition: opacity 0.5s, visibility 0.5s;
+    transition: opacity 0.2s, visibility 0.2s;
 }
 
 .signup__label_passwordless:hover .tooltip{
@@ -143,13 +154,45 @@
     grid-area: accountpassword;
 }
 
+.signup__password_error{
+    display: none;
+    grid-area: pass-err;
+}
+
 .signup__label_passwordconfirm{
     grid-area: accountpasswordconfirmlabel;
 }
 
-
 #account-password-confirm{
     grid-area: accountpasswordconfirm
+}
+
+.signup__passwordconfirm_error{
+    display: none;
+    grid-area: pass-confirm-err;
+}
+
+.signup__password_error,
+.signup__passwordconfirm_error{
+    border: 2px solid red;
+    background-color: rgb(253, 203, 203);
+    border-radius: 0.5em;
+    padding: 0.5em;
+    margin-top: 0.5em;
+}
+
+.signup__password_error *,
+.signup__passwordconfirm_error *{
+    color: red;
+    font-weight: 500;
+}
+
+.signup__password_error li{
+    margin-left: 1.5em;
+}
+
+.input-field-error{
+    display: none;
 }
 
 #first-name,
@@ -168,6 +211,38 @@
     border-radius: 0.5em;
     border: none;
     cursor: pointer;
+}
+
+.signup__btn:active{
+    transform: translate(1px, 1px)
+}
+
+.input-field-error{
+    color: red;
+    animation: none;
+}
+
+.input-field-error.shake{
+    animation: 0.25s linear 0s 3 shake;
+}
+
+.signup__success{
+    display: flex;
+    /* flex-direction: column; */
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 2em;
+    text-align: center;
+}
+
+.success__img{
+    border-radius: 50%;
+    width: 3em;
+}
+
+.success__msg{
+    font-size: 2.5em;
 }
 
 @media screen and (min-width: 500px){
@@ -203,6 +278,21 @@
     } */
 }
 
+@keyframes shake{
+    25%{
+        transform: translate(1px, 1px);
+    }
+    50%{
+        transform: translate(-1px,-1px);
+    }
+    75%{
+        transform: translate(-1px,1px)
+    }
+    100%{
+        transform: translate(1px,-1px)
+    }
+}
+
 /* @keyframes slideInCenter{
     0%{
         left: -100%;
@@ -212,3 +302,9 @@
         left: 0;
     }
 } */
+
+.show-test{
+    position: relative;
+    top: -50px;
+    left: 300px;
+}
