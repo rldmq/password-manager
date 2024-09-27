@@ -1,9 +1,13 @@
 import React from 'react'
-import { NavLink, Outlet } from 'react-router-dom'
+import { NavLink, Outlet, useSearchParams } from 'react-router-dom'
 
 import data from '../assets/sample-data.js'
 
 export default function Testing(){
+
+    const [searchParams, setSearchParams] = useSearchParams()
+
+    const tagFilter = searchParams.get('tag')
 
     const activeStyle = {
         backgroundColor : 'var(--dark-mode-green',
@@ -11,7 +15,20 @@ export default function Testing(){
         fontWeight : '600'
     }
 
-    const dataRender = data[0].storage.map((e,i) => {
+    const [userData, setUserData] = React.useState(null)
+
+    React.useEffect(()=>{
+        // Fetch goes here
+        setUserData(data[0].storage)
+
+        //the dependency should be the user id and logged in state or something
+    },[])
+
+    // const filteredData = tagFilter ? userData.filter(e => e.tag.toLowerCase() === tagFilter) : null
+
+    // const dataRender = tagFilter ?
+
+    const dataRender = userData ? userData.map((e,i) => {
 
         // use nested routing for the accounts
         return (
@@ -27,7 +44,7 @@ export default function Testing(){
             </div>
         </NavLink>
         )
-    })
+    }) : <h1>Loading...</h1>
 
     // data[0].storage.map((e) => console.log(e.account,e.login,e.pass))
 
@@ -35,11 +52,15 @@ export default function Testing(){
         <main className='main main__test'>
             {/* This should say something like "Welcome ${user}" */}
             <h1 className='test__heading'>Accounts</h1>
+            <div>
+                {/* render buttons here for tags */}
+                {/* <button onClick={setSearchParams({type:"socials"})} /> */}
+            </div>
             <div className='test__accounts'>
                 {dataRender}
             </div>
             <div className='test__accountdetails'>
-                <Outlet />
+                <Outlet context={[userData, setUserData]}/>
             </div>
         </main>
     )

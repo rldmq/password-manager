@@ -1,17 +1,19 @@
 import React from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link, useOutletContext } from 'react-router-dom'
 
 // For testing purposes
 import data from '../assets/sample-data'
 
 export default function TestingDetails(){
 
+    const [userData, setUserData] = useOutletContext()
+
     const params = useParams()
 
     const [login, setLogin] = React.useState('')
     const [pass, setPass] = React.useState('')
     
-    
+    console.log(userData)
 
     // We want the page to refresh when there is a new ID, hence params.id being included in the dependecy array
     React.useEffect(()=>{

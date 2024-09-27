@@ -5,3 +5,10 @@
 5. Login page + error handling
 6. When logged in, signup becomes sign out
 7. Login: forgot password link
+8. Filtering in the main accounts page can be for: Work, Personal, Email, Social, etc. (These will be tags)
+9. Ability to add tags on creation and on existing data
+
+Go back to same filters:
+pass a prop to the Link:
+<Link state={{serach: serachParam}} />Example</Link>
+This passes any query strings to the next page so that we can use it to go back with the query strings applied to the url
