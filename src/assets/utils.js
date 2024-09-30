@@ -18,3 +18,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 export { firebaseConfig, app }
+
+// require auth function
+// using redirect

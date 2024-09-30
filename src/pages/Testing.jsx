@@ -1,9 +1,19 @@
 import React from 'react'
-import { NavLink, Outlet, useSearchParams } from 'react-router-dom'
+import { NavLink, Outlet, useSearchParams, useLoaderData, useRouteError } from 'react-router-dom'
+// import api function for request for loader use
 
 import data from '../assets/sample-data.js'
+import { getData } from '../assets/api.js'
+
+export function loader(){
+    return "fetch request gets returned here"
+}
 
 export default function Testing(){
+
+    // const loaderData = useLoaderData()
+
+    const error = useRouteError()
 
     const [searchParams, setSearchParams] = useSearchParams()
 
@@ -15,18 +25,27 @@ export default function Testing(){
         fontWeight : '600'
     }
 
+    
+    // when using data layer APIs we don't need the state anymore, it will be data = useLoaderData()
     const [userData, setUserData] = React.useState(null)
 
     React.useEffect(()=>{
         // Fetch goes here
         setUserData(data[0].storage)
 
+        // async function getUserData(){
+        //     const data = await getData()
+        //     setUserData(data)
+        // }
+
+        // getUserData()
+
         //the dependency should be the user id and logged in state or something
     },[])
 
-    // const filteredData = tagFilter ? userData.filter(e => e.tag.toLowerCase() === tagFilter) : null
+    // const filteredData = tagFilter ? userData.filter(e => e.tag.toLowerCase() === tagFilter) : userData
 
-    // const dataRender = tagFilter ?
+    // const dataRender = filteredData.map((e,i)=>{})
 
     const dataRender = userData ? userData.map((e,i) => {
 
@@ -47,6 +66,8 @@ export default function Testing(){
     }) : <h1>Loading...</h1>
 
     // data[0].storage.map((e) => console.log(e.account,e.login,e.pass))
+
+    // throw new Error()
 
     return (
         <main className='main main__test'>

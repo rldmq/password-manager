@@ -7,8 +7,20 @@
 7. Login: forgot password link
 8. Filtering in the main accounts page can be for: Work, Personal, Email, Social, etc. (These will be tags)
 9. Ability to add tags on creation and on existing data
+10. Sad path toggle for fetch
+11. --
+12. implement error state
+13. aria-live='polite' to finish first/ 'assertive' to announce immediately
+14. useLoaderData
+15. errorElement in Route
 
 Go back to same filters:
 pass a prop to the Link:
 <Link state={{serach: serachParam}} />Example</Link>
 This passes any query strings to the next page so that we can use it to go back with the query strings applied to the url
+
+// Added 404 page
+// opted into data layer apis
+// 
+
+implement loading state (so that it renders 'loading' while data is loading) - nvm loading state not needed with data apis

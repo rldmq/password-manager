@@ -1,6 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
+// loader function for login
+// use request instead of params for the loader
+// new URL grab searchParams
+
 export default function Login(){
 
     const [userName, setUserName] = React.useState('')
