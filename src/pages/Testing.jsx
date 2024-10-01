@@ -6,6 +6,8 @@ import data from '../assets/sample-data.js'
 import { getData } from '../assets/api.js'
 
 export function loader(){
+    // export await function loader
+    // await requireAuth()
     return "fetch request gets returned here"
 }
 

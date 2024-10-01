@@ -1,6 +1,5 @@
 export async function getData(){
 
-    // await requireAuth
     const res = await fetch('/path/here')
 
     if(!res.ok){
@@ -20,3 +19,5 @@ export async function getData(){
 
     return data
 }
+
+// login user

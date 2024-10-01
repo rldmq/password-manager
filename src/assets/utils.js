@@ -19,5 +19,29 @@ const app = initializeApp(firebaseConfig);
 
 export { firebaseConfig, app }
 
-// require auth function
-// using redirect
+// scrimba@test.com
+// Scrimba123
+
+import { getAuth } from "firebase/auth"
+
+const auth = getAuth(app)
+
+export {auth}
+
+// onAuthStateChanged for checking if sure is logged in or out
+
+// enable google sign in?
+
+import { redirect } from 'react-router-dom'
+
+export function authRequired(request){
+
+  const pathname = new URL(request.url).pathname || '/account'
+
+  // grab from firebase?? local storage??
+  const isLoggedIn = false
+  
+  if(!isLoggedIn){
+    throw redirect(`/login?message=Please%20log%20in%20to%20your%20account.${pathname ? `&redirect=${pathname}` : ''}`)
+  }
+}
