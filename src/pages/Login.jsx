@@ -4,44 +4,36 @@ import { Link, Form, useActionData, useLoaderData, useNavigation, redirect } fro
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '../assets/utils'
 
-// action function
-// useActionData for login errors
-
 // when wanting to go to the same url (eg: user tries to go to a nested route that requires auth, use redirect with new URL in loader - use URL .pathname)
 // in the action is where we actually redirect to the desired path upon successful login using the request
 
 export async function action({ request }){
     const formData = await request.formData()
 
-    const username = formData.get('username')
+    const email = formData.get('email')
     const password = formData.get('password')
 
     try{
-        const userCredential = await signInWithEmailAndPassword(auth, username, password)
+        const userCredential = await signInWithEmailAndPassword(auth, email, password)
 
-        const user = userCredential.user
-        // console.log(userCredential, user)
-        
         const pathname = new URL(request.url).searchParams.get('redirect') || '/account'
 
         // setlocalstorage login?? firebase??
 
-        throw redirect(pathname)
+        return redirect(pathname)
     }catch(err){
-        return err
+        return 'Email/password combination not found.'
     }
-
-    return null
 }
 
-export function loader({request, params}){
+export function loader({ request }){
     const message = new URL(request.url).searchParams.get('message')
     return message
 }
 
 export default function Login(){
 
-    const userNameInput = React.useRef()
+    const emailInput = React.useRef()
 
     const navigation = useNavigation()
 
@@ -49,11 +41,9 @@ export default function Login(){
 
     const error = useActionData()
 
-    console.log(error && error.code)
-
     React.useEffect(()=>{
         setTimeout(()=>{
-            userNameInput.current.focus()
+            emailInput.current.focus()
         },500)
     },[])
 
@@ -65,20 +55,22 @@ export default function Login(){
 
                 {message && <span className='form__message'>{message}</span>}
 
+                {error && <span className='form__error'>{error}</span>}
+
                 <label
-                    htmlFor='username'
+                    htmlFor='email'
                     className='form__label'
                 >
-                    Username:
+                    Email:
                 </label>
 
                 <input
                 type='text'
-                id='username'
-                name='username'
+                id='email'
+                name='email'
                 className='form__input'
-                placeholder='Username'
-                ref={userNameInput}
+                placeholder='Email'
+                ref={emailInput}
                 />
 
                 <label

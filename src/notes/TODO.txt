@@ -1,9 +1,5 @@
 1. Show/hide password
-2. Redirection for sign update
 3. Error handling for firebase user creation
-4. Test sign in link login (once redirection is complete)
-5. Login page + error handling
-6. When logged in, signup becomes sign out
 7. Login: forgot password link
 8. Filtering in the main accounts page can be for: Work, Personal, Email, Social, etc. (These will be tags)
 9. Ability to add tags on creation and on existing data
@@ -13,14 +9,11 @@
 13. aria-live='polite' to finish first/ 'assertive' to announce immediately
 14. useLoaderData
 15. errorElement in Route
+>Auto log out after 15 mins, with a 10 second toggle for presentation
 
 Go back to same filters:
 pass a prop to the Link:
 <Link state={{serach: serachParam}} />Example</Link>
 This passes any query strings to the next page so that we can use it to go back with the query strings applied to the url
 
-// Added 404 page
-// opted into data layer apis
-// 
-
-implement loading state (so that it renders 'loading' while data is loading) - nvm loading state not needed with data apis
+// the error message from the action in the login page should refresh if you try to login again and get another error

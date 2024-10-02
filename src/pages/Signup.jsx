@@ -1,5 +1,5 @@
 import React from 'react'
-import { redirect } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import InputFieldError from '../components/InputFieldError'
 
@@ -18,6 +18,8 @@ import { getAuth,
 const auth = getAuth(app)
 
 export default function Signup(){
+
+    const navigate = useNavigate()
 
     const firstNameInput = React.useRef()
 
@@ -126,7 +128,7 @@ export default function Signup(){
         }
     }
 
-    function handleSignupSubmit(e){
+    function handleSignupSubmit(){
         // console.log(signupFormData)
 
         const reviewEls = document.querySelectorAll('.input-field-error')
@@ -180,6 +182,10 @@ export default function Signup(){
 
                 overrideEl.innerHTML += 
                 `<p>You will now be redirected to the login page.</p>`
+
+                setTimeout(()=>{
+                    navigate('/login')
+                },2000)
 
                 // redirect user to login page
             }
@@ -249,7 +255,8 @@ export default function Signup(){
             minLength={6}
             />
 
-            <img src={showSecret} alt='Show password' className='show-test'/>
+            {/* The show password img is causing margin issues */}
+            {/* <img src={showSecret} alt='Show password' className='show-test'/> */}
 
             <div className='signup__passwordconfirm_error'>
                 <p>Passwords do not match.</p>
@@ -264,6 +271,7 @@ export default function Signup(){
         }, 500)
     },[])
 
+    // Unsure if it's worth converting form to React Router Form
     return (
         <main className="main main__signup">
             <div className='signup__hero'>
@@ -365,7 +373,7 @@ export default function Signup(){
                 {!passwordless ? passwordInputsRender : null }
 
                 <button
-                onClick={(e)=>handleSignupSubmit(e)}
+                onClick={()=>handleSignupSubmit()}
                 className='signup__btn'
                 >
                     Sign up

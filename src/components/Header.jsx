@@ -1,5 +1,8 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, redirect } from 'react-router-dom'
+
+import { onAuthStateChanged, signOut } from "firebase/auth"
+import { auth } from '../assets/utils'
 
 import collapsedMenuIcon from '../assets/images/icons8-menu-50.png'
 import expandedMenuIcon from '../assets/images/icons8-collapse-24.png'
@@ -8,12 +11,24 @@ export default function Header(){
 
     const [mobileCollapsedMenu, setMobileCollapsedMenu] = React.useState(true)
 
+    const [isLoggedIn, setIsLoggedIn] = React.useState(false)
+
     const [displayMode, setDisplayMode] = React.useState(window.innerWidth >= 540 ? 'desktop' : 'mobile')
 
     const activeStyle = {
         color : 'var(--dark-mode-green)',
         fontWeight : '600'
     }
+
+    React.useEffect(()=>{
+        onAuthStateChanged(auth, (user) =>{
+            if(user){
+                setIsLoggedIn(true)
+            }else{
+                setIsLoggedIn(false)
+            }
+        })
+    },[])    
 
     window.addEventListener('resize', ()=>{
         if(window.innerWidth >= 540){
@@ -23,6 +38,15 @@ export default function Header(){
             setDisplayMode('mobile')
         }
     })
+
+    function handleSignOut(){
+        try{
+            signOut(auth)
+            return redirect('/')
+        }catch(err){
+            console.error(err)
+        }
+    }
 
     const expandedMenu = 
     (<nav
@@ -45,7 +69,17 @@ export default function Header(){
                     About
                 </NavLink>
             </li>
+            {isLoggedIn? 
             <li className='menu__item'>
+                <NavLink 
+                to='/account' 
+                onClick={()=>setMobileCollapsedMenu(true)}
+                style={({isActive}) => isActive ? activeStyle : null}
+                >
+                    Account
+                </NavLink>
+            </li>
+            : <li className='menu__item'>
                 <NavLink 
                 to='/login' 
                 onClick={()=>setMobileCollapsedMenu(true)}
@@ -53,8 +87,19 @@ export default function Header(){
                 >
                     Login
                 </NavLink>
-            </li>
+            </li>}
+            {isLoggedIn ?  
             <li className='menu__item'>
+                <NavLink 
+                onClick={()=>{
+                    setMobileCollapsedMenu(true)
+                    handleSignOut()
+                }}
+                >
+                    Sign out
+                </NavLink>
+            </li>
+            : <li className='menu__item'>
                 <NavLink 
                 to='/signup' 
                 onClick={()=>setMobileCollapsedMenu(true)}
@@ -62,7 +107,7 @@ export default function Header(){
                 >
                     Sign up
                 </NavLink>
-            </li>
+            </li>}
         </ul>
     </nav>)
 

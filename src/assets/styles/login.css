@@ -24,9 +24,10 @@
     border-radius: 1.5em;
 }
 
-.form__message{
+.form__message,
+.form__error{
     color: red;
-    margin-top: 1.5em;
+    margin-top: 1em;
 }
 
 .form__label{
