@@ -38,7 +38,7 @@ export async function authRequired(request){
   
     onAuthStateChanged(auth, (user)=>{
       if(user){
-        resolve()
+        resolve(user)
       }else{
         reject(redirect(`/login?message=Please%20log%20in%20to%20your%20account.${pathname ? `&redirect=${pathname}` : ''}`))
       }
@@ -50,25 +50,53 @@ export async function authRequired(request){
 
 // }
 
-import { signOut } from "firebase/auth";
+import { signOut } from 'firebase/auth'
 
-let expiredSessionTimer
+let sessionTimer
 
-export const handleExpiredSession = () => {
-    if(expiredSessionTimer){
-        clearTimeout(expiredSessionTimer)
-    }
-
-    expiredSessionTimer = setTimeout(()=>{
+export function startSessionTimer(navigate){
+  
+  clearSessionTimer()
+  
+  sessionTimer = setTimeout(()=>{
         signOut(auth)
-        .then(()=>{
-            console.log('signed out due to inactivity')
-            throw redirect('/login')
-        })
-        .catch((err)=>{
+          .then(()=> {
+            navigate('/login?message=You%20have%20been%20signed%20out%20due%20to%20inactivity.')
+            })
+          .catch((err)=>{
             console.log(err)
         })
-    }, (900000))
+    }, 900000)
+    // 900000 = 15 mins
 }
 
-export { expiredSessionTimer }
+export function clearSessionTimer(){
+  if(sessionTimer){
+    clearTimeout(sessionTimer)
+  }
+}
+
+import React from 'react'
+import { useNavigate } from 'react-router-dom'
+
+export function autoLogout(){
+  const navigate = useNavigate()
+
+  React.useEffect(()=>{
+      startSessionTimer(navigate)
+      
+      document.addEventListener('mousemove',()=>{
+          startSessionTimer(navigate)
+      })
+      document.addEventListener('keypress', ()=>{
+          startSessionTimer(navigate)
+      })
+
+      return ()=>{
+          document.removeEventListener('mousemove',startSessionTimer)
+          document.removeEventListener('keypress',startSessionTimer)
+          clearSessionTimer()
+      }
+  },[navigate])
+
+}

@@ -7,6 +7,8 @@ import { auth } from '../assets/utils'
 // when wanting to go to the same url (eg: user tries to go to a nested route that requires auth, use redirect with new URL in loader - use URL .pathname)
 // in the action is where we actually redirect to the desired path upon successful login using the request
 
+
+
 export async function action({ request }){
     const formData = await request.formData()
 

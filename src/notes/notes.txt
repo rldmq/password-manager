@@ -30,3 +30,6 @@ aria-label - eg: for links, say what will happen when you click (aria-label="vie
 useParams
 
 const params = useParams() // grabs the params of the url
+
+css scaling up:
+transform: scale(X); where x is the number to scale

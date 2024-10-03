@@ -27,8 +27,8 @@ export default function Header(){
             }else{
                 setIsLoggedIn(false)
             }
-        })
-    },[])    
+        })  
+    },[])
 
     window.addEventListener('resize', ()=>{
         if(window.innerWidth >= 540){
