@@ -19,7 +19,7 @@ const app = initializeApp(firebaseConfig);
 
 export { firebaseConfig, app }
 
-// scrimba@test.com
+// scrimba@test.com // scrimba2@test.com
 // Scrimba123
 
 import { getAuth, onAuthStateChanged } from "firebase/auth"
@@ -45,10 +45,6 @@ export async function authRequired(request){
     })
   })
 }
-
-// export function handleExpiredSession(seconds){
-
-// }
 
 import { signOut } from 'firebase/auth'
 

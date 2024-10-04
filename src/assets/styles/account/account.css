@@ -1,1 +1,17 @@
 /* ACCOUNT PAGE STYLES */
+.main__account{
+    padding: 0 2em;
+}
+
+.account__container_render{
+    margin-top: 1em;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.account__item{
+    background-color: black;
+    padding: 0.75em;
+    border-radius: 0.5em;
+}

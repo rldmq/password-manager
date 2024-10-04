@@ -17,3 +17,5 @@ pass a prop to the Link:
 This passes any query strings to the next page so that we can use it to go back with the query strings applied to the url
 
 // the error message from the action in the login page should refresh if you try to login again and get another error
+// The rendering of the Reveal and Hide needs Work
+// The actual document id should be in the html id

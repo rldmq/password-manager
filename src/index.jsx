@@ -7,6 +7,7 @@ import './assets/styles/home.css'
 import './assets/styles/about.css'
 import './assets/styles/login.css'
 import './assets/styles/signup.css'
+import './assets/styles/account/account.css'
 
 import Layout from './components/Layout'
 import Error from './components/Error'
@@ -17,6 +18,7 @@ import Signup from './pages/Signup'
 import NotFound from './pages/NotFound'
 
 import Account, { loader as accountLoader } from './pages/account/Account'
+import AccountDetails, { loader as accountDetailsLoader } from './pages/account/AccountDetails'
 
 // Test page
 import Testing, { loader as testLoader } from './pages/Testing'
@@ -41,11 +43,11 @@ function App(){
                     element={<Account />}
                     loader={accountLoader}
                     >
-                    
+                        <Route path=':id' element={<AccountDetails />} loader={accountDetailsLoader}/>
                     </Route>
                     <Route path='testing' element={<Testing />} loader={testLoader}  errorElement={<Error />}>
                         {/* <Route index element={<ElementHere />} /> */}
-                        <Route path=':id' element={<TestingDetails />}/>
+                        <Route index element={<TestingDetails />}/>
                     </Route>
                     <Route path='*' element={<NotFound />} />
                 </Route>
