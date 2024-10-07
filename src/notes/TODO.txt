@@ -19,3 +19,7 @@ This passes any query strings to the next page so that we can use it to go back 
 // the error message from the action in the login page should refresh if you try to login again and get another error
 // The rendering of the Reveal and Hide needs Work
 // The actual document id should be in the html id
+// review some of the functions (are some of them using a function instead of state directly?)
+// must have unique identifiers or at least have a warning (this name already exists, continue with same name?)
+// issue with delete double taps
+// the modals are basically the same thing - refactor

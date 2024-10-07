@@ -1,0 +1,105 @@
+.modal__background{
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--dark-mode-modal-background);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 0;
+}
+
+.modal__form{
+    /* display: flex; */
+    /* flex-direction: column; */
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: 
+    'heading heading'
+    'purposelabel purposelabel'
+    'purposeinput purposeinput'
+    'loginlabel logainlabal'
+    'logininput logininput'
+    'passlabel passlabel'
+    'passinput passinput'
+    'cancelbtn addbtn';
+    background-color: var(--dark-mode-primary-background);
+    padding: 2em;
+    border-radius: 0.5em;
+}
+
+.modal__form_edit{
+    display: grid;
+}
+
+.modal__form div{
+    animation: none;
+}
+
+.modal__heading{
+    grid-area: heading;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.modal__label{
+    margin-top: 1em;
+}
+
+.modal__label_purpose{
+    grid-area: purposelabel;
+}
+
+#account-purpose{
+    grid-area: purposeinput;
+}
+
+.modal__label_login{
+    grid-area: loginlabel;
+}
+
+#login{
+    grid-area: logininput;
+}
+
+.modal__label_password{
+    grid-area: passlabel;
+}
+
+#password{
+    grid-area: passinput;
+}
+
+.modal__input{
+    margin-top: 0.25em;
+    padding: 0.3em;
+    border-radius: 0.5em;
+    border: none;
+    color: black;
+}
+
+.modal__btn{
+    margin-top: 1em;
+    border: none;
+    cursor: pointer;
+    flex-shrink: 0.5;
+    border-radius: 0.5em;
+    padding: 0.25em 0;
+}
+
+.modal__btn:active{
+    transform: translate(1px, 1px)
+}
+
+.modal__btn_add{
+    margin-left: 0.25em;
+    background-color: var(--dark-mode-btn);
+    grid-area: addbtn;
+}
+
+.modal__btn_cancel{
+    margin-right: 0.25em;
+    background-color: var(--dark-mode-btn-red);
+    grid-area: cancelbtn;
+}

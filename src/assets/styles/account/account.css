@@ -1,6 +1,16 @@
 /* ACCOUNT PAGE STYLES */
 .main__account{
-    padding: 0 2em;
+    padding: 0 2em 2em;
+}
+
+.account__greeting{
+    font-size: 1.5rem;
+}
+
+.account__heading{
+    margin-top: 1em;
+    font-size: 1.75rem;
+    font-weight: 500;
 }
 
 .account__container_render{
@@ -10,8 +20,63 @@
     gap: 1em;
 }
 
+.account__addnew{
+    background-color: var(--dark-mode-btn);
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    gap: 0.5em;
+    padding: 1em;
+    border-radius: 0.5em;
+}
+
+.account__addnew:active{
+    transform: translate(1px, 1px);
+}
+
 .account__item{
     background-color: black;
     padding: 0.75em;
     border-radius: 0.5em;
+    display: flex;
+    justify-content: space-between;
+}
+
+.item__functions{
+    display: flex;
+    gap: 1em;
+    align-items: center;
+}
+
+.item__functions *{
+    animation: none;
+}
+
+.item__btn{
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.item__symbol{
+    fill: var(--dark-mode-btn-grey);
+    font-size: 1.5rem;
+}
+
+
+.item__symbol_delete:hover,
+.item__symbol_delete:active{
+    fill: var(--dark-mode-btn-red);
+}
+
+.item__symbol_show:hover,
+.item__symbol_hide:hover,
+.item__symbol_edit:hover{
+    fill: var(--dark-mode-btn);
+}
+
+.item__symbol_hide{
+    fill: rgb(0, 139, 139);
 }

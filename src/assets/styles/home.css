@@ -21,7 +21,7 @@
 .hero__text_middle:before,
 .hero__text_bottom:before{
     position: absolute;
-    content: "";
+    content: '';
     /* background: rgb(36, 36, 45); */
     background: var(--dark-mode-green);
     height: 0.1em;
@@ -220,7 +220,7 @@
         justify-content: center;
     }
     .offerings:before{
-        content: "";
+        content: '';
         position: absolute;
         z-index: -1;
         left: 0;

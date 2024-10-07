@@ -16,30 +16,30 @@
     display: grid;
 
     /* grid-template-areas:
-    "firstnamelabel lastnamelabel"
-    "firstname lastname"
-    "emaillabel emaillabel"
-    "email email"
-    "signupbtn signupbtn"
+    'firstnamelabel lastnamelabel'
+    'firstname lastname'
+    'emaillabel emaillabel'
+    'email email'
+    'signupbtn signupbtn'
     ; */
 
     grid-template-areas:
-    "signupheading signupheading"
-    "signuptext signuptext"
-    "firstnamelabel firstnamelabel"
-    "firstname firstname"
-    "lastnamelabel lastnamelabel"
-    "lastname lastname"
-    "emaillabel emaillabel"
-    "email email"
-    "toggle togglelabel"
-    "accountpasswordlabel accountpasswordlabel"
-    "accountpassword accountpassword"
-    "pass-err pass-err"
-    "accountpasswordconfirmlabel accountpasswordconfirmlabel"
-    "accountpasswordconfirm accountpasswordconfirm"
-    "pass-confirm-err pass-confirm-err"
-    "signupbtn signupbtn";
+    'signupheading signupheading'
+    'signuptext signuptext'
+    'firstnamelabel firstnamelabel'
+    'firstname firstname'
+    'lastnamelabel lastnamelabel'
+    'lastname lastname'
+    'emaillabel emaillabel'
+    'email email'
+    'toggle togglelabel'
+    'accountpasswordlabel accountpasswordlabel'
+    'accountpassword accountpassword'
+    'pass-err pass-err'
+    'accountpasswordconfirmlabel accountpasswordconfirmlabel'
+    'accountpasswordconfirm accountpasswordconfirm'
+    'pass-confirm-err pass-confirm-err'
+    'signupbtn signupbtn';
 
     grid-template-columns: 1em auto;
 
@@ -268,7 +268,7 @@
 
     /* .signup__heading_bottom:before{
         position: absolute;
-        content: "";
+        content: '';
         background: var(--dark-mode-green);
         height: 0.15em;
         z-index: -1;

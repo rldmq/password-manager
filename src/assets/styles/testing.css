@@ -2,8 +2,8 @@
 .main__test{
     display: grid;
     grid-template-areas:
-    "testheading testheading"
-    "accounts accountdetails"
+    'testheading testheading'
+    'accounts accountdetails'
     ;
     grid-template-rows: auto;
 }

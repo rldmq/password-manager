@@ -22,6 +22,10 @@
     --dark-mode-header-footer: rgb(24 ,24, 30);
     --dark-mode-green: #1BD16A;
     --dark-mode-btn: #168446;
+    --dark-mode-btn-red: rgb(159,0,0);
+    --dark-mode-modal-background: rgba(0, 0, 0, 0.511);
+    --dark-mode-btn-grey: rgb(78,78,78);
+    
 }
 
 #root{

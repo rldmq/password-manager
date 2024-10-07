@@ -8,6 +8,7 @@ import './assets/styles/about.css'
 import './assets/styles/login.css'
 import './assets/styles/signup.css'
 import './assets/styles/account/account.css'
+import './assets/styles/account/modal-add-account.css'
 
 import Layout from './components/Layout'
 import Error from './components/Error'
@@ -17,7 +18,7 @@ import Login, { action as loginAction, loader as loginLoader } from './pages/Log
 import Signup from './pages/Signup'
 import NotFound from './pages/NotFound'
 
-import Account, { loader as accountLoader } from './pages/account/Account'
+import Account, { loader as accountLoader, action as accountAction } from './pages/account/Account'
 import AccountDetails, { loader as accountDetailsLoader } from './pages/account/AccountDetails'
 
 // Test page
@@ -42,6 +43,7 @@ function App(){
                     path='account'
                     element={<Account />}
                     loader={accountLoader}
+                    action={accountAction}
                     >
                         <Route path=':id' element={<AccountDetails />} loader={accountDetailsLoader}/>
                     </Route>
