@@ -42,7 +42,7 @@ export default function Header(){
     function handleSignOut(){
         try{
             signOut(auth)
-            return redirect('/')
+            return redirect('/login')
         }catch(err){
             console.error(err)
         }

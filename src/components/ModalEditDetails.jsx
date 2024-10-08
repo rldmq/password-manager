@@ -26,7 +26,7 @@ export default function ModalEditDetails({submitData, closeModal, details}){
         <div className='modal__background'>
             <Form method='post' className='modal__form'>
 
-                <h1 className='modal__heading'>Edit Details for {details.name}</h1>
+                <h1 className='modal__heading'>Edit Details for "{details.name}"</h1>
 
                 <label htmlFor='account-purpose' className='modal__label modal__label_purpose'>Label:</label>
                 <input required type='text' defaultValue={details.name} id='account-purpose' name='account-purpose' ref={purposeInput} className='modal__input'/>
