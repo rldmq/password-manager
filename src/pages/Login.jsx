@@ -96,12 +96,19 @@ export default function Login(){
                 >
                     Don't have an account? Sign up here!
                 </Link>
-
+                
                 <button 
                 disabled={navigation.state === 'submitting'}
                 className='form__button'>
                     {navigation.state === 'idle' ? 'Login' : 'Logging in...'}
                 </button>
+
+                <Link
+                    to='/recover'
+                    className='form__reset'
+                >
+                    Forgot your password? Click here!
+                </Link>
 
             </Form>
         </main>
