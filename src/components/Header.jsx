@@ -1,11 +1,14 @@
 import React from 'react'
-import { NavLink, redirect } from 'react-router-dom'
+import { NavLink, redirect, Link } from 'react-router-dom'
 
 import { onAuthStateChanged, signOut } from "firebase/auth"
 import { auth } from '../assets/utils'
 
 import collapsedMenuIcon from '../assets/images/icons8-menu-50.png'
 import expandedMenuIcon from '../assets/images/icons8-collapse-24.png'
+
+import logoDarkHalf from '../assets/images/logo_dark_half_1.png'
+import logoGreenHalf from '../assets/images/logo_half_2.png'
 
 export default function Header(){
 
@@ -14,6 +17,8 @@ export default function Header(){
     const [isLoggedIn, setIsLoggedIn] = React.useState(false)
 
     const [displayMode, setDisplayMode] = React.useState(window.innerWidth >= 540 ? 'desktop' : 'mobile')
+
+    const [logoDisplay, setLogoDisplay] = React.useState(window.innerWidth >= 1000 ? 'large' : 'small')
 
     const activeStyle = {
         color : 'var(--dark-mode-green)',
@@ -36,6 +41,12 @@ export default function Header(){
             setMobileCollapsedMenu(true)
         }else{
             setDisplayMode('mobile')
+        }
+
+        if(window.innerWidth >= 1000){
+            setLogoDisplay('large')
+        }else{
+            setLogoDisplay('small')
         }
     })
 
@@ -111,11 +122,21 @@ export default function Header(){
         </ul>
     </nav>)
 
+    const expandedLogo = (
+        <div className='logo__container_text'>
+            <span className='logo__text logo__text_green'>password </span>
+            <span className='logo__text'>manager</span>
+        </div>
+    )
+
     return (
     <header className='header'>
         <div className='header__container'>
-            {/* h1 to be converted to logo */}
-            <h1 className='header__logo'>PM</h1>
+            <Link to='/' className='header__logo_container'>
+                <img src={logoDarkHalf} alt='Password Manager Logo' className='header__logo_img' />
+                {expandedLogo}
+                <img src={logoGreenHalf} alt='Password Manager Logo' className='header__logo_img' />
+            </Link>
             {
             displayMode === 'mobile' ? 
             <button 
