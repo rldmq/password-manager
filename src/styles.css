@@ -166,6 +166,27 @@ body{
     background-color: whitesmoke;
 }
 
+/* 
+    NOTIFICATIONS
+*/
+.notification__slideup{
+    padding: 0.25em 0.75em;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 2em;
+    position: fixed;
+    font-weight: 600;
+    background: var(--dark-mode-secondary-background);
+    box-shadow: 0 0 10px black;
+    bottom: 7em;
+    opacity: 0;
+    animation: 0.25s ease-in-out notificationSlideUp, 2s ease-in-out 0.25s notificationFadeOut;
+}
+
+/* 
+    MEDIA QUERIES
+*/
+
 @media screen and (min-width: 1000px){
     #root{
         max-width: 1000px;
@@ -217,6 +238,10 @@ body{
     }
 }
 
+/* 
+    ANIMATIONS
+*/
+
 @keyframes expandLogoText{
     0%{
         width: 0%;
@@ -238,5 +263,30 @@ body{
     }
     100%{
         width: 0;
+    }
+}
+
+@keyframes notificationSlideUp{
+    0%{
+        bottom: 3em;
+        opacity: 0;
+    }
+    100%{
+        bottom: 7em;
+        opacity: 1;
+    }
+}
+
+@keyframes notificationFadeOut{
+    0%{
+        opacity: 1;
+    }
+    90%{
+        opacity: 1;
+    }
+    100%{
+        opacity: 0;
+        display: none;
+        visibility: hidden;
     }
 }

@@ -47,7 +47,13 @@
     margin-top: 1em;
 }
 
-.form__signup:hover{
+.form__reset{
+    margin-top: 1em;
+    font-size: 0.75rem;
+}
+
+.form__signup:hover,
+.form__reset:hover{
     color: var(--dark-mode-green);
 }
 
