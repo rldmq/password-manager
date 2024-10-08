@@ -29,6 +29,7 @@
     left: 0;
     /* duration function delay count name */
     animation: 1s ease-in-out 0s leftSlide;
+    margin-top: 0.35em;
 }
 
 .hero__text_top:before{

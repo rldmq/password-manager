@@ -17,6 +17,8 @@
     GLOBAL
 */
 :root{
+    --header-height-margin-mobile: 5.875em 0 0 0; /*4.875em + 1em for the header*/
+    --header-height-margin-desktop: 6.875em 0 0 0; /*5.875em + 1em for the header*/
     --dark-mode-primary-background: rgb(25, 25, 35);
     --dark-mode-secondary-background: rgb(38, 38, 52);
     --dark-mode-header-footer: rgb(24 ,24, 30);
@@ -47,7 +49,7 @@ body{
 }
 
 .main{
-    margin: 4.875em 0 0 0; /*3.875em + 1em for the header*/
+    margin: var(--header-height-margin-mobile);
     flex-grow: 1;
 }
 
@@ -67,6 +69,36 @@ body{
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.header__logo_container{
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    text-decoration: none;
+}
+
+.header__logo_img{
+    width: 25px;
+    transition: width 1s;
+}
+
+.logo__container_text{
+    overflow: hidden;
+    display: flex;
+    gap: 0.25em;
+    width: 0;
+    animation: 1s ease-in collapseLogoText;
+}
+
+.logo__text{
+    gap: 0.25em;
+    font-size: 1rem;
+    transition: font-size 1s;
+}
+
+.logo__text_green{
+    color: var(--dark-mode-green)
 }
 
 .header__button{
@@ -140,9 +172,34 @@ body{
         margin: auto;
     }
 
+    .main{
+        margin: var(--header-height-margin-desktop);
+        flex-grow: 1;
+    }
+
     .header{
         left: 0;
     }
+
+    .header__logo_img{
+        width: 37.5px;
+        display: block;
+    }
+    
+    .logo__container_text{
+        width: 100%;
+        animation: 1s ease-in expandLogoText;
+    }
+
+    .logo__text{
+        gap: 0.25em;
+        font-size: 1.5rem;
+    }
+
+    .logo__text_green{
+        color: var(--dark-mode-green)
+    }
+
     .header__container{
         max-width: 1000px;
         margin: 0 auto;
@@ -157,5 +214,29 @@ body{
         height: 88px;
         margin-top: -2em;
         background-color: var(--dark-mode-header-footer);
+    }
+}
+
+@keyframes expandLogoText{
+    0%{
+        width: 0%;
+    }
+    50%{
+        width: 50%;
+    }
+    100%{
+        width: 100%;
+    }
+}
+
+@keyframes collapseLogoText{
+    0%{
+        width: 100%;
+    }
+    50%{
+        width: 50%;
+    }
+    100%{
+        width: 0;
     }
 }
