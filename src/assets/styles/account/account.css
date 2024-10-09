@@ -1,6 +1,7 @@
 /* ACCOUNT PAGE STYLES */
 .main__account{
-    padding: 0 2em 2em;
+    padding: 0 2em;
+    margin-top: 8em;
 }
 
 .account__greeting{
