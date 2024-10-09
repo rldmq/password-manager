@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { RouterProvider, createBrowserRouter, createRoutesFromElements, BrowserRouter, Routes, Route } from 'react-router-dom'
+import { RouterProvider, createBrowserRouter, createRoutesFromElements, BrowserRouter, Routes, Route, createHashRouter } from 'react-router-dom'
 
 import './styles.css'
 import './assets/styles/home.css'
@@ -31,7 +31,7 @@ import './assets/styles/testing.css'
 
 function App(){
 
-    const router = createBrowserRouter(createRoutesFromElements(
+    const router = createHashRouter(createRoutesFromElements(
         <Route element={<Layout />}>
                     <Route path='/' element={<Home />}/>
                     <Route path='about' element={<About />}/>
