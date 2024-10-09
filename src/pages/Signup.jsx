@@ -12,7 +12,9 @@ import successGif from '../assets/images/signup/icons8-success-green.gif'
 import { app } from '../assets/utils'
 import { getAuth,
         createUserWithEmailAndPassword,
-        sendSignInLinkToEmail } 
+        sendSignInLinkToEmail,
+        updateProfile,
+        signOut} 
         from 'firebase/auth'
 
 const auth = getAuth(app)
@@ -129,7 +131,6 @@ export default function Signup(){
     }
 
     function handleSignupSubmit(){
-        // console.log(signupFormData)
 
         const reviewEls = document.querySelectorAll('.input-field-error')
 
@@ -178,16 +179,19 @@ export default function Signup(){
                 overrideEl.innerHTML += 
                 `<p>Please check your email for the sign-in link.</p>`
             }else{
-                // createUserWithEmailAndPassword(auth, signupFormData.email, signupFormData.password)
-
+                createUserWithEmailAndPassword(auth, signupFormData.email, signupFormData.password)
+                    .then(()=>
+                        updateProfile(auth.currentUser, {
+                        displayName: `${signupFormData.firstname} ${signupFormData.lastname}`
+                        })
+                        .then(()=>signOut(auth)))
+                
                 overrideEl.innerHTML += 
                 `<p>You will now be redirected to the login page.</p>`
 
                 setTimeout(()=>{
                     navigate('/login')
                 },2000)
-
-                // redirect user to login page
             }
         }
     }
