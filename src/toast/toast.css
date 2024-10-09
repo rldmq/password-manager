@@ -1,0 +1,19 @@
+/* TOAST STYLES */
+.toast__container{
+    position: fixed;
+    bottom: 5em;
+    width: max-content;
+    right: 0;
+    left: 0;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+}
+
+.toast__success{
+    background: black;
+    padding: 0.25em 0.5em;
+    border-radius: 2em;
+    border: 2px solid var(--dark-mode-green);
+}
