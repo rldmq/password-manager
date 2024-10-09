@@ -95,7 +95,7 @@ export default function Account(){
                         <div className='item__functions'>
                             <Link 
                                 to={`${doc.id}`} 
-                                onClick={(e)=>setActiveItem(doc.data().id)} id={`reveal-${doc.data().id}`}
+                                onClick={()=>setActiveItem(doc.data().id)} id={`reveal-${doc.data().id}`}
                                 className='item__btn_reveal'
                                 style={{'display': path === doc.id ? 'none' : 'block'}}
                             >
