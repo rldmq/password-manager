@@ -1,13 +1,12 @@
 import React from 'react'
-import { Outlet, Link, Form } from 'react-router-dom'
-import { getFirestore, collection, doc, getDocs, getDoc, query, where, setDoc, onSnapshot, serverTimestamp, deleteDoc, updateDoc } from 'firebase/firestore'
+import { Outlet, Link, useLoaderData } from 'react-router-dom'
+import { getFirestore, collection, doc, setDoc, onSnapshot, serverTimestamp, deleteDoc, updateDoc } from 'firebase/firestore'
 import { app, auth, authRequired, autoLogout, generateId } from '../../assets/utils'
 
 import ModalAddPassword from '../../components/ModalAddPassword'
 import ModalEditDetails from '../../components/ModalEditDetails'
 
 import { LuPlusCircle } from 'react-icons/lu'
-// import { MdDeleteOutline } from 'react-icons/md'
 import { MdDeleteForever } from 'react-icons/md'
 import { MdVisibility } from 'react-icons/md'
 import { MdVisibilityOff } from 'react-icons/md'
@@ -15,10 +14,14 @@ import { MdEdit } from 'react-icons/md'
 
 export async function loader({ request }){
     await authRequired(request)
-    return null
+
+    const path = new URL(request.url).pathname
+
+    return path
 }
 
 export async function action({ request }){
+
     const userID = auth.currentUser.uid
 
     const db = getFirestore(app)
@@ -50,13 +53,12 @@ export async function action({ request }){
         })
     }
 
-
     return null
 }
 
-// need a greeting for user - means that on sign up, we have to take first name and update the user profile
-
 export default function Account(){
+
+    const path = useLoaderData().split('/')[2]
     
     autoLogout()
 
@@ -66,18 +68,11 @@ export default function Account(){
 
     const [editModalVis, setEditModalVis] = React.useState(false)
 
-    const [editItemDetails, seteditItemDetails] = React.useState(null)
-
-    // come back to this at a later date : switching between show and hide text
-    // const [showDetails, setShowDetails] = React.useState([])
+    const [editItemDetails, setEditItemDetails] = React.useState(null)
     
     const db = getFirestore(app)
     const userID = auth.currentUser.uid
     const displayName = auth.currentUser.displayName?.split(' ')[0] || null
-
-    const dbRef = collection(db, userID)
-
-    const q = query(dbRef, where('uid', '==', userID))
 
     const currentHour = new Date().getHours()
     
@@ -100,7 +95,9 @@ export default function Account(){
                         <div className='item__functions'>
                             <Link 
                                 to={`${doc.id}`} 
-                                onClick={()=>setActiveItem(doc.data().id)} id={`reveal-${doc.data().id}`}
+                                onClick={(e)=>setActiveItem(doc.data().id)} id={`reveal-${doc.data().id}`}
+                                className='item__btn_reveal'
+                                style={{'display': path === doc.id ? 'none' : 'block'}}
                             >
                                 <MdVisibility className='item__symbol item__symbol_show'/>
                             </Link>
@@ -109,13 +106,14 @@ export default function Account(){
                                 to={`.`} 
                                 onClick={()=>removeActiveItem(doc.data().id)} 
                                 id={`hide-${doc.data().id}`} 
-                                style={{'display':'none'}}
+                                style={{'display': path === doc.id ? 'block' : 'none'}}
+                                className='item__btn_hide'
                             >
                                 <MdVisibilityOff className='item__symbol item__symbol_hide'/>
                             </Link>
 
                             <button className='item__btn item__btn_edit' onClick={()=> {
-                                seteditItemDetails({
+                                setEditItemDetails({
                                     id: doc.id,
                                     name: doc.data().f,
                                     login: doc.data().l,
@@ -136,6 +134,22 @@ export default function Account(){
     },[])
 
     function setActiveItem(id){
+
+        const hideItemEls = document.querySelectorAll('.item__btn_hide')
+
+        const revealItemEls = document.querySelectorAll('.item__btn_reveal')
+
+        for(let item of hideItemEls){
+            if(item.getAttribute('id') !== `hide-${id}`){
+                item.style.display = 'none'
+            }
+        }
+
+        for(let item of revealItemEls){
+            if(item.getAttribute('id') !== `reveal-${id}`){
+                item.style.display = 'block'
+            }
+        }
 
         document.getElementById(id).classList.add('account__item_active')
 
@@ -168,10 +182,6 @@ export default function Account(){
             setEditModalVis(false)
         }, 1)
     }
-
-    // function revealOrHideText(id){
-    //     return document.getElementById(id)?.classList.includes('account__item_active') ? 'Hide' : 'Reveal'
-    // }
 
     return(
         <main className='main main__account'>
