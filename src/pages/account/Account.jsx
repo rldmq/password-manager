@@ -5,6 +5,7 @@ import { app, auth, authRequired, autoLogout, generateId } from '../../assets/ut
 
 import ModalAddPassword from '../../components/ModalAddPassword'
 import ModalEditDetails from '../../components/ModalEditDetails'
+import Toast from '../../toast/Toast'
 
 import { LuPlusCircle } from 'react-icons/lu'
 import { MdDeleteForever } from 'react-icons/md'
@@ -58,6 +59,8 @@ export async function action({ request }){
 
 export default function Account(){
 
+    const [toastList, setToastList] = React.useState([])
+
     const path = useLoaderData().split('/')[2]
     
     autoLogout()
@@ -90,7 +93,7 @@ export default function Account(){
                         <div>
                             <p>{doc.data().f}</p>
 
-                            <Outlet context={{docID: doc.id,data: doc.data()}}/>
+                            <Outlet context={{docID: doc.id,data: doc.data(), showToast: showToast}}/>
                         </div>
                         <div className='item__functions'>
                             <Link 
@@ -183,6 +186,23 @@ export default function Account(){
         }, 1)
     }
 
+    function showToast(message, type, data){
+        navigator.clipboard.writeText(data)
+        const toastProperties = {
+            id: Date.now(),
+            body: message,
+            type: type,
+        }
+        setToastList(prev => [...prev, toastProperties])
+        setTimeout(()=>{
+            setToastList(prev => {
+                const list = [...prev]
+                list.shift()
+                return list
+            })
+        },2000)
+    }
+
     return(
         <main className='main main__account'>
             <p className='account__greeting'>{`Good ${greetingTime}${displayName ? `, ${displayName}!` : '!'}`}</p>
@@ -195,7 +215,7 @@ export default function Account(){
             {newAccountModalVis && <ModalAddPassword closeModal={()=>setNewAccountModalVis(false)} submitData={()=>handleSubmitAccountDetails()}/>}
 
             {editModalVis && <ModalEditDetails closeModal={()=>setEditModalVis(false)} submitData={()=>handleSubmitEdits(editItemDetails)} details={editItemDetails}/>}
-
+            <Toast toastList={toastList} />
         </main>
     )
 }

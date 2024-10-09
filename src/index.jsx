@@ -10,6 +10,7 @@ import './assets/styles/signup.css'
 import './assets/styles/reset-password.css'
 import './assets/styles/account/account.css'
 import './assets/styles/account/modal-add-account.css'
+import './toast/toast.css'
 
 import Layout from './components/Layout'
 import Error from './components/Error'

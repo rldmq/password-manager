@@ -81,3 +81,42 @@
 .item__symbol_hide{
     fill: rgb(0, 139, 139);
 }
+
+/*
+    ACCOUNT DETAILS
+*/
+.account__details{
+    margin-top: 1em;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.details__l,
+.details__k{
+    background-color: var(--dark-mode-secondary-background);
+    border: none;
+    padding: 0.5em;
+    border-radius: 0.5em;
+    cursor: pointer;
+    margin-left: 0.5em;
+    pointer-events: auto;
+}
+
+.details__l:active,
+.details__k:active{
+    transform: translate(1px, 1px);
+}
+
+.details__l:hover .details__symbol,
+.details__k:hover .details__symbol{
+    fill: var(--dark-mode-green);
+}
+
+.details__container{
+    pointer-events: none;
+}
+
+.details__container:hover{
+    color: var(--dark-mode-green);
+}
