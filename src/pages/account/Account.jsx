@@ -209,7 +209,6 @@ export default function Account(){
 
     function handleSubmitEdits(){
         // Delay to let action grab form data
-        console.log(action)
         setTimeout(()=>{
             setEditModalVis(false)
             if(action === 'success'){
