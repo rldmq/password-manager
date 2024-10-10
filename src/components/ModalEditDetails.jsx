@@ -14,10 +14,10 @@ export default function ModalEditDetails({submitData, closeModal, details}){
             }
         }
         
-        document.addEventListener('click', handleBackgroundClick)
+        document.addEventListener('mousedown', handleBackgroundClick)
 
         return () => {
-            document.removeEventListener('click', handleBackgroundClick)
+            document.removeEventListener('mousedown', handleBackgroundClick)
         }
     
     },[])

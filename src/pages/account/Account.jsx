@@ -1,5 +1,5 @@
 import React from 'react'
-import { Outlet, Link, useLoaderData } from 'react-router-dom'
+import { Outlet, Link, useLoaderData, useActionData } from 'react-router-dom'
 import { getFirestore, collection, doc, setDoc, onSnapshot, serverTimestamp, deleteDoc, updateDoc } from 'firebase/firestore'
 import { app, auth, authRequired, autoLogout, generateId } from '../../assets/utils'
 
@@ -35,23 +35,37 @@ export async function action({ request }){
     const password = formData.get('password')
 
     if(formData.get('edit') === 'on'){
-        await updateDoc(doc(dbRef,formData.get('docID')),{
-            f: purpose,
-            k: password,
-            l: login,
-            dateModified: serverTimestamp(),
-        })
+        try{
+            await updateDoc(doc(dbRef,formData.get('docID')),{
+                f: purpose,
+                k: password,
+                l: login,
+                dateModified: serverTimestamp(),
+            })
+            return 'success'
+            // return await Promise.reject(new Error('fail'))
+        }catch(err){
+            console.log(err)
+            return 'error'
+        }
 
     }else{
-        await setDoc((doc(dbRef)),{
-            f: purpose,
-            id: generateId(),
-            k: password,
-            l: login,
-            uid: userID,
-            dateCreated: serverTimestamp(),
-            dateModified: serverTimestamp(),
-        })
+        try{
+            await setDoc((doc(dbRef)),{
+                f: purpose,
+                id: generateId(),
+                k: password,
+                l: login,
+                uid: userID,
+                dateCreated: serverTimestamp(),
+                dateModified: serverTimestamp(),
+            })
+            return 'success'
+        }catch(err){
+            console.log(err)
+            return 'error'
+        }
+
     }
 
     return null
@@ -62,6 +76,8 @@ export default function Account(){
     const [toastList, setToastList] = React.useState([])
 
     const path = useLoaderData().split('/')[2]
+
+    const action = useActionData()
     
     autoLogout()
 
@@ -172,22 +188,43 @@ export default function Account(){
         // Delay to let action grab form data
         setTimeout(()=>{
             setNewAccountModalVis(false)
+            if(action === 'success'){
+                showToast('Account added!', 'success')
+            }
+            if(action === 'error'){
+                showToast('Error, please try again.', 'error')
+            }
         }, 1)
     }
 
     async function handleDeleteItem(id){
-        await deleteDoc(doc(db,userID, id))
+        try{
+            await deleteDoc(doc(db,userID, id))
+            showToast('Account deleted!', 'success')
+        }catch(err){
+            console.log(err)
+            showToast('Error, please try again.', 'error')
+        }
     }
 
     function handleSubmitEdits(){
         // Delay to let action grab form data
+        console.log(action)
         setTimeout(()=>{
             setEditModalVis(false)
+            if(action === 'success'){
+                showToast('Account updated!', 'success')
+            }
+            if(action === 'error'){
+                showToast('Error, please try again.', 'error')
+            }
         }, 1)
     }
 
-    function showToast(message, type, data){
-        navigator.clipboard.writeText(data)
+    function showToast(message, type, copyData){
+        if(message.includes('clipboard')){
+            navigator.clipboard.writeText(copyData)
+        }
         const toastProperties = {
             id: Date.now(),
             body: message,
@@ -212,9 +249,9 @@ export default function Account(){
                 {dataRender}
             </div>
 
-            {newAccountModalVis && <ModalAddPassword closeModal={()=>setNewAccountModalVis(false)} submitData={()=>handleSubmitAccountDetails()}/>}
+            {newAccountModalVis && <ModalAddPassword closeModal={()=>setNewAccountModalVis(false)} submitData={()=>handleSubmitAccountDetails()} showToast={showToast}/>}
 
-            {editModalVis && <ModalEditDetails closeModal={()=>setEditModalVis(false)} submitData={()=>handleSubmitEdits(editItemDetails)} details={editItemDetails}/>}
+            {editModalVis && <ModalEditDetails closeModal={()=>setEditModalVis(false)} submitData={()=>handleSubmitEdits(editItemDetails)} details={editItemDetails} showToast={showToast}/>}
             <Toast toastList={toastList} />
         </main>
     )
