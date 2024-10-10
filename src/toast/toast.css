@@ -17,3 +17,10 @@
     border-radius: 2em;
     border: 2px solid var(--dark-mode-green);
 }
+
+.toast__error{
+    background: black;
+    padding: 0.25em 0.5em;
+    border-radius: 2em;
+    border: 2px solid var(--dark-mode-red);
+}

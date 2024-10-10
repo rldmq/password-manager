@@ -16,10 +16,10 @@ export default function ModalAddPassword({ closeModal, submitData }){
             }
         }
         
-        document.addEventListener('click', handleBackgroundClick)
+        document.addEventListener('mousedown', handleBackgroundClick)
 
         return () => {
-            document.removeEventListener('click', handleBackgroundClick)
+            document.removeEventListener('mousedown', handleBackgroundClick)
         }
     
     },[])
