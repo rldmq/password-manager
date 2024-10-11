@@ -29,6 +29,11 @@
     --dark-mode-modal-background: rgba(0, 0, 0, 0.511);
     --dark-mode-btn-grey: rgb(78,78,78);
     
+    --light-mode-primary-background: #ECFDF5;
+    --light-mode-secondary-background: #c7e3d6;
+    --light-mode-header-footer: #e1f5ec;
+    --light-mode-text: #2B283A;
+    --light-mode-green: #1eb45f;
 }
 
 #root{
@@ -54,6 +59,24 @@ body{
     flex-grow: 1;
 }
 
+.btn__theme{
+    position: fixed;
+    bottom: 1em;
+    right: 1em;
+    border: none;
+    padding: 0.1em 0.25em;
+    border-radius: 0.25em;
+    cursor: pointer;
+}
+
+.btn__theme:active{
+    transform: translate(1px, 1px);
+}
+
+.btn__theme_text{
+    fill: var(--light-mode-text);
+    vertical-align: middle;
+}
 /* 
     HEADER
 */
@@ -158,13 +181,6 @@ body{
     /* position: absolute;
     width: 100vw;
     bottom: 0; */
-}
-
-/* 
-    LIGHT MODE
-*/
-.light{
-    background-color: whitesmoke;
 }
 
 /* 
@@ -290,4 +306,27 @@ body{
         display: none;
         visibility: hidden;
     }
+}
+
+/* 
+    LIGHT MODE
+*/
+body.light{
+    background-color: var(--light-mode-primary-background);
+}
+
+*.light{
+    color: var(--light-mode-text);
+}
+
+.header.light,
+.footer.light,
+.footer.light:before{
+    background-color: var(--light-mode-header-footer);
+    color: var(--light-mode-text);
+}
+
+.header.light *:not(.logo__text_green),
+.footer.light *{
+    color: var(--light-mode-text);
 }

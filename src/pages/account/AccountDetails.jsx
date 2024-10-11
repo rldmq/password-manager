@@ -18,7 +18,15 @@ export default function AccountDetails(){
 
     const path = useLoaderData()
 
-    const {docID, data, showToast} = useOutletContext()
+    const {docID, data, showToast, theme} = useOutletContext()
+
+    React.useEffect(()=>{
+        if(theme === 'light'){
+            document.querySelectorAll('*').forEach(e => e.classList.add('light'))
+        }else{
+            document.querySelectorAll('*').forEach(e => e.classList.remove('light'))
+        }
+    })
 
     return (
         <>

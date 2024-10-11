@@ -1,5 +1,5 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useOutletContext } from 'react-router-dom'
 
 import InputFieldError from '../components/InputFieldError'
 
@@ -20,6 +20,16 @@ import { getAuth,
 const auth = getAuth(app)
 
 export default function Signup(){
+
+    const theme = useOutletContext()
+
+    React.useEffect(()=>{
+        if(theme === 'light'){
+            document.querySelectorAll('*').forEach(e => e.classList.add('light'))
+        }else{
+            document.querySelectorAll('*').forEach(e => e.classList.remove('light'))
+        }
+    })
 
     const navigate = useNavigate()
 

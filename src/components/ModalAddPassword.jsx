@@ -1,9 +1,17 @@
 import React from 'react'
-import { Form } from 'react-router-dom'
+import { Form, useOutletContext } from 'react-router-dom'
 
 export default function ModalAddPassword({ closeModal, submitData }){
 
-    React.useRef()
+    const theme = useOutletContext()
+
+    React.useEffect(()=>{
+        if(theme === 'light'){
+            document.querySelectorAll('*').forEach(e => e.classList.add('light'))
+        }else{
+            document.querySelectorAll('*').forEach(e => e.classList.remove('light'))
+        }
+    })
 
     const purposeInput = React.useRef()
 

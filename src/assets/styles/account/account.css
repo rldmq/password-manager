@@ -120,3 +120,16 @@
 .details__container:hover{
     color: var(--dark-mode-green);
 }
+
+/* 
+    LIGHT MODE
+*/
+.account__item.light{
+    background-color: var(--light-mode-secondary-background);
+}
+
+.details__l.light,
+.details__k.light{
+    background-color: var(--light-mode-primary-background);
+}
+

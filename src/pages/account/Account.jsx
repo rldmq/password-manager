@@ -1,5 +1,5 @@
 import React from 'react'
-import { Outlet, Link, useLoaderData, useActionData } from 'react-router-dom'
+import { Outlet, Link, useLoaderData, useActionData, useOutletContext } from 'react-router-dom'
 import { getFirestore, collection, doc, setDoc, onSnapshot, serverTimestamp, deleteDoc, updateDoc } from 'firebase/firestore'
 import { app, auth, authRequired, autoLogout, generateId } from '../../assets/utils'
 
@@ -73,6 +73,16 @@ export async function action({ request }){
 
 export default function Account(){
 
+    const theme = useOutletContext()
+
+    React.useEffect(()=>{
+        if(theme === 'light'){
+            document.querySelectorAll('*').forEach(e => e.classList.add('light'))
+        }else{
+            document.querySelectorAll('*').forEach(e => e.classList.remove('light'))
+        }
+    })
+
     const [toastList, setToastList] = React.useState([])
 
     const path = useLoaderData().split('/')[2]
@@ -109,7 +119,7 @@ export default function Account(){
                         <div>
                             <p>{doc.data().f}</p>
 
-                            <Outlet context={{docID: doc.id,data: doc.data(), showToast: showToast}}/>
+                            <Outlet context={{docID: doc.id,data: doc.data(), showToast: showToast, theme: theme}}/>
                         </div>
                         <div className='item__functions'>
                             <Link 
@@ -248,10 +258,10 @@ export default function Account(){
                 {dataRender}
             </div>
 
-            {newAccountModalVis && <ModalAddPassword closeModal={()=>setNewAccountModalVis(false)} submitData={()=>handleSubmitAccountDetails()} showToast={showToast}/>}
+            {newAccountModalVis && <ModalAddPassword closeModal={()=>setNewAccountModalVis(false)} submitData={()=>handleSubmitAccountDetails()} showToast={showToast} context={theme}/>}
 
-            {editModalVis && <ModalEditDetails closeModal={()=>setEditModalVis(false)} submitData={()=>handleSubmitEdits(editItemDetails)} details={editItemDetails} showToast={showToast}/>}
-            <Toast toastList={toastList} />
+            {editModalVis && <ModalEditDetails closeModal={()=>setEditModalVis(false)} submitData={()=>handleSubmitEdits(editItemDetails)} details={editItemDetails} showToast={showToast} context={theme}/>}
+            <Toast toastList={toastList} context={theme}/>
         </main>
     )
 }

@@ -103,3 +103,10 @@
     background-color: var(--dark-mode-btn-red);
     grid-area: cancelbtn;
 }
+
+/* 
+    LIGHT MODE
+*/
+.modal__form{
+    background-color: var(--light-mode-secondary-background);
+}

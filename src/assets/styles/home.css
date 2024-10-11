@@ -122,6 +122,14 @@
 }
 
 /* 
+    LIGHT MODE
+*/
+.reputation.light,
+.signup.light{
+    background-color: var(--light-mode-secondary-background);
+}
+
+/* 
     ANIMATIONS
 */
 
@@ -194,9 +202,19 @@
         flex-grow: 1;
     }
 
+    .offerings.light,
+    .offerings.light:before{
+        background-color: var(--light-mode-secondary-background);
+    }
+
     .signup{
         background-color: transparent;
         flex-grow: 1;
+    }
+
+    .reputation.light,
+    .signup.light{
+        background-color: var(--light-mode-primary-background);
     }
 }
 
@@ -237,3 +255,4 @@
         gap: 0;
     }
 }
+

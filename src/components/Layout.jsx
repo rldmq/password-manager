@@ -4,12 +4,12 @@ import { Outlet } from 'react-router-dom'
 import Header from './Header.jsx'
 import Footer from './Footer.jsx'
 
-export default function Layout(){
+export default function Layout({ theme }){
     return(
         <>
-            <Header />
-            <Outlet />
-            <Footer />
+            <Header theme={theme}/>
+            <Outlet context={theme}/>
+            <Footer theme={theme}/>
         </>
     )
 }
