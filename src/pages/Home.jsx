@@ -1,12 +1,26 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useOutletContext } from 'react-router-dom'
 
 import vaultImage from '../assets/images/home/secure-vault-tilted.png'
 import securitySymbolDark from '../assets/images/home/icons8-grand-master-key-100_dark.png'
 import crossPlatformSymbolDark from '../assets/images/home/icons8-internet-of-things-64_dark.png'
 import peaceOfMindSymbolDark from '../assets/images/home/icons8-spa-flower-100_dark.png'
+import securitySymbolLight from '../assets/images/home/icons8-grand-master-key-100_light.png'
+import crossPlatformSymbolLight from '../assets/images/home/icons8-internet-of-things-64_light.png'
+import peaceOfMindSymbolLight from '../assets/images/home/icons8-spa-flower-100_light.png'
 
 export default function Home(){
+
+    const theme = useOutletContext()
+
+    React.useEffect(()=>{
+        if(theme === 'light'){
+            document.querySelectorAll('*').forEach(e => e.classList.add('light'))
+        }else{
+            document.querySelectorAll('*').forEach(e => e.classList.remove('light'))
+        }
+    })
+
     return (
         <main className="main main__home">
             <section className="hero">
@@ -31,7 +45,7 @@ export default function Home(){
                 <ul className="offerings__list">
                     <li className="offerings__item">
                         <img 
-                            src={securitySymbolDark}
+                            src={theme === 'light' ? securitySymbolLight : securitySymbolDark}
                             className="offerings__item_img" 
                         />
                         <p>
@@ -41,7 +55,7 @@ export default function Home(){
 
                     <li className="offerings__item">
                         <img 
-                            src={crossPlatformSymbolDark}
+                            src={theme === 'light' ? crossPlatformSymbolLight : crossPlatformSymbolDark}
                             className="offerings__item_img" 
                         />
                         <p>
@@ -51,7 +65,7 @@ export default function Home(){
 
                     <li className="offerings__item">
                         <img 
-                            src={peaceOfMindSymbolDark}
+                            src={theme === 'light' ? peaceOfMindSymbolLight : peaceOfMindSymbolDark}
                             className="offerings__item_img" 
                         />
                         <p>

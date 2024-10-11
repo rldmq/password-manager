@@ -84,3 +84,10 @@
         margin-top: calc(100vh - 50vh - 176px - 1.5em);
     }
 } */
+
+/* 
+    LIGHT MODE
+*/
+.main__form.light{
+    background-color: var(--light-mode-secondary-background);
+}

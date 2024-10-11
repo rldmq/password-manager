@@ -245,6 +245,13 @@
     font-size: 2.5em;
 }
 
+/* 
+    LIGHT MODE
+*/
+.signup__success.light *{
+    color: var(--light-mode-text);
+}
+
 @media screen and (min-width: 500px){
     .signup__hero{
         display: block;

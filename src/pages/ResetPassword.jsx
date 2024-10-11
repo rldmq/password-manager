@@ -1,5 +1,5 @@
 import React from 'react'
-import { Form, useActionData, Link } from 'react-router-dom'
+import { Form, useActionData, Link, useOutletContext } from 'react-router-dom'
 import { auth } from '../assets/utils'
 import { sendPasswordResetEmail } from 'firebase/auth'
 
@@ -29,6 +29,16 @@ export async function action({ request }){
 }
 
 export default function ResetPassword(){
+
+    const theme = useOutletContext()
+
+    React.useEffect(()=>{
+        if(theme === 'light'){
+            document.querySelectorAll('*').forEach(e => e.classList.add('light'))
+        }else{
+            document.querySelectorAll('*').forEach(e => e.classList.remove('light'))
+        }
+    })
 
     const emailInput = React.useRef()
 
@@ -63,7 +73,7 @@ export default function ResetPassword(){
                 : error === 'unknown' ? <p className='reset__error'>Unknown error. Please refresh the page and try again or <br /><Link to='/contact' className='reset__error_link'>contact our support team by clicking here</Link></p> : null}
                 <button className='reset__btn_submit'>Submit</button>
             </Form>
-            {slideNotificationVis && <NotificationSlideUp type={error} message={'Success! Email sent!'}/>}
+            {slideNotificationVis && <NotificationSlideUp type={error} message={'Success! Email sent!'} context={theme}/>}
         </main>
     )
 }

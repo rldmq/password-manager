@@ -8,9 +8,10 @@ import collapsedMenuIcon from '../assets/images/icons8-menu-50.png'
 import expandedMenuIcon from '../assets/images/icons8-collapse-24.png'
 
 import logoDarkHalf from '../assets/images/logo_dark_half_1.png'
+import logoLightHalf from '../assets/images/logo_light_half_1.png'
 import logoGreenHalf from '../assets/images/logo_half_2.png'
 
-export default function Header(){
+export default function Header({ theme }){
 
     const [mobileCollapsedMenu, setMobileCollapsedMenu] = React.useState(true)
 
@@ -130,10 +131,10 @@ export default function Header(){
     )
 
     return (
-    <header className='header'>
+    <header className='header' >
         <div className='header__container'>
             <Link to='/' className='header__logo_container'>
-                <img src={logoDarkHalf} alt='Password Manager Logo' className='header__logo_img' />
+                <img src={theme === 'light' ? logoLightHalf : logoDarkHalf} alt='Password Manager Logo' className='header__logo_img' />
                 {expandedLogo}
                 <img src={logoGreenHalf} alt='Password Manager Logo' className='header__logo_img' />
             </Link>

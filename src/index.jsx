@@ -24,6 +24,9 @@ import NotFound from './pages/NotFound'
 import Account, { loader as accountLoader, action as accountAction } from './pages/account/Account'
 import AccountDetails, { loader as accountDetailsLoader } from './pages/account/AccountDetails'
 
+import { MdDarkMode } from 'react-icons/md'
+import { MdOutlineLightMode } from 'react-icons/md'
+
 // Test page
 import Testing, { loader as testLoader } from './pages/Testing'
 import TestingDetails from './pages/TestingDetails'
@@ -31,8 +34,10 @@ import './assets/styles/testing.css'
 
 function App(){
 
+    const [theme, setTheme] = React.useState('dark')
+
     const router = createHashRouter(createRoutesFromElements(
-        <Route element={<Layout />}>
+        <Route element={<Layout theme={theme}/>}>
                     <Route path='/' element={<Home />}/>
                     <Route path='about' element={<About />}/>
                     <Route
@@ -59,8 +64,15 @@ function App(){
                 </Route>
     ))
 
+    function handleThemeChange(){
+        setTheme(prev => prev === 'dark' ? 'light' : 'dark')
+    }
+
     return (
-        <RouterProvider router={router} />
+        <>
+            <RouterProvider router={router} />
+            <button className='btn__theme' onClick={()=>handleThemeChange()}>{theme === 'dark' ? <MdOutlineLightMode className='btn__theme_text'/> : <MdDarkMode className='btn__theme_text'/>}</button>
+        </>
     )
 }
 

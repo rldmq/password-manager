@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, Form, useActionData, useLoaderData, useNavigation, redirect } from 'react-router-dom'
+import { Link, Form, useActionData, useLoaderData, useNavigation, redirect, useOutletContext } from 'react-router-dom'
 
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '../assets/utils'
@@ -10,6 +10,7 @@ import { auth } from '../assets/utils'
 
 
 export async function action({ request }){
+
     const formData = await request.formData()
 
     const email = formData.get('email')
@@ -35,6 +36,15 @@ export function loader({ request }){
 
 export default function Login(){
 
+    const theme = useOutletContext()
+
+    React.useEffect(()=>{
+        if(theme === 'light'){
+            document.querySelectorAll('*').forEach(e => e.classList.add('light'))
+        }else{
+            document.querySelectorAll('*').forEach(e => e.classList.remove('light'))
+        }
+    })
     const emailInput = React.useRef()
 
     const navigation = useNavigation()
