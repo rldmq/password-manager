@@ -1,5 +1,6 @@
 import React from 'react'
 import { Form, useOutletContext } from 'react-router-dom'
+import SecretToggleButton from './SecretToggleButton'
 
 export default function ModalEditDetails({submitData, closeModal, details}){
 
@@ -45,7 +46,11 @@ export default function ModalEditDetails({submitData, closeModal, details}){
                 <input required type='text' defaultValue={details.login} id='login' name='login' className='modal__input'/>
 
                 <label htmlFor='password' className='modal__label modal__label_password'>Password:</label>
-                <input required type='password' defaultValue={details.password} id='password' name='password' className='modal__input'/>
+                <div className='modal__password_container'>
+                    <input required type='password' defaultValue={details.password} id='password' name='password' className='modal__input'/>
+                    <SecretToggleButton inputId={'password'}/>
+
+                </div>
 
                 <button onClick={submitData} className='modal__btn modal__btn_add'>Submit</button>
                 <button onClick={closeModal} className='modal__btn modal__btn_cancel'>Cancel</button>

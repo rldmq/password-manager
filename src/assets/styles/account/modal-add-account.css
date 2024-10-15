@@ -67,8 +67,19 @@
     grid-area: passlabel;
 }
 
-#password{
+.modal__password_container{
     grid-area: passinput;
+    background: white;
+    border-radius: 0.5em;
+    display: flex;
+}
+
+#password{
+    flex-grow: 2;
+}
+
+#password:focus{
+    outline: none;
 }
 
 .modal__input{
@@ -107,6 +118,6 @@
 /* 
     LIGHT MODE
 */
-.modal__form{
+.modal__form.light{
     background-color: var(--light-mode-secondary-background);
 }
