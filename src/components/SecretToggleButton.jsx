@@ -1,4 +1,5 @@
 import React from 'react'
+import '../assets/styles/secret-toggle-button.css'
 
 import { BiShow, BiHide } from 'react-icons/bi'
 
