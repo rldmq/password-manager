@@ -6,8 +6,6 @@ import InputFieldError from '../components/InputFieldError'
 import signupImage from '../assets/images/signup/secure-vault-portrait.png'
 import successGif from '../assets/images/signup/icons8-success-green.gif'
 
-import { BiHide, BiShow } from 'react-icons/bi'
-
 import SecretToggleButton from '../components/SecretToggleButton'
 
 // Firebase

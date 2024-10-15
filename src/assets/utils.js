@@ -17,21 +17,25 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-export { firebaseConfig, app }
+/**
+ * Firebase Test Accounts:
+ * L: scrimba@test.com K: Scrimba123
+ * L: scrimba2@test.com K: Scrimba123
+ * L: jon.ube@email.com K: Abc123
+ * L: jeebs.cheebs@nowhere.com K: Abc123
+ */
 
-// scrimba@test.com // scrimba2@test.com
-// Scrimba123
-
-import { getAuth, onAuthStateChanged } from "firebase/auth"
+import React from 'react'
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth"
+import { redirect, useNavigate } from 'react-router-dom'
 
 const auth = getAuth(app)
 
-export {auth}
+let sessionTimer
+
+const chars = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','1','2','3','4','5','6','7','8','9','0','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
 
 // enable google sign in?
-
-import { redirect } from 'react-router-dom'
-
 export async function authRequired(request){
   return new Promise((resolve, reject) => {
     const pathname = new URL(request.url).pathname || '/account'
@@ -45,10 +49,6 @@ export async function authRequired(request){
     })
   })
 }
-
-import { signOut } from 'firebase/auth'
-
-let sessionTimer
 
 export function startSessionTimer(navigate){
   
@@ -72,9 +72,6 @@ export function clearSessionTimer(){
   }
 }
 
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
-
 export function autoLogout(){
   const navigate = useNavigate()
 
@@ -97,7 +94,6 @@ export function autoLogout(){
 
 }
 
-const chars = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','1','2','3','4','5','6','7','8','9','0','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
 
 export function generateId(){
   // Make sure that ID starts with a string
@@ -107,3 +103,5 @@ export function generateId(){
   }
   return id
 }
+
+export { firebaseConfig, app, auth }

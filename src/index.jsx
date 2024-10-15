@@ -27,11 +27,6 @@ import AccountDetails, { loader as accountDetailsLoader } from './pages/account/
 import { MdDarkMode } from 'react-icons/md'
 import { MdOutlineLightMode } from 'react-icons/md'
 
-// Test page
-import Testing, { loader as testLoader } from './pages/Testing'
-import TestingDetails from './pages/TestingDetails'
-import './assets/styles/testing.css'
-
 function App(){
 
     const [theme, setTheme] = React.useState('dark')
@@ -56,10 +51,6 @@ function App(){
                     >
                         <Route path=':id' element={<AccountDetails />} loader={accountDetailsLoader}/>
                     </Route>
-                    <Route path='testing' element={<Testing />} loader={testLoader}  errorElement={<Error />}>
-                        {/* <Route index element={<ElementHere />} /> */}
-                        <Route index element={<TestingDetails />}/>
-                    </Route>
                     <Route path='*' element={<NotFound />} />
                 </Route>
     ))
@@ -71,7 +62,7 @@ function App(){
     return (
         <>
             <RouterProvider router={router} />
-            <button className='btn__theme' onClick={()=>handleThemeChange()}>{theme === 'dark' ? <MdOutlineLightMode className='btn__theme_text'/> : <MdDarkMode className='btn__theme_text'/>}</button>
+            <button className='btn__theme' style={theme === 'light' ? {backgroundColor: 'var(--dark-mode-primary-background)'} : null} onClick={()=>handleThemeChange()}>{theme === 'dark' ? <MdOutlineLightMode className='btn__theme_text' /> : <MdDarkMode className='btn__theme_text' style={{fill: 'white'}}/>}</button>
         </>
     )
 }
