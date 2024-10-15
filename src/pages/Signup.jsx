@@ -4,9 +4,11 @@ import { useNavigate, useOutletContext } from 'react-router-dom'
 import InputFieldError from '../components/InputFieldError'
 
 import signupImage from '../assets/images/signup/secure-vault-portrait.png'
-import showSecret from '../assets/images/signup/icons8-show-50.png'
-import hideSecret from '../assets/images/signup/icons8-hide-50.png'
 import successGif from '../assets/images/signup/icons8-success-green.gif'
+
+import { BiHide, BiShow } from 'react-icons/bi'
+
+import SecretToggleButton from '../components/SecretToggleButton'
 
 // Firebase
 import { app } from '../assets/utils'
@@ -16,7 +18,7 @@ import { getAuth,
         updateProfile,
         signOut} 
         from 'firebase/auth'
-
+        
 const auth = getAuth(app)
 
 export default function Signup(){
@@ -217,6 +219,36 @@ export default function Signup(){
         }, 1000)
     }
 
+    function handleShowSecret(inputId){
+        if(inputId === 'account-password'){
+            setSecretSymbol(prev => {
+                prev[0] = 'hide'
+                return [...prev]
+            })
+        }else if(inputId === 'account-password-confirm'){
+            setSecretSymbol(prev => {
+                prev[1] = 'hide'
+                return [...prev]
+            })
+        }
+        document.getElementById(inputId).setAttribute('type','text')
+    }
+
+    function handleHideSecret(inputId){
+        if(inputId === 'account-password'){
+            setSecretSymbol(prev => {
+                prev[0] = 'show'
+                return [...prev]
+            })
+        }else if(inputId === 'account-password-confirm'){
+            setSecretSymbol(prev => {
+                prev[1] = 'show'
+                return [...prev]
+            })
+        }
+        document.getElementById(inputId).setAttribute('type','password')
+    }
+
     const passwordInputsRender = (
         <>
             <label
@@ -229,15 +261,18 @@ export default function Signup(){
                 visibility={signupFormData.password.trim() !== ''}
                 />
             </label>
-            <input
-            type='password'
-            id='account-password'
-            placeholder='Enter password'
-            name='password'
-            onChange={handleSignupFormChanges}
-            minLength={6}
-            required
-            />
+            <div className='signup__password_container'>
+                <input
+                type='password'
+                id='account-password'
+                placeholder='Enter password'
+                name='password'
+                onChange={handleSignupFormChanges}
+                minLength={6}
+                required
+                />
+                <SecretToggleButton inputId={'account-password'}/>
+            </div>
 
             <div className='signup__password_error'>
                 <p>Password must meet the following requirements:</p>
@@ -259,18 +294,18 @@ export default function Signup(){
                 visibility={signupFormData.confirmpassword.trim() !== ''}
                 />
             </label>
-            <input
-            type='password'
-            id='account-password-confirm'
-            placeholder='Confirm password'
-            name='confirmpassword'
-            onChange={handleSignupFormChanges}
-            required
-            minLength={6}
-            />
-
-            {/* The show password img is causing margin issues */}
-            {/* <img src={showSecret} alt='Show password' className='show-test'/> */}
+            <div className='signup__passwordconfirm_container'>
+                <input
+                type='password'
+                id='account-password-confirm'
+                placeholder='Confirm password'
+                name='confirmpassword'
+                onChange={handleSignupFormChanges}
+                required
+                minLength={6}
+                />
+                <SecretToggleButton inputId={'account-password-confirm'}/>
+            </div>
 
             <div className='signup__passwordconfirm_error'>
                 <p>Passwords do not match.</p>
@@ -287,7 +322,7 @@ export default function Signup(){
 
     // Unsure if it's worth converting form to React Router Form
     return (
-        <main className="main main__signup">
+        <main className='main main__signup'>
             <div className='signup__hero'>
                 <p className='signup__heading signup__heading_top'>Protect What's Important</p>
                 <img

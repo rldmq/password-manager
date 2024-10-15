@@ -150,8 +150,49 @@
     grid-area: accountpasswordlabel;
 }
 
-#account-password{
+.signup__password_container{
     grid-area: accountpassword;
+}
+
+.signup__password_container,
+.signup__passwordconfirm_container{
+    display: flex;
+    background: white;
+    border-radius: 0.5em;
+}
+
+#account-password,
+#account-password-confirm{
+    flex-grow: 2;
+}
+
+#account-password:focus,
+#account-password-confirm:focus{
+    outline: none;
+}
+
+.password__btn_show{
+    border: none;
+    border-radius: 0.5em;
+    background: white;
+    padding-right: 0.5em;
+    cursor: pointer;
+    animation: none;
+}
+
+.password__btn_show *{
+    animation: none;
+}
+
+.password__btn_symbol{
+    fill: black;
+    font-size: 1.5rem;
+    vertical-align: middle;
+    pointer-events: none;
+}
+
+.password__btn_show:active .password__btn_symbol{
+    fill: var(--dark-mode-red);
 }
 
 .signup__password_error{
@@ -163,8 +204,8 @@
     grid-area: accountpasswordconfirmlabel;
 }
 
-#account-password-confirm{
-    grid-area: accountpasswordconfirm
+.signup__passwordconfirm_container{
+    grid-area: accountpasswordconfirm;
 }
 
 .signup__passwordconfirm_error{
@@ -309,9 +350,3 @@
         left: 0;
     }
 } */
-
-.show-test{
-    position: relative;
-    top: -50px;
-    left: 300px;
-}
