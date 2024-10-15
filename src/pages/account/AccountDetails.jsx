@@ -20,6 +20,20 @@ export default function AccountDetails(){
 
     const {docID, data, showToast, theme} = useOutletContext()
 
+    const [displayMode, setDisplayMode] = React.useState('mobile')
+
+    React.useEffect(()=>{
+        const windowEventListener = window.addEventListener('resize', ()=>{
+            if(window.innerWidth >= 540){
+                setDisplayMode('desktop')
+            }else{
+                setDisplayMode('mobile')
+            }
+        })
+
+        return () => window.removeEventListener("resize",windowEventListener)
+    },[])
+
     React.useEffect(()=>{
         if(theme === 'light'){
             document.querySelectorAll('*').forEach(e => e.classList.add('light'))
@@ -32,13 +46,16 @@ export default function AccountDetails(){
         <>
             {docID === path ? 
             <div className="account__details">
-                <p className='details__container'>Login:<button
+                <p className='details__container'>Login:{displayMode === 'mobile' ? <br /> : ''}<button
                 onClick={()=>showToast('Copied to clipboard!', 'success', data.l)}
                 className='details__l'
+                style={displayMode === 'mobile' ? {marginLeft: '0', marginTop: '0.5em'} : null}
                 >{`${data.l}`} <FaRegCopy className='details__symbol'/></button></p>
-                <p className='details__container'>Password:<button
+                <p className='details__container'>Password:
+                {displayMode === 'mobile' ? <br /> : ''}<button
                 onClick={()=>showToast('Copied to clipboard!', 'success', data.k)}
                 className='details__k'
+                style={displayMode === 'mobile' ? {marginLeft: '0', marginTop: '0.5em'} : null}
                 >{`${data.k}`} <FaRegCopy className='details__symbol'/></button></p>
             </div>
             : ''}
