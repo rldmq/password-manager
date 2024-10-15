@@ -319,6 +319,10 @@ body.light{
     color: var(--light-mode-text);
 }
 
+.logo__text_green.light{
+    color: var(--light-mode-green)
+}
+
 .header.light,
 .footer.light,
 .footer.light:before{
