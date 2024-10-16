@@ -19,7 +19,7 @@ export default function Home(){
         }else{
             document.querySelectorAll('*').forEach(e => e.classList.remove('light'))
         }
-    })
+    },[theme])
 
     return (
         <main className="main main__home">

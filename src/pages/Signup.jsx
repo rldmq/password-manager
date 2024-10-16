@@ -29,7 +29,7 @@ export default function Signup(){
         }else{
             document.querySelectorAll('*').forEach(e => e.classList.remove('light'))
         }
-    })
+    },[theme])
 
     const navigate = useNavigate()
 

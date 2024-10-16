@@ -38,7 +38,7 @@ export default function ResetPassword(){
         }else{
             document.querySelectorAll('*').forEach(e => e.classList.remove('light'))
         }
-    })
+    },[theme])
 
     const emailInput = React.useRef()
 

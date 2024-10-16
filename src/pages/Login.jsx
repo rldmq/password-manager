@@ -44,7 +44,8 @@ export default function Login(){
         }else{
             document.querySelectorAll('*').forEach(e => e.classList.remove('light'))
         }
-    })
+    },[theme])
+    
     const emailInput = React.useRef()
 
     const navigation = useNavigation()

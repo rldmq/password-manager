@@ -12,7 +12,7 @@ export default function ModalEditDetails({submitData, closeModal, details}){
         }else{
             document.querySelectorAll('*').forEach(e => e.classList.remove('light'))
         }
-    })
+    },[theme])
 
     const purposeInput = React.useRef()
 
