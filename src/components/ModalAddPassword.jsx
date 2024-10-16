@@ -12,7 +12,7 @@ export default function ModalAddPassword({ closeModal, submitData }){
         }else{
             document.querySelectorAll('*').forEach(e => e.classList.remove('light'))
         }
-    })
+    },[theme])
 
     const purposeInput = React.useRef()
 

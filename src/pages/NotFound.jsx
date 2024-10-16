@@ -11,7 +11,7 @@ export default function NotFound(){
         }else{
             document.querySelectorAll('*').forEach(e => e.classList.remove('light'))
         }
-    })
+    },[theme])
 
     return (
         <main className='main main__notfound'>
