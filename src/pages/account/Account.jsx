@@ -71,16 +71,12 @@ export async function action({ request }){
 }
 
 export default function Account(){
+    
+    autoLogout()
 
     const theme = useOutletContext()
 
-    React.useEffect(()=>{
-        if(theme === 'light'){
-            document.querySelectorAll('*').forEach(e => e.classList.add('light'))
-        }else{
-            document.querySelectorAll('*').forEach(e => e.classList.remove('light'))
-        }
-    },[theme])
+    
 
     const [searchTerm, setSearchTerm] = React.useState(null)
 
@@ -90,8 +86,6 @@ export default function Account(){
 
     const action = useActionData()
     
-    autoLogout()
-
     const [userData, setUserData] = React.useState([])
 
     const filteredData = searchTerm?.trim() ? userData.filter((e) => {
@@ -191,6 +185,14 @@ export default function Account(){
     const greetingTime = currentHour < 12 && currentHour > 4 ? 'morning' 
     : currentHour >= 12 && currentHour < 18 ? 'afternoon' 
     : 'evening'
+
+    React.useEffect(()=>{
+        if(theme === 'light'){
+            document.querySelectorAll('*').forEach(e => e.classList.add('light'))
+        }else{
+            document.querySelectorAll('*').forEach(e => e.classList.remove('light'))
+        }
+    },[theme])
 
     React.useEffect(()=>{
         onSnapshot(collection(db,userID), (snapshot) => {
@@ -352,9 +354,9 @@ export default function Account(){
                 {dataRender}
             </div>
 
-            {newAccountModalVis && <ModalAddPassword closeModal={()=>setNewAccountModalVis(false)} submitData={()=>handleSubmitAccountDetails()} showToast={showToast} context={theme}/>}
+            {newAccountModalVis && <ModalAddPassword closeModal={()=>setNewAccountModalVis(false)} submitData={()=>handleSubmitAccountDetails()} showToast={showToast} context={theme} userData={userData}/>}
 
-            {editModalVis && <ModalEditDetails closeModal={()=>setEditModalVis(false)} submitData={()=>handleSubmitEdits(editItemDetails)} details={editItemDetails} showToast={showToast} context={theme}/>}
+            {editModalVis && <ModalEditDetails closeModal={()=>setEditModalVis(false)} submitData={()=>handleSubmitEdits(editItemDetails)} details={editItemDetails} showToast={showToast} context={theme} userData={userData}/>}
             <Toast toastList={toastList} context={theme}/>
         </main>
     )

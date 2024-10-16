@@ -19,6 +19,7 @@
     'heading heading'
     'purposelabel purposelabel'
     'purposeinput purposeinput'
+    'purposeerror purposeerror'
     'loginlabel logainlabal'
     'logininput logininput'
     'passlabel passlabel'
@@ -53,6 +54,12 @@
 
 #account-purpose{
     grid-area: purposeinput;
+}
+
+.modal__error_name{
+    grid-area: purposeerror;
+    margin-top: 0.75em;
+    color: var(--dark-mode-red);
 }
 
 .modal__label_login{
@@ -107,6 +114,11 @@
     margin-left: 0.25em;
     background-color: var(--dark-mode-btn);
     grid-area: addbtn;
+}
+
+.modal__btn_add:disabled{
+    background-color: darkgrey;
+    cursor: not-allowed;
 }
 
 .modal__btn_cancel{
