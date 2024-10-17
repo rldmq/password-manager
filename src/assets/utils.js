@@ -1,17 +1,17 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
+import { initializeApp } from 'firebase/app';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyBR5mOctVTJXh5yK24jZc4yEj97mxRKDKc",
-  authDomain: "password-manager-4e071.firebaseapp.com",
-  projectId: "password-manager-4e071",
-  storageBucket: "password-manager-4e071.appspot.com",
-//   messagingSenderId: "714651573878",
-//   appId: "1:714651573878:web:bd7fd462e86e5b7fda0957"
-  databaseURL: "https://password-manager-4e071-default-rtdb.firebaseio.com/"
+  apiKey: 'AIzaSyBR5mOctVTJXh5yK24jZc4yEj97mxRKDKc',
+  authDomain: 'password-manager-4e071.firebaseapp.com',
+  projectId: 'password-manager-4e071',
+  storageBucket: 'password-manager-4e071.appspot.com',
+//   messagingSenderId: '714651573878',
+//   appId: '1:714651573878:web:bd7fd462e86e5b7fda0957'
+  databaseURL: 'https://password-manager-4e071-default-rtdb.firebaseio.com/'
 };
 
 // Initialize Firebase
@@ -26,8 +26,9 @@ const app = initializeApp(firebaseConfig);
  */
 
 import React from 'react'
-import { getAuth, onAuthStateChanged, signOut } from "firebase/auth"
+import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth'
 import { redirect, useNavigate } from 'react-router-dom'
+import { getFirestore } from 'firebase/firestore'
 
 const auth = getAuth(app)
 
@@ -94,7 +95,6 @@ export function autoLogout(){
 
 }
 
-
 export function generateId(){
   // Make sure that ID starts with a string
   let id = 'i'
@@ -103,5 +103,53 @@ export function generateId(){
   }
   return id
 }
+
+// export async function handleDataUpdateAction(request){
+//   const userID = auth.currentUser.uid
+
+//   const db = getFirestore(app)
+//   const dbRef = collection(db, userID)
+
+//   const formData = await request.formData()
+
+//   const purpose = formData.get('account-purpose')
+//   const login = formData.get('login')
+//   const password = formData.get('password')
+
+//   if(formData.get('edit') === 'on'){
+//     try{
+//           await updateDoc(doc(dbRef,formData.get('docID')),{
+//               f: purpose,
+//               k: password,
+//               l: login,
+//               dateModified: serverTimestamp(),
+//           })
+
+//           return 'success-edit'
+//           // return await Promise.reject(new Error('fail'))
+//       }catch(err){
+//           console.log(err)
+//           return 'error'
+//       }
+//   }else{
+//       try{
+//           await setDoc((doc(dbRef)),{
+//               f: purpose,
+//               id: generateId(),
+//               k: password,
+//               l: login,
+//               uid: userID,
+//               dateCreated: serverTimestamp(),
+//               dateModified: serverTimestamp(),
+//           })
+//           return 'success-add'
+//       }catch(err){
+//           console.log(err)
+//           return 'error'
+//       }
+
+//   }
+
+// }
 
 export { firebaseConfig, app, auth }

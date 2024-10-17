@@ -1,6 +1,6 @@
 import React from 'react'
-import { Outlet, Link, useLoaderData, useActionData, useOutletContext, useSearchParams } from 'react-router-dom'
-import { getFirestore, collection, doc, setDoc, onSnapshot, serverTimestamp, deleteDoc, updateDoc, where } from 'firebase/firestore'
+import { Outlet, Link, useLoaderData, useActionData, useOutletContext, redirect } from 'react-router-dom'
+import { getFirestore, collection, doc, setDoc, onSnapshot, serverTimestamp, deleteDoc, updateDoc } from 'firebase/firestore'
 import { app, auth, authRequired, autoLogout, generateId } from '../../assets/utils'
 
 import ModalAddPassword from '../../components/ModalAddPassword'
@@ -33,6 +33,8 @@ export async function action({ request }){
     const login = formData.get('login')
     const password = formData.get('password')
 
+    const path = new URL(formData.get('url')).hash.slice(1)
+
     if(formData.get('edit') === 'on'){
         try{
             await updateDoc(doc(dbRef,formData.get('docID')),{
@@ -41,13 +43,15 @@ export async function action({ request }){
                 l: login,
                 dateModified: serverTimestamp(),
             })
-            return 'success'
+
+            // return redirect(path)
+            // return redirect(`${path}?u=${generateId()}`)
+            return 'success-edit'
             // return await Promise.reject(new Error('fail'))
         }catch(err){
             console.log(err)
             return 'error'
         }
-
     }else{
         try{
             await setDoc((doc(dbRef)),{
@@ -59,15 +63,13 @@ export async function action({ request }){
                 dateCreated: serverTimestamp(),
                 dateModified: serverTimestamp(),
             })
-            return 'success'
+            return 'success-add'
         }catch(err){
             console.log(err)
             return 'error'
         }
 
     }
-
-    return null
 }
 
 export default function Account(){
@@ -76,8 +78,6 @@ export default function Account(){
 
     const theme = useOutletContext()
 
-    
-
     const [searchTerm, setSearchTerm] = React.useState(null)
 
     const [toastList, setToastList] = React.useState([])
@@ -85,7 +85,7 @@ export default function Account(){
     const path = useLoaderData().split('/')[2]
 
     const action = useActionData()
-    
+
     const [userData, setUserData] = React.useState([])
 
     const filteredData = searchTerm?.trim() ? userData.filter((e) => {
@@ -203,6 +203,23 @@ export default function Account(){
         })
     },[])
 
+    React.useEffect(()=>{
+        // if(action?.contains('u=')){
+        //     showToast('Account updated!', 'success')
+        // }
+        // const actionUrl = window.location.href
+        // console.log(actionUrl, "ran")
+        if(action === 'success-edit'){
+            showToast('Account updated!', 'success')
+        }
+        if(action === 'success-add'){
+            showToast('Account added!', 'success')
+        }
+        if(action === 'error'){
+            showToast('Error, please try again.', 'error')
+        }
+    },[action])
+
     function setActiveItem(id){
 
         const hideItemEls = document.querySelectorAll('.item__btn_hide')
@@ -236,15 +253,12 @@ export default function Account(){
     }
 
     function handleSubmitAccountDetails(){
+        const activeEl = document.querySelector('.account__item_active')
+        activeEl.classList.remove('account__item_active')
         // Delay to let action grab form data
         setTimeout(()=>{
             setNewAccountModalVis(false)
-            if(action === 'success'){
-                showToast('Account added!', 'success')
-            }
-            if(action === 'error'){
-                showToast('Error, please try again.', 'error')
-            }
+            removeActiveItem(activeEl.getAttribute('id'))
         }, 1)
     }
 
@@ -259,15 +273,12 @@ export default function Account(){
     }
 
     function handleSubmitEdits(){
+        const activeEl = document.querySelector('.account__item_active')
+        activeEl.classList.remove('account__item_active')
         // Delay to let action grab form data
         setTimeout(()=>{
             setEditModalVis(false)
-            if(action === 'success'){
-                showToast('Account updated!', 'success')
-            }
-            if(action === 'error'){
-                showToast('Error, please try again.', 'error')
-            }
+            removeActiveItem(activeEl.getAttribute('id'))
         }, 1)
     }
 

@@ -86,6 +86,7 @@ export default function ModalAddPassword({ closeModal, submitData, userData}){
                 <button onClick={closeModal} className='modal__btn modal__btn_cancel'>Cancel</button>
 
                 <input type='checkbox' name='edit' readOnly style={{visibility: 'hidden', display: 'none'}}/>
+                <input type='text' name='url' defaultValue={window.location.href} readOnly style={{visibility: 'hidden', display: 'none'}}/>
             </Form>
         </div>
     )

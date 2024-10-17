@@ -2,7 +2,7 @@ import React from 'react'
 import { Form, useOutletContext } from 'react-router-dom'
 import SecretToggleButton from './SecretToggleButton'
 
-export default function ModalEditDetails({submitData, closeModal, details, userData }){
+export default function ModalEditDetails({ submitData, closeModal, details, userData }){
 
     const theme = useOutletContext()
 
@@ -105,11 +105,14 @@ export default function ModalEditDetails({submitData, closeModal, details, userD
 
                 <button onClick={submitData} className='modal__btn modal__btn_add' 
                 disabled={userInputsError.some(e => e === true) || sameNameError}
+                type='submit'
                 >Submit</button>
                 <button onClick={closeModal} className='modal__btn modal__btn_cancel'>Cancel</button>
 
                 <input type='checkbox' name='edit' checked readOnly style={{visibility: 'hidden', display: 'none'}}/>
-                <input type='text' name='docID' value={details.id} readOnly style={{visibility: 'hidden', display: 'none'}}/>
+                <input type='text' name='docID' value={details.id} readOnly style={{visibility: 'hidden', display: 'none'}}
+                />
+                <input type='text' name='url' defaultValue={window.location.href} readOnly style={{visibility: 'hidden', display: 'none'}}/>
             </Form>
 
         </div>
