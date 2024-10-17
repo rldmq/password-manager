@@ -29,8 +29,10 @@ export async function action({ request }){
         return redirect(pathname)
     }catch(err){
         count++
-        if(err.code === 'auth/invalid-email'){
+        if(err.code === 'auth/invalid-email' || err.code === 'auth/invalid-credential'){
             return `not found ${count}`
+        }else if(err.code === 'auth/too-many-requests'){
+            return `limit reached ${count}`
         }else{
             return `unknown ${count}`
         }
@@ -73,6 +75,8 @@ export default function Login(){
     React.useEffect(()=>{
         if(error?.includes('not found')){
             setLoginError('Email/password combination not found.')
+        }else if(error?.includes('limit reached')){
+            setLoginError('Firebase authentication limit reached. Please try again later.')
         }else if(error?.includes('unknown')){
             setLoginError('Unknown error. Please refresh the page.')
         }
@@ -83,7 +87,7 @@ export default function Login(){
         document.querySelector('.form__error')?.classList.remove('fade-out')
 
         clearLoginErrorVis = setTimeout(()=>{
-            document.querySelector('.form__error').classList.add('fade-out')
+            document.querySelector('.form__error')?.classList.add('fade-out')
         },2000)
 
         clearLoginError = setTimeout(()=>{setLoginError(null)},3500)
