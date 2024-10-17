@@ -81,12 +81,17 @@
     display: flex;
 }
 
+.modal__password_container:has(input:focus){
+    outline: var(--default-outline-style);
+}
+
 #password{
     flex-grow: 2;
 }
 
 #password:focus{
     outline: none;
+
 }
 
 .modal__input{
