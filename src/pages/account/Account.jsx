@@ -341,7 +341,8 @@ export default function Account(){
                         </div>
                     </div>
                     <div className='account__sort'>
-                        <label htmlFor='sort-data'>Sort by: </label>
+                        <label
+                        htmlFor='sort-data'>Sort by: </label>
                         <select name='sort-data' id='sort-data' defaultValue='name'
                         onChange={(e)=>setSortBy(e.target.value)}>
                             <option value='date-created'>Date Created</option>

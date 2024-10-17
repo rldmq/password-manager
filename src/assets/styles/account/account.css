@@ -101,6 +101,7 @@
     padding-right: 1em;
     margin-right: 1em;
     background-color: var(--dark-mode-primary-background);
+    flex-grow: 1;
 }
 
 .sort-btn-symbol{
