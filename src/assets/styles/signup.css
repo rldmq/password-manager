@@ -189,6 +189,11 @@
     grid-area: pass-confirm-err;
 }
 
+.signup__password_container:has(input:focus),
+.signup__passwordconfirm_container:has(input:focus){
+    outline: var(--default-outline-style);
+}
+
 .signup__password_error,
 .signup__passwordconfirm_error{
     border: 2px solid red;
