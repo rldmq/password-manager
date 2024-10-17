@@ -8,7 +8,9 @@ import SecretToggleButton from '../components/SecretToggleButton'
 // when wanting to go to the same url (eg: user tries to go to a nested route that requires auth, use redirect with new URL in loader - use URL .pathname)
 // in the action is where we actually redirect to the desired path upon successful login using the request
 
-
+let count = 0
+let clearLoginError
+let clearLoginErrorVis
 
 export async function action({ request }){
 
@@ -26,7 +28,12 @@ export async function action({ request }){
 
         return redirect(pathname)
     }catch(err){
-        return 'Email/password combination not found.'
+        count++
+        if(err.code === 'auth/invalid-email'){
+            return `not found ${count}`
+        }else{
+            return `unknown ${count}`
+        }
     }
 }
 
@@ -55,11 +62,34 @@ export default function Login(){
 
     const error = useActionData()
 
+    const [loginError, setLoginError] = React.useState(null)
+
     React.useEffect(()=>{
         setTimeout(()=>{
             emailInput.current.focus()
         },500)
     },[])
+
+    React.useEffect(()=>{
+        if(error?.includes('not found')){
+            setLoginError('Email/password combination not found.')
+        }else if(error?.includes('unknown')){
+            setLoginError('Unknown error. Please refresh the page.')
+        }
+
+        clearTimeout(clearLoginError)
+        clearTimeout(clearLoginErrorVis)
+
+        document.querySelector('.form__error')?.classList.remove('fade-out')
+
+        clearLoginErrorVis = setTimeout(()=>{
+            document.querySelector('.form__error').classList.add('fade-out')
+        },2000)
+
+        clearLoginError = setTimeout(()=>{setLoginError(null)},3500)
+
+    },[error])
+
 
     return (
         <main className='main main__login'>
@@ -69,7 +99,7 @@ export default function Login(){
 
                 {message && <span className='form__message'>{message}</span>}
 
-                {error && <span className='form__error'>{error}</span>}
+                {loginError && <span className='form__error'>{loginError}</span>}
 
                 <label
                     htmlFor='email'
