@@ -30,6 +30,11 @@
     margin-top: 1em;
 }
 
+.form__error.fade-out{
+    opacity: 0;
+    transition: opacity 2s;
+}
+
 .form__label{
     align-self: start;
     margin-top: 1em;
