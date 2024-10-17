@@ -5,8 +5,10 @@ import { sendPasswordResetEmail } from 'firebase/auth'
 
 import NotificationSlideUp from '../components/NotificationSlideUp'
 
-// This is here so that if the user clicks the button again, it allows another notification to appear
+// The count helps to refresh the value of the action data
 let count = 0
+
+let clearNotFoundError
 
 export async function action({ request }){
 
@@ -16,14 +18,16 @@ export async function action({ request }){
 
     try{
         await sendPasswordResetEmail(auth,email)
-        count += 1
+        count++
         const val = `success-${count}`
         return val
     }catch(err){
-        if(err.code === 'auth/invalid-email'){
-            return 'not-found'
+        if(err.code === 'auth/invalid-email' || err.code === 'auth/user-not-found'){
+            count++
+            return `not-found-${count}`
         }else{
-            return 'unknown'
+            count++
+            return `unknown-${count}`
         }
     }
 }
@@ -44,12 +48,16 @@ export default function ResetPassword(){
 
     const [slideNotificationVis, setSlideNotificationVis] = React.useState(false)
 
+    const [inlineError, setInlineError] = React.useState(null)
+
     const error = useActionData()
 
     React.useEffect(()=>{
         emailInput.current.focus()
 
         if(error){
+            setInlineError(null)
+
             if(error.includes('success')){
                 setSlideNotificationVis(true)
                 document.getElementById('email').value = ''
@@ -57,10 +65,18 @@ export default function ResetPassword(){
                     setSlideNotificationVis(false)
                 },3000)
             }else if(error.includes('not-found')){
-                
+                clearTimeout(clearNotFoundError)
+                clearNotFoundError = setTimeout(()=>{
+                    setInlineError(<p className='reset__error'>The email provided was not found.<br /><Link to='/signup' className='reset__error_link'>Need an account? Click here to sign up!</Link></p>)
+                },100)
+            }else if(error.includes('unknown')){
+                clearTimeout(clearNotFoundError)
+                clearNotFoundError = setTimeout(()=>{
+                    setInlineError(<p className='reset__error'>Unknown error. Please refresh the page and try again or <Link to='/contact' className='reset__error_link'>contact our support team by clicking here</Link></p>)
+                },100)
             }
         }
-    },[error])
+    }, [error])
 
     return (
         <main className='main main__reset'>
@@ -68,9 +84,7 @@ export default function ResetPassword(){
             <Form method='post' className='reset__form'>
                 <label htmlFor='email'>Enter your email below and we'll send you a secure link to reset your password.</label>
                 <input type='email' id='email' name='email' placeholder='firstname.lastname@email.com' ref={emailInput}/>
-                {error === 'not-found' ? 
-                <p className='reset__error'>The email provided was not found.<br /><Link to='/signup' className='reset__error_link'>Need an account? Click here to sign up!</Link></p> 
-                : error === 'unknown' ? <p className='reset__error'>Unknown error. Please refresh the page and try again or <br /><Link to='/contact' className='reset__error_link'>contact our support team by clicking here</Link></p> : null}
+                {inlineError}
                 <button className='reset__btn_submit'>Submit</button>
             </Form>
             {slideNotificationVis && <NotificationSlideUp type={error} message={'Success! Email sent!'} context={theme}/>}
