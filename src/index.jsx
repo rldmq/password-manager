@@ -49,7 +49,10 @@ function App(){
                     loader={accountLoader}
                     action={accountAction}
                     >
-                        <Route path=':id' element={<AccountDetails />} loader={accountDetailsLoader}/>
+                        <Route path=':id'
+                        element={<AccountDetails />}
+                        loader={accountDetailsLoader}
+                        />
                     </Route>
                     <Route path='*' element={<NotFound />} />
                 </Route>
