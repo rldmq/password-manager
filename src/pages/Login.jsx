@@ -3,6 +3,7 @@ import { Link, Form, useActionData, useLoaderData, useNavigation, redirect, useO
 
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '../assets/utils'
+import SecretToggleButton from '../components/SecretToggleButton'
 
 // when wanting to go to the same url (eg: user tries to go to a nested route that requires auth, use redirect with new URL in loader - use URL .pathname)
 // in the action is where we actually redirect to the desired path upon successful login using the request
@@ -93,13 +94,16 @@ export default function Login(){
                     Password:
                 </label>
 
-                <input
-                type='password'
-                id='password'
-                name='password'
-                className='form__input'
-                placeholder='Password'
-                />
+                <div className='form__password_container'>
+                    <input
+                    type='password'
+                    id='password'
+                    name='password'
+                    className='form__input'
+                    placeholder='Password'
+                    />
+                    <SecretToggleButton inputId={'password'}/>
+                </div>
 
                 <Link
                     to='/signup'
