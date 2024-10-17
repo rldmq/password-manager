@@ -35,6 +35,17 @@
     margin-top: 1em;
 }
 
+.form__password_container{
+    display: flex;
+    width: 100%;
+    background: white;
+    border-radius: 0.5em;
+}
+
+.form__password_container:has(input:focus){
+    outline: var(--default-outline-style);
+}
+
 .form__input{
     color: black;
     padding: 0.5em;
