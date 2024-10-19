@@ -25,7 +25,7 @@ export async function action({ request }){
     const userID = auth.currentUser.uid
 
     const db = getFirestore(app)
-    const dbRef = collection(db, userID)
+    // const dbRef = doc(db, 'userData', userID)
 
     const formData = await request.formData()
 
@@ -37,7 +37,7 @@ export async function action({ request }){
 
     if(formData.get('edit') === 'on'){
         try{
-            await updateDoc(doc(dbRef,formData.get('docID')),{
+            await updateDoc(doc(collection(db, 'userData', userID, 'saved'), formData.get('docID')),{
                 f: purpose,
                 k: password,
                 l: login,
@@ -54,7 +54,7 @@ export async function action({ request }){
         }
     }else{
         try{
-            await setDoc((doc(dbRef)),{
+            await setDoc(doc(collection(db, 'userData', userID, 'saved')),{
                 f: purpose,
                 id: generateId(),
                 k: password,
@@ -195,7 +195,7 @@ export default function Account(){
     },[theme])
 
     React.useEffect(()=>{
-        onSnapshot(collection(db,userID), (snapshot) => {
+        onSnapshot(collection(db, 'userData', userID, 'saved'), (snapshot) => {
             setUserData([])
             snapshot.forEach(doc =>{
                 setUserData(prev => [...prev, {...doc.data(), docID : doc.id}])
@@ -254,17 +254,19 @@ export default function Account(){
 
     function handleSubmitAccountDetails(){
         const activeEl = document.querySelector('.account__item_active')
-        activeEl.classList.remove('account__item_active')
+        activeEl?.classList.remove('account__item_active')
         // Delay to let action grab form data
         setTimeout(()=>{
             setNewAccountModalVis(false)
-            removeActiveItem(activeEl.getAttribute('id'))
+            if(activeEl){
+                removeActiveItem(activeEl.getAttribute('id'))
+            }
         }, 1)
     }
 
     async function handleDeleteItem(id){
         try{
-            await deleteDoc(doc(db,userID, id))
+            await deleteDoc(doc(collection(db, 'userData', userID, 'saved'), id))
             showToast('Account deleted!', 'success')
         }catch(err){
             console.log(err)
@@ -274,11 +276,13 @@ export default function Account(){
 
     function handleSubmitEdits(){
         const activeEl = document.querySelector('.account__item_active')
-        activeEl.classList.remove('account__item_active')
+        activeEl?.classList.remove('account__item_active')
         // Delay to let action grab form data
         setTimeout(()=>{
             setEditModalVis(false)
-            removeActiveItem(activeEl.getAttribute('id'))
+            if(activeEl){
+                removeActiveItem(activeEl.getAttribute('id'))
+            }
         }, 1)
     }
 

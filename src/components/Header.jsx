@@ -1,5 +1,5 @@
 import React from 'react'
-import { NavLink, redirect, Link } from 'react-router-dom'
+import { NavLink, redirect, Link, useNavigate } from 'react-router-dom'
 
 import { onAuthStateChanged, signOut } from "firebase/auth"
 import { auth } from '../assets/utils'
@@ -25,6 +25,8 @@ export default function Header({ theme }){
         color : 'var(--dark-mode-green)',
         fontWeight : '600'
     }
+
+    const navigate = useNavigate()
 
     React.useEffect(()=>{
         onAuthStateChanged(auth, (user) =>{
@@ -53,8 +55,7 @@ export default function Header({ theme }){
 
     function handleSignOut(){
         try{
-            signOut(auth)
-            return redirect('/login')
+            signOut(auth).then(()=>navigate('/login'))
         }catch(err){
             console.error(err)
         }

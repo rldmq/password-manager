@@ -7,6 +7,7 @@ import './assets/styles/home.css'
 import './assets/styles/about.css'
 import './assets/styles/login.css'
 import './assets/styles/signup.css'
+import './assets/styles/contact-us.css'
 import './assets/styles/reset-password.css'
 import './assets/styles/account/account.css'
 import './assets/styles/account/modal-add-account.css'
@@ -19,6 +20,7 @@ import About from './pages/About'
 import Login, { action as loginAction, loader as loginLoader } from './pages/Login'
 import Signup from './pages/Signup'
 import ResetPassword, { action as resetPasswordAction } from './pages/ResetPassword'
+import ContactUs, { action as contactUsAction } from './pages/ContactUs'
 import NotFound from './pages/NotFound'
 
 import Account, { loader as accountLoader, action as accountAction } from './pages/account/Account'
@@ -54,6 +56,7 @@ function App(){
                         loader={accountDetailsLoader}
                         />
                     </Route>
+                    <Route path='contact' element={<ContactUs />} action={contactUsAction}/>
                     <Route path='*' element={<NotFound />} />
                 </Route>
     ))
