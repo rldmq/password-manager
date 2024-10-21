@@ -11,16 +11,25 @@
     gap: 0.5em;
 }
 
-.toast__success{
-    background: black;
+.toast{
+    background-color: black;
     padding: 0.25em 0.5em;
     border-radius: 2em;
+    box-shadow: 0 0 5px black;
+}
+
+.toast__success{
     border: 2px solid var(--dark-mode-green);
 }
 
 .toast__error{
-    background: black;
-    padding: 0.25em 0.5em;
-    border-radius: 2em;
     border: 2px solid var(--dark-mode-red);
+}
+
+.toast.light{
+    background-color: var(--light-mode-secondary-background);
+}
+
+.toast .light{
+    color: black;
 }
