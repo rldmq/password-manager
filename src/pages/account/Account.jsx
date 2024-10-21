@@ -3,6 +3,7 @@ import { Outlet, Link, useLoaderData, useActionData, useOutletContext, redirect 
 import { getFirestore, collection, doc, setDoc, onSnapshot, serverTimestamp, deleteDoc, updateDoc } from 'firebase/firestore'
 import { app, auth, authRequired, autoLogout, generateId, showToast } from '../../assets/utils'
 
+import Sidebar from '../../components/Sidebar'
 import ModalAddPassword from '../../components/ModalAddPassword'
 import ModalEditDetails from '../../components/ModalEditDetails'
 import Toast from '../../toast/Toast'
@@ -319,6 +320,7 @@ export default function Account(){
     }
 
     return(
+        <>
         <main className='main main__account'>
             <p className='account__greeting'>{`Good ${greetingTime}${displayName ? `, ${displayName}!` : '!'}`}</p>
             <h1 className='account__heading'>Saved Passwords</h1>
@@ -370,5 +372,7 @@ export default function Account(){
             {editModalVis && <ModalEditDetails closeModal={()=>setEditModalVis(false)} submitData={()=>handleSubmitEdits(editItemDetails)} details={editItemDetails} context={theme} userData={userData}/>}
             <Toast toastList={toastList} context={theme}/>
         </main>
+        <Sidebar />
+        </>
     )
 }

@@ -36,6 +36,9 @@
     --light-mode-green: #1eb45f;
 
     --default-outline-style: medium auto black;
+
+    --sidebar-background: rgb(15, 15, 25);
+    --sidebar-light-background: #aac9bb;
 }
 
 #root{
