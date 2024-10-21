@@ -1,9 +1,9 @@
 import React from 'react'
 import { Form, useActionData, Link, useOutletContext } from 'react-router-dom'
-import { auth } from '../assets/utils'
+import { auth, showToast } from '../assets/utils'
 import { sendPasswordResetEmail } from 'firebase/auth'
 
-import NotificationSlideUp from '../components/NotificationSlideUp'
+import Toast from '../toast/Toast'
 
 // The count helps to refresh the value of the action data
 let count = 0
@@ -21,13 +21,16 @@ export async function action({ request }){
         count++
         const val = `success-${count}`
         return val
+        // return 'success'
     }catch(err){
         if(err.code === 'auth/invalid-email' || err.code === 'auth/user-not-found'){
             count++
             return `not-found-${count}`
+            // return 'not-found'
         }else{
             count++
             return `unknown-${count}`
+            // return 'unknown'
         }
     }
 }
@@ -46,9 +49,9 @@ export default function ResetPassword(){
 
     const emailInput = React.useRef()
 
-    const [slideNotificationVis, setSlideNotificationVis] = React.useState(false)
-
     const [inlineError, setInlineError] = React.useState(null)
+
+    const [toastList, setToastList] = React.useState([])
 
     const error = useActionData()
 
@@ -57,13 +60,10 @@ export default function ResetPassword(){
 
         if(error){
             setInlineError(null)
-
+    
             if(error.includes('success')){
-                setSlideNotificationVis(true)
+                showToast('Success! Email sent!', 'success', setToastList)
                 document.getElementById('email').value = ''
-                setTimeout(()=>{
-                    setSlideNotificationVis(false)
-                },3000)
             }else if(error.includes('not-found')){
                 clearTimeout(clearNotFoundError)
                 clearNotFoundError = setTimeout(()=>{
@@ -87,7 +87,7 @@ export default function ResetPassword(){
                 {inlineError}
                 <button className='reset__btn_submit'>Submit</button>
             </Form>
-            {slideNotificationVis && <NotificationSlideUp type={error} message={'Success! Email sent!'} context={theme}/>}
+            <Toast toastList={toastList} context={theme} />
         </main>
     )
 }
