@@ -203,6 +203,20 @@ export default function Account(){
         })
     },[])
 
+    // Remove active element when user clicks on 'Account' link
+    React.useEffect(()=>{
+        // Delay is needed for the browser to recognize updated path
+        setTimeout(()=>{
+            const hashLength = new URL(window.location.href).hash.split('/').length
+            if(hashLength === 2){
+                const items = document.querySelectorAll('.account__item')
+                items.forEach(e => {
+                        removeActiveItem(e.getAttribute('id'))
+                })
+            }
+        }, 1)
+    })
+
     React.useEffect(()=>{
         // if(action?.contains('u=')){
         //     showToast('Account updated!', 'success')
