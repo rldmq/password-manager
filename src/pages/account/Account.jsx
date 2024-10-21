@@ -1,7 +1,7 @@
 import React from 'react'
 import { Outlet, Link, useLoaderData, useActionData, useOutletContext, redirect } from 'react-router-dom'
 import { getFirestore, collection, doc, setDoc, onSnapshot, serverTimestamp, deleteDoc, updateDoc } from 'firebase/firestore'
-import { app, auth, authRequired, autoLogout, generateId } from '../../assets/utils'
+import { app, auth, authRequired, autoLogout, generateId, showToast } from '../../assets/utils'
 
 import ModalAddPassword from '../../components/ModalAddPassword'
 import ModalEditDetails from '../../components/ModalEditDetails'
@@ -210,13 +210,13 @@ export default function Account(){
         // const actionUrl = window.location.href
         // console.log(actionUrl, "ran")
         if(action === 'success-edit'){
-            showToast('Account updated!', 'success')
+            showToast('Account updated!', 'success', setToastList)
         }
         if(action === 'success-add'){
-            showToast('Account added!', 'success')
+            showToast('Account added!', 'success', setToastList)
         }
         if(action === 'error'){
-            showToast('Error, please try again.', 'error')
+            showToast('Error, please try again.', 'error', setToastList)
         }
     },[action])
 
@@ -267,10 +267,10 @@ export default function Account(){
     async function handleDeleteItem(id){
         try{
             await deleteDoc(doc(collection(db, 'userData', userID, 'saved'), id))
-            showToast('Account deleted!', 'success')
+            showToast('Account deleted!', 'success', setToastList)
         }catch(err){
             console.log(err)
-            showToast('Error, please try again.', 'error')
+            showToast('Error, please try again.', 'error', setToastList)
         }
     }
 
@@ -284,25 +284,6 @@ export default function Account(){
                 removeActiveItem(activeEl.getAttribute('id'))
             }
         }, 1)
-    }
-
-    function showToast(message, type, copyData){
-        if(message.includes('clipboard')){
-            navigator.clipboard.writeText(copyData)
-        }
-        const toastProperties = {
-            id: Date.now(),
-            body: message,
-            type: type,
-        }
-        setToastList(prev => [...prev, toastProperties])
-        setTimeout(()=>{
-            setToastList(prev => {
-                const list = [...prev]
-                list.shift()
-                return list
-            })
-        },2000)
     }
 
     function handleSearch(){
@@ -370,9 +351,9 @@ export default function Account(){
                 {dataRender}
             </div>
 
-            {newAccountModalVis && <ModalAddPassword closeModal={()=>setNewAccountModalVis(false)} submitData={()=>handleSubmitAccountDetails()} showToast={showToast} context={theme} userData={userData}/>}
+            {newAccountModalVis && <ModalAddPassword closeModal={()=>setNewAccountModalVis(false)} submitData={()=>handleSubmitAccountDetails()} context={theme} userData={userData}/>}
 
-            {editModalVis && <ModalEditDetails closeModal={()=>setEditModalVis(false)} submitData={()=>handleSubmitEdits(editItemDetails)} details={editItemDetails} showToast={showToast} context={theme} userData={userData}/>}
+            {editModalVis && <ModalEditDetails closeModal={()=>setEditModalVis(false)} submitData={()=>handleSubmitEdits(editItemDetails)} details={editItemDetails} context={theme} userData={userData}/>}
             <Toast toastList={toastList} context={theme}/>
         </main>
     )

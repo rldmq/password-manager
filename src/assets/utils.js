@@ -104,6 +104,25 @@ export function generateId(){
   return id
 }
 
+export function showToast(message, type, setterFn,copyData){
+  if(message.includes('clipboard')){
+    navigator.clipboard.writeText(copyData)
+  }
+  const toastProperties = {
+      id: Date.now(),
+      body: message,
+      type: type,
+  }
+  setterFn(prev => [...prev, toastProperties])
+  setTimeout(()=>{
+      setterFn(prev => {
+          const list = [...prev]
+          list.shift()
+          return list
+      })
+  },2000)
+}
+
 // export async function handleDataUpdateAction(request){
 //   const userID = auth.currentUser.uid
 
