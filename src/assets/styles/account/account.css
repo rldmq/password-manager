@@ -197,6 +197,58 @@
 }
 
 /* 
+    SIDEBAR
+*/
+.sidebar{
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-color: var(--sidebar-background);
+    width: 200px;
+    padding: 4em 0 0 2em;;
+    gap: 1em;
+}
+
+.sidebar__link{
+    text-decoration: none;
+    font-size: 1.25rem;
+    display: flex;
+    gap: 0.75em;
+    align-items: center;
+}
+
+.link__symbol{
+    font-size: 1.25rem;
+}
+
+.sidebar__link_contact{
+    position: absolute;
+    bottom: 2em;
+    font-size: 1rem;
+}
+
+.sidebar__toggle{
+    background-color: var(--sidebar-background);
+    border: none;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto 0;
+    height: min-content;
+    width: min-content;
+    right: -1em;
+    cursor: pointer;
+    border-radius: 25%;
+    padding: 0 0.1em;
+}
+
+.sidebar__symbol{
+    fill: white;
+    vertical-align: middle;
+}
+
+/* 
     LIGHT MODE
 */
 .account__item.light{
@@ -217,6 +269,19 @@
 }
 .sort-btn.active.light .sort-btn-symbol{
     fill: var(--light-mode-green);
+}
+
+.sidebar.light,
+.sidebar__toggle.light{
+    background-color: var(--sidebar-light-background);
+}
+
+.sidebar__link.light{
+    color: var(--light-mode-text);
+}
+
+.sidebar__symbol.light{
+    fill: black;
 }
 
 @media screen and (min-width: 1000px){
