@@ -130,7 +130,7 @@ export default function Account(){
                 <div>
                     <p>{item.f}</p>
 
-                    <Outlet context={{docID: item.docID, data: item, showToast: showToast, theme: theme}}/>
+                    <Outlet context={{docID: item.docID, data: item, setToastList: setToastList, theme: theme}}/>
                 </div>
                 <div className='item__functions'>
                     <Link 

@@ -1,7 +1,7 @@
 import React from 'react'
 import { useOutletContext, useLoaderData } from 'react-router-dom'
 
-import { authRequired } from '../../assets/utils'
+import { authRequired, showToast } from '../../assets/utils'
 
 import { FaRegCopy } from 'react-icons/fa'
 
@@ -18,7 +18,7 @@ export default function AccountDetails(){
 
     const path = useLoaderData()
 
-    const {docID, data, showToast, theme} = useOutletContext()
+    const {docID, data, setToastList, theme} = useOutletContext()
 
     const [displayMode, setDisplayMode] = React.useState('mobile')
 
@@ -47,13 +47,13 @@ export default function AccountDetails(){
             {docID === path ? 
             <div className="account__details">
                 <p className='details__container'>Login:{displayMode === 'mobile' ? <br /> : ''}<button
-                onClick={()=>showToast('Copied to clipboard!', 'success', data.l)}
+                onClick={()=>showToast('Copied to clipboard!', 'success', setToastList,data.l)}
                 className='details__l'
                 style={displayMode === 'mobile' ? {marginLeft: '0', marginTop: '0.5em'} : null}
                 >{`${data.l}`} <FaRegCopy className='details__symbol'/></button></p>
                 <p className='details__container'>Password:
                 {displayMode === 'mobile' ? <br /> : ''}<button
-                onClick={()=>showToast('Copied to clipboard!', 'success', data.k)}
+                onClick={()=>showToast('Copied to clipboard!', 'success', setToastList,data.k)}
                 className='details__k'
                 style={displayMode === 'mobile' ? {marginLeft: '0', marginTop: '0.5em'} : null}
                 >{`${data.k}`} <FaRegCopy className='details__symbol'/></button></p>
