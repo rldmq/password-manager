@@ -124,11 +124,11 @@ export default function Account(){
     const dataRender = sortedData?.map(item => {
         return (
             <div
-            className='account__item'
+            className={`account__item ${theme === 'light' ? 'light' : ''}`}
             id={item.id}
             key={item.id}>
                 <div>
-                    <p>{item.f}</p>
+                    <p className={`${theme === 'light' ? 'light' : ''}`}>{item.f}</p>
 
                     <Outlet context={{docID: item.docID, data: item, setToastList: setToastList, theme: theme}}/>
                 </div>

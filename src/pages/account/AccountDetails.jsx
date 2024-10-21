@@ -46,17 +46,21 @@ export default function AccountDetails(){
         <>
             {docID === path ? 
             <div className="account__details">
-                <p className='details__container'>Login:{displayMode === 'mobile' ? <br /> : ''}<button
+                <p className={`details__container ${theme === 'light' ? 'light' : ''}`}>Login:{displayMode === 'mobile' ? <br /> : ''}
+                <button
                 onClick={()=>showToast('Copied to clipboard!', 'success', setToastList,data.l)}
-                className='details__l'
+                className={`details__l ${theme === 'light' ? 'light' : ''}`}
                 style={displayMode === 'mobile' ? {marginLeft: '0', marginTop: '0.5em'} : null}
-                >{`${data.l}`} <FaRegCopy className='details__symbol'/></button></p>
-                <p className='details__container'>Password:
+                >
+                    {`${data.l}`} 
+                    <FaRegCopy className={`details__symbol ${theme === 'light' ? 'light' : ''}`}/>
+                    </button></p>
+                <p className={`details__container ${theme === 'light' ? 'light' : ''}`}>Password:
                 {displayMode === 'mobile' ? <br /> : ''}<button
                 onClick={()=>showToast('Copied to clipboard!', 'success', setToastList,data.k)}
-                className='details__k'
+                className={`details__k ${theme === 'light' ? 'light' : ''}`}
                 style={displayMode === 'mobile' ? {marginLeft: '0', marginTop: '0.5em'} : null}
-                >{`${data.k}`} <FaRegCopy className='details__symbol'/></button></p>
+                >{`${data.k}`} <FaRegCopy className={`details__symbol ${theme === 'light' ? 'light' : ''}`}/></button></p>
             </div>
             : ''}
         </>

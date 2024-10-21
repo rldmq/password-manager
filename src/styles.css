@@ -186,23 +186,6 @@ body{
 }
 
 /* 
-    NOTIFICATIONS
-*/
-.notification__slideup{
-    padding: 0.25em 0.75em;
-    border-width: 2px;
-    border-style: solid;
-    border-radius: 2em;
-    position: fixed;
-    font-weight: 600;
-    background: var(--dark-mode-secondary-background);
-    box-shadow: 0 0 10px black;
-    bottom: 7em;
-    opacity: 0;
-    animation: 0.25s ease-in-out notificationSlideUp, 2s ease-in-out 0.25s notificationFadeOut;
-}
-
-/* 
     MEDIA QUERIES
 */
 

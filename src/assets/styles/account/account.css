@@ -208,6 +208,10 @@
     background-color: var(--light-mode-primary-background);
 }
 
+.details__symbol.light{
+    fill: var(--light-mode-text);
+}
+
 #sort-data.light{
     background-color: white;
 }
