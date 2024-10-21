@@ -5,7 +5,7 @@ import { getApp } from 'firebase/app'
 import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage'
 import { getFirestore, doc, setDoc, collection, serverTimestamp } from 'firebase/firestore'
 
-import { app, generateId } from '../assets/utils'
+import { app, generateId, showToast } from '../assets/utils'
 
 import { IoMdRemoveCircleOutline } from 'react-icons/io'
 
@@ -114,10 +114,10 @@ export default function ContactUs(){
 
             setFileDisplay([])
 
-            showToast('Message sent!', 'success')
+            showToast('Message sent!', 'success', setToastList)
         }
         if(action?.includes('error')){
-            showToast('Error! Please refresh the page.', 'error')
+            showToast('Error! Please refresh the page.', 'error', setToastList)
         }
     },[action])
     
@@ -235,22 +235,6 @@ export default function ContactUs(){
         fileListEl.files = newDataTransfer.files
 
         handleFileDisplay()
-    }
-
-    function showToast(message, type){
-        const toastProperties = {
-            id: Date.now(),
-            body: message,
-            type: type,
-        }
-        setToastList(prev => [...prev, toastProperties])
-        setTimeout(()=>{
-            setToastList(prev => {
-                const list = [...prev]
-                list.shift()
-                return list
-            })
-        },2000)
     }
 
     return (
