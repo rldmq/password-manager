@@ -180,12 +180,18 @@ body{
     FOOTER
 */
 .footer{
+    display: flex;
+    justify-content: space-between;
     text-align: center;
     padding: 2em;
     background-color:var(--dark-mode-header-footer);
     /* position: absolute;
     width: 100vw;
     bottom: 0; */
+}
+
+.footer a{
+    text-decoration: none;
 }
 
 /* 
