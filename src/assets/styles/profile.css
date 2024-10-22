@@ -7,11 +7,6 @@
     margin-bottom: 3em;
 }
 
-hr{
-    margin-top: 0;
-    margin-bottom: 0;
-}
-
 .profile__section,
 .profile__form,
 .email__section,
@@ -76,6 +71,7 @@ hr{
     display: flex;
     background: white;
     border-radius: 0.5em;
+    margin-top: 0.25em;
 }
 
 .password__container:has(input:focus){
@@ -87,13 +83,94 @@ hr{
     outline: none;
 }
 
+.password__error,
+.email__error{
+    border: 2px solid red;
+    background-color: rgb(253, 203, 203);
+    border-radius: 0.5em;
+    padding: 0.5em;
+    margin-top: 0.5em;
+}
+
+.password__error *,
+.email__error *{
+    color: red;
+    font-weight: 500;
+}
+
+.password__error_str li{
+    margin-left: 1.5em;
+}
+
+.profile__container_btns,
+.email__container_btns,
+.password__container_btns{
+    display: flex;
+    flex-direction: column;
+}
 /* 
     MEDIA QUERIES
 */
 @media screen and (min-width: 1000px){
+    .main__profile{
+        margin-top: 8em;
+        display: grid;
+        grid-template-areas:
+        'profile-heading profile-heading'
+        'profile-section-name profile-section-email'
+        'profile-section-password .';
+        grid-template-columns: 1fr 1fr;
+    }
+
+    hr{
+        display: none;
+    }
+
+    .profile__section{
+        grid-area: profile-section-name;
+    }
+
+    .email__section{
+        grid-area: profile-section-email;
+    }
+
+    .password__section{
+        grid-area: profile-section-password;
+    }
+
+    .profile__container_btns,
+    .email__container_btns,
+    .password__container_btns{
+        flex-direction: row;
+        gap: 1em;
+    }
+
+    .profile__container_btns *,
+    .email__container_btns *,
+    .password__container_btns *{
+        flex-grow: 1;
+    }
 
 }
 
 /* 
     LIGHT MODE
 */
+.profile__btn{
+    color: white;
+}
+
+.profile__btn_cancel{
+    color: white;
+}
+
+.profile__btn.light:disabled{
+    background-color: lightgrey;
+    color: var(--light-mode-text);
+}
+
+.profile__form>.profile__input,
+.email__form>.profile__input,
+.password__container{
+    border: 1px solid black;
+}

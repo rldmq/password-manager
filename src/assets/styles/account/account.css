@@ -251,6 +251,11 @@
 /* 
     LIGHT MODE
 */
+.account__addnew,
+.account__addnew *{
+    color: white;
+    stroke: white;
+}
 .account__item.light{
     background-color: var(--light-mode-secondary-background);
 }

@@ -5,7 +5,7 @@ import { updateProfile, updateEmail, updatePassword, reauthenticateWithCredentia
 import Toast from '../toast/Toast'
 import SecretToggleButton from '../components/SecretToggleButton'
 
-import { auth, autoLogout, authRequired, showToast } from '../assets/utils'
+import { auth, autoLogout, authRequired, showToast, handlePasswordStrength } from '../assets/utils'
 
 export async function loader({ request }){
     await authRequired(request)
@@ -16,23 +16,70 @@ export async function loader({ request }){
 }
 
 export async function action({ request }){
-    const formData = await request.formData()
-    
-    const firstName = formData.get('profile-firstname')
-    const lastName = formData.get('profile-lastname')
-    const purpose = formData.get('purpose')
-
-    const displayName = `${firstName} ${lastName}`
-
+    // Consider redirects for email and password updates
     try{
+        const formData = await request.formData()
+        
+        const purpose = formData.get('purpose')
+        
         if(purpose === 'profile'){
-            await updateProfile(auth.currentUser, {
-                displayName: displayName,
-            })
+            const firstName = formData.get('profile-firstname')
+            const lastName = formData.get('profile-lastname')
+        
+            const displayName = `${firstName} ${lastName}`
+            try{
+                await updateProfile(auth.currentUser, {
+                    displayName: displayName,
+                })
+                return `success-${Date.now()}`
+            }catch(err){
+                return `error-${Date.now()}`
+            }
         }
+        if(purpose === 'email'){
+            const newEmail = formData.get('profile-email')
+            const newEmailConfirm = formData.get('profile-email-confirm')
+            const password = formData.get('email-password')
+            // Extra layer of email check
+            if(newEmail === newEmailConfirm){
+                try{
+                    const credential = EmailAuthProvider.credential(auth.currentUser.email, password)
+                    const result = await reauthenticateWithCredential(auth.currentUser, credential)
+                    const update = await updateEmail(auth.currentUser, newEmail)
 
-        // there should be an incorrect password return for the password related items
-
+                    return `success-${Date.now()}`
+                }catch(err){
+                    if(err.code === 'auth/wrong-password'){
+                        return `error-password-${Date.now()}`
+                    }else{
+                        return`error-${Date.now()}`
+                    }
+                }
+            }else{
+                return `error-${Date.now()}`
+            }
+        }
+        if(purpose === 'password'){
+            const password = formData.get('password-current')
+            const newPassword = formData.get('password-new')
+            const newPasswordConfirm = formData.get('password-confirm')
+            // Extra layer of password check
+            if(newPassword === newPasswordConfirm){
+                try{
+                    const credential = EmailAuthProvider.credential(auth.currentUser.email, password)
+                    const result = await reauthenticateWithCredential(auth.currentUser, credential)
+                    const update = await updatePassword(auth.currentUser, newPassword)
+                }catch(err){
+                    if(err.code === 'auth/wrong-password'){
+                        return `error-password-${Date.now()}`
+                    }else{
+                        return `error-${Date.now()}`
+                    }
+                }
+            }else{
+                return `error-${Date.now()}`
+            }
+        }
         return `success-${Date.now()}`
     }catch(err){
         return `error-${Date.now()}`
@@ -51,11 +98,22 @@ export default function Profile(){
 
     const [disabledProfileBtns, setDisabledProfileBtns] = React.useState(true)
 
-    const [disabledEmailBtns, setDisabledEmailBtns] = React.useState(true)
-
-    const [disabledPasswordBtns, setDisabledPasswordbtns] = React.useState(true)
+    const [changedEmailInput, setChangedEmailInput] = React.useState(false)
+    
+    const [disableEmailSaveBtn, setDisableEmailSaveBtn] = React.useState(true)
+    
+    const [emailMatchError, setEmailMatchError] = React.useState(false)
+    
+    const [disablePasswordSaveBtn, setDisablePasswordSaveBtn] = React.useState(true)
+    
+    const [disablePasswordCancelBtn, setDisablePasswordCancelBtn] = React.useState(true)
 
     const [toastList, setToastList] = React.useState([])
+
+    const [passwordStrengthError, setPasswordStrengthError] = React.useState(false)
+
+    const [passwordMatchError, setPasswordMatchError] = React.useState(false)
+
 
     const { displayName, email } = userInfo
     
@@ -77,25 +135,103 @@ export default function Profile(){
     React.useEffect(()=>{
         if(action){
             if(action.includes('success')){
+                // Reset profile form
                 setDisabledProfileBtns(true)
+
+                // Reset email form
+                setChangedEmailInput(false)
+
+                // Reset password form
+                setDisablePasswordCancelBtn(true)
+                setDisablePasswordSaveBtn(true)
+                document.getElementById('password-current').value = ''
+                document.getElementById('password-new').value = ''
+                document.getElementById('password-confirm').value = ''
+
+                // Show toast
                 showToast('Success! Profile updated!', 'success', setToastList)
-            }
-            if(action.includes('error')){
+            }else if(action.includes('error-password')){
+                showToast('Invalid password.', 'error', setToastList)
+            }else{
                 showToast('Error! Please refresh.', 'error', setToastList)
             }
         }
     },[action])
+
+    React.useEffect(()=>{
+        if(!emailMatchError && changedEmailInput){
+            setDisableEmailSaveBtn(false)
+        }else{
+            setDisableEmailSaveBtn(true)
+        }
+    },[emailMatchError])
+
+    React.useEffect(()=>{
+        const newPassEl = document.getElementById('password-new')?.value
+        const confirmPassEl = document.getElementById('password-confirm')?.value
+
+        if(!passwordMatchError && !passwordStrengthError && newPassEl && confirmPassEl){
+            setDisablePasswordSaveBtn(false)
+        }else{
+            setDisablePasswordSaveBtn(true)
+        }
+    },[passwordMatchError, passwordStrengthError])
 
     function handleChangedProfileInput(){
         setDisabledProfileBtns(false)
     }
 
     function handleChangedEmailInput(){
-        setDisabledEmailBtns(false)
+        setChangedEmailInput(true)
+    }
+
+    function handleNewEmailMatch(e, id){
+        let emailCheck
+        if(id === 'profile-email'){
+            emailCheck = document.getElementById('profile-email-confirm')?.value
+        }
+        if(id === 'profile-email-confirm'){
+            emailCheck = document.getElementById('profile-email')?.value
+        }
+
+        if(e.target.value === emailCheck){
+            setEmailMatchError(false)
+        }else{
+            setEmailMatchError(true)
+        }
     }
 
     function handleChangedPasswordInput(){
-        setDisabledPasswordbtns(false)
+        setDisablePasswordCancelBtn(false)
+    }
+
+    function handleNewPasswordChecks(password){
+        const checker = handlePasswordStrength(password)
+        if(checker){
+            setPasswordStrengthError(false)
+        }else{
+            setPasswordStrengthError(true)
+        }
+    }
+
+    function handleNewPasswordMatch(password, id){
+
+        let newPassword
+
+        if(id === 'password-new'){
+            newPassword = document.getElementById('password-confirm').value
+        }
+        if(id === 'password-confirm'){
+            newPassword = document.getElementById('password-new').value
+        }
+
+        const matcher = password === newPassword
+
+        if(matcher){
+            setPasswordMatchError(false)
+        }else{
+            setPasswordMatchError(true)
+        }
     }
 
     function handleCancelEdits(type){
@@ -106,11 +242,13 @@ export default function Profile(){
             document.getElementById('profile-lastname').value = lastName
         }
         if(type === 'email'){
-            setDisabledEmailBtns(true)
+            setChangedEmailInput(false)
+            setDisableEmailSaveBtn(true)
             document.getElementById('profile-email').value = email
         }
         if(type === 'password'){
-            setDisabledPasswordbtns(true)
+            setDisablePasswordSaveBtn(true)
+            setDisablePasswordCancelBtn(true)
 
             document.getElementById('password-current').value = ''
             document.getElementById('password-new').value = ''
@@ -126,7 +264,7 @@ export default function Profile(){
                 <h2 className='profile__subheading'>Update Profile</h2>
                 <Form method='post' className='profile__form'>
                     <label htmlFor='profile-firstname'
-                    className='profile__label'>First Name</label>
+                    className='profile__label profile__label_fn'>First Name</label>
                     <input 
                     className='profile__input'
                     id='profile-firstname' 
@@ -136,7 +274,7 @@ export default function Profile(){
                     onChange={()=>handleChangedProfileInput()} />
 
                     <label htmlFor='profile-lastname'
-                    className='profile__label'>Last Name</label>
+                    className='profile__label profile__label_ln'>Last Name</label>
                     <input 
                     className='profile__input'
                     id='profile-lastname' 
@@ -145,22 +283,24 @@ export default function Profile(){
                     defaultValue={lastName}
                     onChange={()=>handleChangedProfileInput()} />
 
-                    <button
-                    id='profile-edit-btn' 
-                    className='profile__btn'
-                    disabled={disabledProfileBtns}
-                    >
-                        Save
-                    </button>
+                    <div className='profile__container_btns'>
+                        <button
+                        id='profile-edit-btn' 
+                        className='profile__btn prof__btn_save'
+                        disabled={disabledProfileBtns}
+                        >
+                            Save
+                        </button>
 
-                    <button
-                    id='profile-cancel-btn' 
-                    className='profile__btn profile__btn_cancel'
-                    disabled={disabledProfileBtns}
-                    type='button'
-                    onClick={()=>handleCancelEdits('profile')}>
-                        Cancel
-                    </button>
+                        <button
+                        id='profile-cancel-btn' 
+                        className='profile__btn profile__btn_cancel prof__btn_cancel'
+                        disabled={disabledProfileBtns}
+                        type='button'
+                        onClick={()=>handleCancelEdits('profile')}>
+                            Cancel
+                        </button>
+                    </div>
 
                     <input
                     type='text'
@@ -179,47 +319,62 @@ export default function Profile(){
                 <Form method='post' className='email__form'>
                     <label
                     htmlFor='profile-email'
-                    className='profile__label'>Email</label>
+                    className='profile__label profile__label_email'>Email</label>
                     <input
                     className='profile__input'
                     type='email'
                     id='profile-email'
                     name='profile-email'
-                    onChange={handleChangedEmailInput}
+                    onChange={(e)=>{
+                        handleChangedEmailInput()
+                        handleNewEmailMatch(e, 'profile-email')
+                    }}
                     defaultValue={email}/>
 
-                    {!disabledEmailBtns && <><label htmlFor='profile-email-confirm'
-                    className='profile__label'>Confirm New Email</label>
+                    {changedEmailInput && <><label htmlFor='profile-email-confirm'
+                    className='profile__label profile__label_emailconfirm'>Confirm New Email</label>
                     <input
                     className='profile__input'
                     type='email'
                     id='profile-email-confirm'
                     name='profile-email-confirm'
                     required
+                    placeholder='Confirm your new email'
+                    onChange={(e)=>{
+                        handleNewEmailMatch(e, 'profile-email-confirm')
+                    }}
                     />
+                    {emailMatchError && 
+                    <div className='email__error'>
+                        <p>Emails do not match.</p>    
+                    </div>}
 
                     <label htmlFor='email-password'
-                    className='profile__label'>Enter password to continue</label>
+                    className='profile__label profile__label_emailpassword'>Enter password for authentication</label>
                     <div className='password__container'>
                         <input
                         className='profile__input'
                         type='password'
                         id='email-password'
                         name='email-password'
-                        required/>
+                        required
+                        placeholder='Enter your password'/>
                         <SecretToggleButton inputId={'email-password'}/>
                     </div>
                     
                     </>}
 
-                    <button 
-                    className='profile__btn'
-                    disabled={disabledEmailBtns}>Save</button>
+                    <div className='email__container_btns'>
+                        <button 
+                        className='profile__btn email__btn_save'
+                        disabled={disableEmailSaveBtn}>Save</button>
 
-                    <button 
-                    className='profile__btn profile__btn_cancel'
-                    disabled={disabledEmailBtns}
-                    onClick={()=>handleCancelEdits('email')}>Cancel</button>
+                        <button 
+                        className='profile__btn profile__btn_cancel email__btn_cancel'
+                        type='button'
+                        disabled={!changedEmailInput}
+                        onClick={()=>handleCancelEdits('email')}>Cancel</button>
+                    </div>
 
                     <input
                     type='text'
@@ -234,57 +389,86 @@ export default function Profile(){
             </section>
             <hr />
 
-            {/* new password logic: cannot be the same as old password(?), must be at least 6 characters long, must have at least 1 uppercase character and 1 number  */}
             <section className='password__section'>
                 <h2 className='profile__subheading'>Change Password</h2>
                 <Form method='post' className='password__form'>
                     <label
-                    className='profile__label'>Enter current password</label>
+                    className='profile__label profile__label_passwordcurrent'>Enter current password</label>
                     <div className='password__container'>
                         <input 
                         className='profile__input'
                         type='password' 
                         required
-                        onChange={handleChangedPasswordInput}
+                        placeholder='Enter current password'
+                        onChange={()=>{
+                            handleChangedPasswordInput()
+                            // handleAllowPasswordSave()
+                        }}
                         id='password-current'
                         name='password-current'/>
                         <SecretToggleButton inputId={'password-current'} />
                     </div>
 
                     <label
-                    className='profile__label'>Enter new password</label>
+                    className='profile__label profile__label_passwordnew'>Enter new password</label>
                     <div className='password__container'>
                         <input 
                         className='profile__input'
                         type='password' 
                         required
-                        onChange={handleChangedPasswordInput}
+                        minLength='6'
+                        placeholder='Enter new password'
+                        onChange={(e)=>{
+                            handleChangedPasswordInput()
+                            handleNewPasswordChecks(e.target.value)
+                            handleNewPasswordMatch(e.target.value, 'password-new')
+                        }}
                         id='password-new'
                         name='password-new'/>
                         <SecretToggleButton inputId={'password-new'} />
                     </div>
+                    {passwordStrengthError &&
+                    <div className='password__error password__error_str'>
+                        <p>New password must meet the following requirements:</p>
+                        <ul>
+                            <li>No whitespaces.</li>
+                            <li>At least 6 characters long.</li>
+                            <li>At least one number.</li>
+                            <li>At least one uppercase character.</li>
+                        </ul> 
+                    </div>}
 
                     <label
-                    className='profile__label'>Confirm new password</label>
+                    className='profile__label profile__label_passwordconfirm'>Confirm new password</label>
                     <div className='password__container'>
                         <input 
                         className='profile__input'
                         type='password' 
                         required
-                        onChange={handleChangedPasswordInput}
+                        placeholder='Confirm new password'
+                        onChange={(e)=>{
+                            handleChangedPasswordInput()
+                            handleNewPasswordMatch(e.target.value, 'password-confirm')
+                        }}
                         id='password-confirm'
                         name='password-confirm'/>
                         <SecretToggleButton inputId={'password-confirm'} />
                     </div>
+                    {passwordMatchError && 
+                    <div className='password__error password__error_match'>
+                        <p>New passwords do not match.</p>
+                    </div>}
 
-                    <button 
-                    className='profile__btn'
-                    disabled={disabledPasswordBtns}>Save</button>
+                    <div className='password__container_btns'>
+                        <button 
+                        className='profile__btn password__btn_save'
+                        disabled={disablePasswordSaveBtn}>Save</button>
 
-                    <button 
-                    className='profile__btn profile__btn_cancel'
-                    disabled={disabledPasswordBtns}
-                    onClick={()=>handleCancelEdits('password')}>Cancel</button>
+                        <button 
+                        className='profile__btn profile__btn_cancel password__btn_cancel'
+                        disabled={disablePasswordCancelBtn}
+                        onClick={()=>handleCancelEdits('password')}>Cancel</button>
+                    </div>
 
                     <input
                     type='text'
