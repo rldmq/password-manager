@@ -2,7 +2,7 @@ import React from 'react'
 import { NavLink, redirect, Link, useNavigate } from 'react-router-dom'
 
 import { onAuthStateChanged, signOut } from "firebase/auth"
-import { auth } from '../assets/utils'
+import { auth, clearSessionTimer } from '../assets/utils'
 
 import collapsedMenuIcon from '../assets/images/icons8-menu-50.png'
 import expandedMenuIcon from '../assets/images/icons8-collapse-24.png'
@@ -55,6 +55,7 @@ export default function Header({ theme }){
 
     function handleSignOut(){
         try{
+            clearSessionTimer()
             signOut(auth).then(()=>navigate('/login'))
         }catch(err){
             console.error(err)
