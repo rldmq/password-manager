@@ -1,0 +1,99 @@
+/* PROFILE STYLES */
+.main__profile{
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+    padding: 0 2em;
+    margin-bottom: 3em;
+}
+
+hr{
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.profile__section,
+.profile__form,
+.email__section,
+.email__form,
+.password__section,
+.password__form{
+    display: flex;
+    flex-direction: column;
+}
+
+.profile__section,
+.email__section,
+.password__section{
+    gap: 1em;
+}
+
+.profile__heading{
+    font-size: 2rem;
+}
+
+.profile__subheading{
+    font-size: 1.5rem;
+}
+
+.profile__label{
+    margin-top: 1em;
+}
+
+.profile__input{
+    margin-top: 0.25em;
+}
+
+.profile__input{
+    color: black;
+    padding: 0.25em;
+    border-radius: 0.5em;
+    border: none;
+}
+
+.profile__btn{
+    border: none;
+    padding: 0.5em;
+    border-radius: 0.5em;
+    cursor: pointer;
+    background-color: var(--dark-mode-btn);
+    margin-top: 1em;
+}
+
+.profile__btn_cancel{
+    background-color: var(--dark-mode-btn-red);
+}
+
+.profile__btn:active{
+    transform: translate(1px, 1px);
+}
+
+.profile__btn:disabled{
+    background-color: var(--dark-mode-btn-grey);
+}
+
+.password__container{
+    display: flex;
+    background: white;
+    border-radius: 0.5em;
+}
+
+.password__container:has(input:focus){
+    outline: var(--default-outline-style);
+}
+
+.password__container .profile__input{
+    flex-grow: 1;
+    outline: none;
+}
+
+/* 
+    MEDIA QUERIES
+*/
+@media screen and (min-width: 1000px){
+
+}
+
+/* 
+    LIGHT MODE
+*/

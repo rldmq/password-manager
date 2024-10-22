@@ -320,7 +320,6 @@ export default function Account(){
     }
 
     return(
-        <>
         <main className='main main__account'>
             <p className='account__greeting'>{`Good ${greetingTime}${displayName ? `, ${displayName}!` : '!'}`}</p>
             <h1 className='account__heading'>Saved Passwords</h1>
@@ -372,7 +371,5 @@ export default function Account(){
             {editModalVis && <ModalEditDetails closeModal={()=>setEditModalVis(false)} submitData={()=>handleSubmitEdits(editItemDetails)} details={editItemDetails} context={theme} userData={userData}/>}
             <Toast toastList={toastList} context={theme}/>
         </main>
-        <Sidebar />
-        </>
     )
 }

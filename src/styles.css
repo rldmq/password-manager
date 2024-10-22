@@ -66,8 +66,8 @@ body{
 
 .btn__theme{
     position: fixed;
-    bottom: 1em;
-    right: 1em;
+    bottom: 0.25em;
+    right: 0.25em;
     border: none;
     padding: 0.1em 0.25em;
     border-radius: 0.25em;
