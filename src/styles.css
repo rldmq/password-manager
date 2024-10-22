@@ -34,6 +34,8 @@
     --light-mode-header-footer: #e1f5ec;
     --light-mode-text: #2B283A;
     --light-mode-green: #1eb45f;
+    /* --light-mode-btn: #80d0a3 ; */
+    /* --light-mode-btn-red: rgb(231, 116, 116); */
 
     --default-outline-style: medium auto black;
 
@@ -66,8 +68,8 @@ body{
 
 .btn__theme{
     position: fixed;
-    bottom: 1em;
-    right: 1em;
+    bottom: 0.25em;
+    right: 0.25em;
     border: none;
     padding: 0.1em 0.25em;
     border-radius: 0.25em;

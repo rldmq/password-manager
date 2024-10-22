@@ -9,6 +9,7 @@ import './assets/styles/login.css'
 import './assets/styles/signup.css'
 import './assets/styles/contact-us.css'
 import './assets/styles/reset-password.css'
+import './assets/styles/profile.css'
 import './assets/styles/account/account.css'
 import './assets/styles/account/modal-add-account.css'
 import './toast/toast.css'
@@ -22,6 +23,7 @@ import Signup from './pages/Signup'
 import ResetPassword, { action as resetPasswordAction } from './pages/ResetPassword'
 import ContactUs, { action as contactUsAction } from './pages/ContactUs'
 import NotFound from './pages/NotFound'
+import Profile, { loader as profileLoader, action as profileAction } from './pages/Profile'
 
 import Account, { loader as accountLoader, action as accountAction } from './pages/account/Account'
 import AccountDetails, { loader as accountDetailsLoader } from './pages/account/AccountDetails'
@@ -56,8 +58,19 @@ function App(){
                         loader={accountDetailsLoader}
                         />
                     </Route>
-                    <Route path='contact' element={<ContactUs />} action={contactUsAction}/>
-                    <Route path='*' element={<NotFound />} />
+                    <Route
+                    path='profile'
+                    element={<Profile />}
+                    loader={profileLoader}
+                    action={profileAction}/>
+                    <Route
+                    path='contact'
+                    element={<ContactUs />}
+                    action={contactUsAction}/>
+
+                    <Route path='*'
+                    element={<NotFound />} />
+
                 </Route>
     ))
 
@@ -68,7 +81,14 @@ function App(){
     return (
         <>
             <RouterProvider router={router} />
-            <button className='btn__theme' style={theme === 'light' ? {backgroundColor: 'var(--dark-mode-primary-background)'} : null} onClick={()=>handleThemeChange()}>{theme === 'dark' ? <MdOutlineLightMode className='btn__theme_text' /> : <MdDarkMode className='btn__theme_text' style={{fill: 'white'}}/>}</button>
+            <button
+            className='btn__theme'
+            style={theme === 'light' ?
+                {backgroundColor: 'var(--dark-mode-primary-background)'}
+                : null}
+            onClick={()=>handleThemeChange()}>
+                {theme === 'dark' ? <MdOutlineLightMode className='btn__theme_text' /> : <MdDarkMode className='btn__theme_text' style={{fill: 'white'}}/>}
+            </button>
         </>
     )
 }

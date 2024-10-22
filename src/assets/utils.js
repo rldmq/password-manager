@@ -28,7 +28,6 @@ const app = initializeApp(firebaseConfig);
 import React from 'react'
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth'
 import { redirect, useNavigate } from 'react-router-dom'
-import { getFirestore } from 'firebase/firestore'
 
 const auth = getAuth(app)
 
@@ -121,6 +120,47 @@ export function showToast(message, type, setterFn,copyData){
           return list
       })
   },2000)
+}
+
+export function handlePasswordStrength(password){
+// Keep as separate variables so it's easier to read
+  let charLengthCheck = false
+  let upperCaseCheck = false
+  let numCharCheck = false
+  let spaceCheck = false
+
+  // Check for minimum char length
+  if(password.length >= 6){
+    charLengthCheck = true
+  }
+
+  // Check for uppercase characters
+  for(let i = 65; i <= 90; i++){
+    if(password.includes(String.fromCharCode(i))){
+        upperCaseCheck = true
+        break
+    }
+  }
+
+  // Check for number characters
+  for(let i = 48; i <= 57; i++){
+    if(password.includes(String.fromCharCode(i))){
+        numCharCheck = true
+        break
+    }
+  }
+
+  // Check for space usage
+  if(!password.includes(' ')){
+      spaceCheck = true
+  }
+
+  if(charLengthCheck && upperCaseCheck && numCharCheck && spaceCheck){
+    // Passed the checks
+    return true
+  }else{
+    return false
+  }
 }
 
 // export async function handleDataUpdateAction(request){

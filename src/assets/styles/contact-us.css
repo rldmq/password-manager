@@ -196,6 +196,11 @@
 /* 
     LIGHT MODE
 */
+#contact-name.light,
+#contact-email.light{
+    border: 1px solid black;
+}
+
 #contact-files.light,
 #drop-zone.light{
     background-color: var(--light-mode-secondary-background);
@@ -209,4 +214,8 @@
 
 .drop__item.light p{
     color: black;
+}
+
+.contact__btn_submit.light{
+    color: white;
 }

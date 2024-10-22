@@ -138,3 +138,11 @@
 .modal__form.light{
     background-color: var(--light-mode-secondary-background);
 }
+
+.modal__btn{
+    color: white;
+}
+
+.modal__btn:disabled{
+    color: var(--light-mode-text);
+}

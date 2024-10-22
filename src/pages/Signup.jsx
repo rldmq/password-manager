@@ -9,7 +9,7 @@ import successGif from '../assets/images/signup/icons8-success-green.gif'
 import SecretToggleButton from '../components/SecretToggleButton'
 
 // Firebase
-import { app } from '../assets/utils'
+import { app, handlePasswordStrength } from '../assets/utils'
 import { getAuth,
         createUserWithEmailAndPassword,
         sendSignInLinkToEmail,
@@ -79,48 +79,18 @@ export default function Signup(){
     }
 
     function handlePasswordStrengthCheck(e){
-        let charLengthCheck = false
-        let upperCaseCheck = false
-        let numCharCheck = false
-        let spaceCheck = false
 
         const passwordErrorEl = document.querySelector('.signup__password_error')
 
-        // Check for char length
-        if(e.target.value.length >= 6){
-            charLengthCheck = true
-        }
-
-        // Check for uppercase characters
-        for(let i = 65; i <= 90; i++){
-            if(e.target.value.includes(String.fromCharCode(i))){
-                upperCaseCheck = true
-                break
-            }
-        }
-
-        // Check for number characters
-        for(let i = 48; i <= 57; i++){
-            if(e.target.value.includes(String.fromCharCode(i))){
-                numCharCheck = true
-                break
-            }
-        }
-
-        for(let i = 0; i < e.target.value.length; i++){
-            if(e.target.value[i] === ' '){
-                spaceCheck = true
-                break
-            }
-        }
+        const checker = handlePasswordStrength(e.target.value)
 
         setSignupFormData(prev => ({
             ...prev,
-            'passwordCharCheck' : charLengthCheck && upperCaseCheck && numCharCheck ? true : false
+            'passwordCharCheck' : checker ? true : false
         }))
         
         
-        if(!charLengthCheck || !upperCaseCheck || !numCharCheck || spaceCheck){
+        if(!checker){
             passwordErrorEl.style.display = 'block'
 
         }else{
@@ -215,36 +185,6 @@ export default function Signup(){
                 el.classList.remove('shake')
             }
         }, 1000)
-    }
-
-    function handleShowSecret(inputId){
-        if(inputId === 'account-password'){
-            setSecretSymbol(prev => {
-                prev[0] = 'hide'
-                return [...prev]
-            })
-        }else if(inputId === 'account-password-confirm'){
-            setSecretSymbol(prev => {
-                prev[1] = 'hide'
-                return [...prev]
-            })
-        }
-        document.getElementById(inputId).setAttribute('type','text')
-    }
-
-    function handleHideSecret(inputId){
-        if(inputId === 'account-password'){
-            setSecretSymbol(prev => {
-                prev[0] = 'show'
-                return [...prev]
-            })
-        }else if(inputId === 'account-password-confirm'){
-            setSecretSymbol(prev => {
-                prev[1] = 'show'
-                return [...prev]
-            })
-        }
-        document.getElementById(inputId).setAttribute('type','password')
     }
 
     const passwordInputsRender = (

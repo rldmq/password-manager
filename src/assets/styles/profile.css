@@ -1,0 +1,176 @@
+/* PROFILE STYLES */
+.main__profile{
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+    padding: 0 2em;
+    margin-bottom: 3em;
+}
+
+.profile__section,
+.profile__form,
+.email__section,
+.email__form,
+.password__section,
+.password__form{
+    display: flex;
+    flex-direction: column;
+}
+
+.profile__section,
+.email__section,
+.password__section{
+    gap: 1em;
+}
+
+.profile__heading{
+    font-size: 2rem;
+}
+
+.profile__subheading{
+    font-size: 1.5rem;
+}
+
+.profile__label{
+    margin-top: 1em;
+}
+
+.profile__input{
+    margin-top: 0.25em;
+}
+
+.profile__input{
+    color: black;
+    padding: 0.25em;
+    border-radius: 0.5em;
+    border: none;
+}
+
+.profile__btn{
+    border: none;
+    padding: 0.5em;
+    border-radius: 0.5em;
+    cursor: pointer;
+    background-color: var(--dark-mode-btn);
+    margin-top: 1em;
+}
+
+.profile__btn_cancel{
+    background-color: var(--dark-mode-btn-red);
+}
+
+.profile__btn:active{
+    transform: translate(1px, 1px);
+}
+
+.profile__btn:disabled{
+    background-color: var(--dark-mode-btn-grey);
+}
+
+.password__container{
+    display: flex;
+    background: white;
+    border-radius: 0.5em;
+    margin-top: 0.25em;
+}
+
+.password__container:has(input:focus){
+    outline: var(--default-outline-style);
+}
+
+.password__container .profile__input{
+    flex-grow: 1;
+    outline: none;
+}
+
+.password__error,
+.email__error{
+    border: 2px solid red;
+    background-color: rgb(253, 203, 203);
+    border-radius: 0.5em;
+    padding: 0.5em;
+    margin-top: 0.5em;
+}
+
+.password__error *,
+.email__error *{
+    color: red;
+    font-weight: 500;
+}
+
+.password__error_str li{
+    margin-left: 1.5em;
+}
+
+.profile__container_btns,
+.email__container_btns,
+.password__container_btns{
+    display: flex;
+    flex-direction: column;
+}
+/* 
+    MEDIA QUERIES
+*/
+@media screen and (min-width: 1000px){
+    .main__profile{
+        margin-top: 8em;
+        display: grid;
+        grid-template-areas:
+        'profile-heading profile-heading'
+        'profile-section-name profile-section-email'
+        'profile-section-password .';
+        grid-template-columns: 1fr 1fr;
+    }
+
+    hr{
+        display: none;
+    }
+
+    .profile__section{
+        grid-area: profile-section-name;
+    }
+
+    .email__section{
+        grid-area: profile-section-email;
+    }
+
+    .password__section{
+        grid-area: profile-section-password;
+    }
+
+    .profile__container_btns,
+    .email__container_btns,
+    .password__container_btns{
+        flex-direction: row;
+        gap: 1em;
+    }
+
+    .profile__container_btns *,
+    .email__container_btns *,
+    .password__container_btns *{
+        flex-grow: 1;
+    }
+
+}
+
+/* 
+    LIGHT MODE
+*/
+.profile__btn{
+    color: white;
+}
+
+.profile__btn_cancel{
+    color: white;
+}
+
+.profile__btn.light:disabled{
+    background-color: lightgrey;
+    color: var(--light-mode-text);
+}
+
+.profile__form>.profile__input,
+.email__form>.profile__input,
+.password__container{
+    border: 1px solid black;
+}
