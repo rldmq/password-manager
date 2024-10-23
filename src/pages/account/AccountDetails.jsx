@@ -1,7 +1,7 @@
 import React from 'react'
 import { useOutletContext, useLoaderData } from 'react-router-dom'
 
-import { authRequired, showToast } from '../../assets/utils'
+import { authRequired, autoLogout, showToast } from '../../assets/utils'
 
 import { FaRegCopy } from 'react-icons/fa'
 
@@ -15,6 +15,8 @@ export async function loader({ request }){
 }
 
 export default function AccountDetails(){
+
+    autoLogout()
 
     const path = useLoaderData()
 

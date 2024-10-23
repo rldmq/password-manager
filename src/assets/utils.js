@@ -27,7 +27,7 @@ const app = initializeApp(firebaseConfig);
 
 import React from 'react'
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth'
-import { redirect, useNavigate } from 'react-router-dom'
+import { redirect, useLocation, useNavigate } from 'react-router-dom'
 
 const auth = getAuth(app)
 
@@ -50,14 +50,13 @@ export async function authRequired(request){
   })
 }
 
-export function startSessionTimer(navigate){
-  
+export function startSessionTimer(navigate, pathname){
   clearSessionTimer()
-  
+
   sessionTimer = setTimeout(()=>{
         signOut(auth)
           .then(()=> {
-            navigate('/login?message=You%20have%20been%20signed%20out%20due%20to%20inactivity.')
+            navigate(`/login?message=You%20have%20been%20signed%20out%20due%20to%20inactivity.${pathname ? `&redirect=${pathname}` : ''}`)
             })
           .catch((err)=>{
             console.log(err)
@@ -75,22 +74,21 @@ export function clearSessionTimer(){
 export function autoLogout(){
   const navigate = useNavigate()
 
+  const location = useLocation()
+
   React.useEffect(()=>{
-      startSessionTimer(navigate)
+
+      const timer = startSessionTimer(navigate, location.pathname)
       
-      document.addEventListener('mousemove',()=>{
-          startSessionTimer(navigate)
-      })
-      document.addEventListener('keypress', ()=>{
-          startSessionTimer(navigate)
-      })
+      document.addEventListener('mousemove',timer)
+      document.addEventListener('keypress', timer)
 
       return ()=>{
-          document.removeEventListener('mousemove',startSessionTimer)
-          document.removeEventListener('keypress',startSessionTimer)
+          document.removeEventListener('mousemove',timer)
+          document.removeEventListener('keypress',timer)
           clearSessionTimer()
       }
-  },[navigate])
+  },[location])
 
 }
 
