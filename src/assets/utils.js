@@ -19,7 +19,7 @@ const app = initializeApp(firebaseConfig);
 
 /**
  * Firebase Test Accounts:
- * L: scrimba@test.com K: Scrimba123
+ * L: scrimba@test.com K: Scrimba123 changed to L: real.person@email.com K: Pass123
  * L: scrimba2@test.com K: Scrimba123
  * L: jon.ube@email.com K: Abc123
  * L: jeebs.cheebs@nowhere.com K: Abc123
