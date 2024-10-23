@@ -57,10 +57,6 @@ export default function Login(){
     const error = useActionData()
     
     const [loginError, setLoginError] = React.useState(null)
-
-    function handleSubmit(e){
-        console.log(e, 'this ran')
-    }
     
     React.useEffect(()=>{
         if(theme === 'light'){
@@ -126,7 +122,6 @@ export default function Login(){
                 className='form__input'
                 placeholder='Email'
                 ref={emailInput}
-                onSubmit={handleSubmit}
                 />
 
                 <label
@@ -143,7 +138,6 @@ export default function Login(){
                     name='password'
                     className='form__input'
                     placeholder='Password'
-                    onSubmit={handleSubmit}
                     />
                     <SecretToggleButton inputId={'password'}/>
                 </div>
