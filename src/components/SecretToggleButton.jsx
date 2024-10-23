@@ -40,6 +40,7 @@ export default function SecretToggleButton({ inputId }){
         onTouchStart={() => handleShowSecret(inputId)}
         onTouchEnd={() => handleHideSecret(inputId)}
         onClick={e => e.preventDefault()}
+        type='button'
         >
             {symbol}
         </button>

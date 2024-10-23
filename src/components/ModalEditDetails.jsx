@@ -69,11 +69,19 @@ export default function ModalEditDetails({ submitData, closeModal, details, user
                 closeModal()
             }
         }
+
+        const handleEscapeKey = function(e){
+            if(e.key === 'Escape'){
+                closeModal()
+            }
+        }
         
         document.addEventListener('mousedown', handleBackgroundClick)
+        document.addEventListener('keydown', handleEscapeKey)
 
         return () => {
             document.removeEventListener('mousedown', handleBackgroundClick)
+            document.removeEventListener('keydown', handleEscapeKey)
         }
     
     },[])
