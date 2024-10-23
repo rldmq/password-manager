@@ -48,6 +48,16 @@ export default function Login(){
 
     const theme = useOutletContext()
 
+    const emailInput = React.useRef()
+    
+    const navigation = useNavigation()
+    
+    const message = useLoaderData()
+    
+    const error = useActionData()
+    
+    const [loginError, setLoginError] = React.useState(null)
+    
     React.useEffect(()=>{
         if(theme === 'light'){
             document.querySelectorAll('*').forEach(e => e.classList.add('light'))
@@ -55,16 +65,6 @@ export default function Login(){
             document.querySelectorAll('*').forEach(e => e.classList.remove('light'))
         }
     },[theme])
-    
-    const emailInput = React.useRef()
-
-    const navigation = useNavigation()
-
-    const message = useLoaderData()
-
-    const error = useActionData()
-
-    const [loginError, setLoginError] = React.useState(null)
 
     React.useEffect(()=>{
         setTimeout(()=>{
@@ -97,8 +97,11 @@ export default function Login(){
 
     return (
         <main className='main main__login'>
-            <Form method='post' replace className='main__form'>
-
+            <Form
+            method='post'
+            replace
+            className='main__form'
+            >
                 <h1 className='main__title'>Log in to your account</h1>
 
                 {message && <span className='form__message'>{message}</span>}
@@ -147,6 +150,7 @@ export default function Login(){
                 </Link>
                 
                 <button 
+                type='submit'
                 disabled={navigation.state === 'submitting'}
                 className='form__button'>
                     {navigation.state === 'idle' ? 'Login' : 'Logging in...'}
