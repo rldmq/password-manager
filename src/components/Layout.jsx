@@ -4,6 +4,7 @@ import { Outlet, useLocation } from 'react-router-dom'
 import Header from './Header.jsx'
 import Footer from './Footer.jsx'
 import Sidebar from './Sidebar.jsx'
+import TesterInfo from './tester-info/TesterInfo.jsx'
 
 import { auth } from '../assets/utils.js'
 
@@ -26,6 +27,7 @@ export default function Layout({ theme }){
             <Header theme={theme}/>
             <Outlet context={theme}/>
             <Footer theme={theme}/>
+            <TesterInfo />
             {sidebarVis && <Sidebar />}
         </>
     )

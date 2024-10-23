@@ -1,0 +1,116 @@
+/* TESTER INFO STYLES */
+:root{
+    --tester-background-color: rgb(232, 211, 50);
+    --tester-border-settings: 3px solid orange;
+}
+.tester{
+    position: fixed;
+    padding: 0.75em;
+    top: 6em;
+    width: 300px;
+    background-color: var(--tester-background-color);
+    border-left: var(--tester-border-settings);
+    border-top: var(--tester-border-settings);
+    border-bottom: var(--tester-border-settings);
+    border-top-left-radius: 1em;
+    border-bottom-left-radius: 1em;
+    transition: right ease-in-out .5s;
+    user-select: none;
+}
+
+.tester *{
+    color: black;
+    font-weight: 500;
+}
+
+.tester__btn_wave{
+    position: absolute;
+    left: -35px;
+    top: 0;
+    bottom: 0;
+    margin: auto 0;
+    height: 35px;
+    width: 35px;
+    background-color: var(--tester-background-color);
+    border-left: var(--tester-border-settings);
+    border-top: var(--tester-border-settings);
+    border-bottom: var(--tester-border-settings);
+    border-right: none;
+    border-top-left-radius: 50%;
+    border-bottom-left-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 0 10px grey;
+    clip-path: inset(-10px 0px -10px -10px);
+}
+
+.tester__btn_wave p{
+    animation: 0.5s 4 linear wave;
+}
+
+.tester__spoiler{
+    position: absolute;
+    background-color: lightblue;
+    border: 2px dashed orange;
+    left: 10px;
+    right: 10px;
+    top: 0px;
+    bottom: -50px;
+    margin: auto auto;
+    text-align: center;
+    line-height: 50px;
+    height: 50px;
+    cursor: pointer;
+    border-radius: 0.75em;
+    transition: opacity ease-in-out .5s;
+}
+
+.tester__container_email,
+.tester__container_password{
+    cursor: pointer;
+    display: flex;
+    gap: 0.25em;
+    align-items: center;
+}
+
+.tester__container_email:hover,
+.tester__container_password:hover,
+.tester__container_email:hover :nth-child(-n+2),
+.tester__container_password:hover :nth-child(-n+2){
+    color: rgb(145, 10, 145);
+}
+
+.tester__container_email:active,
+.tester__container_password:active{
+    transform: translate(1px, 1px);
+}
+
+.tester__copied{
+    color: red;
+}
+
+/* 
+    ANIMATIONS
+*/
+@keyframes wave{
+    0%{
+        font-size: 1.2rem;
+        transform: rotate(-25deg);
+    }
+    25%{
+        transform: rotate(25deg);
+    }
+    50%{
+        transform: rotate(-25deg);
+    }
+    75%{
+        transform: rotate(25deg);
+    }
+    99%{
+        font-size: 1.2rem;
+        transform: rotate(-25deg);
+    }
+    100%{
+        font-size: 1rem;
+        transform: rotate(0);
+    }
+}

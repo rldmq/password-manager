@@ -17,6 +17,9 @@ export async function loader({ request }){
 
 export async function action({ request }){
     // Consider redirects for email and password updates
+    if(auth.currentUser.uid = 'EE2sxfglLLZLVD1gn6qdCAfW3OE3'){
+        return `error-testacc-${Date.now()}`
+    }
     try{
         const formData = await request.formData()
         
@@ -152,6 +155,8 @@ export default function Profile(){
                 showToast('Success! Profile updated!', 'success', setToastList)
             }else if(action.includes('error-password')){
                 showToast('Invalid password.', 'error', setToastList)
+            }else if(action.includes('error-testacc')){
+                showToast('No edits allowed on test account', 'error', setToastList)
             }else{
                 showToast('Error! Please refresh.', 'error', setToastList)
             }
