@@ -164,27 +164,32 @@ export function handlePasswordStrength(password){
 }
 
 export function encryptData(password, type){
-  let key
   if(type === 'login'){
-    key = auth.currentUser.uid
+    try{
+      const key = auth.currentUser.uid
+      const iv = { words: [ 7, 5, 2, 8 ], sigBytes: 16 }
+      const data = CryptoJS.AES.encrypt(password, CryptoJS.enc.Utf8.parse(key), { iv }).toString()
+      return data
+    }catch(err){
+      console.log(err)
+    }
   }
   if(type === 'add'){
-    key = localStorage.getItem('pwm')
-  }
-  try{
-    const data = CryptoJS.AES.encrypt(JSON.stringify(password), key).toString()
-    return data
-  }catch(err){
-    console.log(err)
-    return err
+    try{
+      const key = sessionStorage.getItem('pwm')
+      const data = CryptoJS.AES.encrypt(password, key).toString()
+      return data
+    }catch(err){
+      console.log(err)
+    }
   }
 }
 
 export function decryptData(password){
   try{
-    const key = localStorage.getItem('pwm')
+    const key = sessionStorage.getItem('pwm')
     const bytes = CryptoJS.AES.decrypt(password, key)
-    const data = JSON.parse(bytes.toString(CryptoJS.enc.Utf8))
+    const data = bytes.toString(CryptoJS.enc.Utf8)
     return data
   }catch(err){
     console.log(err)

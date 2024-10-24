@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link, Form, useActionData, useLoaderData, useNavigation, redirect, useOutletContext } from 'react-router-dom'
 
-import { signInWithEmailAndPassword } from 'firebase/auth'
+import { browserSessionPersistence, setPersistence, signInWithEmailAndPassword } from 'firebase/auth'
 import { auth, encryptData } from '../assets/utils'
 import SecretToggleButton from '../components/SecretToggleButton'
 
@@ -20,15 +20,14 @@ export async function action({ request }){
     const password = formData.get('password')
 
     try{
-        const userCredential = await signInWithEmailAndPassword(auth, email, password)
+        await setPersistence(auth, browserSessionPersistence)
+        await signInWithEmailAndPassword(auth, email, password)
 
         const pathname = new URL(request.url).searchParams.get('redirect') || '/account'
 
         const store = encryptData(password,'login')
 
-        localStorage.setItem('pwm',store)
-
-        // setlocalstorage login?? firebase??
+        sessionStorage.setItem('pwm',store)
 
         return redirect(pathname)
     }catch(err){
