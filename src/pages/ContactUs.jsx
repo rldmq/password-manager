@@ -1,9 +1,9 @@
 import React from 'react'
 import { useOutletContext, Form, useNavigation, useActionData } from 'react-router-dom'
 
-import { getApp } from 'firebase/app'
 import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage'
 import { getFirestore, doc, setDoc, collection, serverTimestamp } from 'firebase/firestore'
+import { onAuthStateChanged } from 'firebase/auth'
 
 import { app, generateId, showToast, auth } from '../assets/utils'
 
@@ -72,6 +72,9 @@ export async function action({ request }){
 
 export default function ContactUs(){
 
+    const [userName, setUserName] = React.useState('')
+    const [userEmail, setUserEmail] = React.useState('')
+
     const theme = useOutletContext()
 
     const navigation = useNavigation()
@@ -100,6 +103,15 @@ export default function ContactUs(){
             document.getElementById('contact-email').setAttribute('placeholder', `${emailName}@email.com`)
         },1)
     })
+
+    React.useEffect(()=>{
+        onAuthStateChanged(auth, (user) => {
+            if(user){
+                setUserName(user.displayName)
+                setUserEmail(user.email)
+            }
+        })
+    }, [])
 
     React.useEffect(()=>{
         if(action?.includes('success')){
@@ -255,7 +267,7 @@ export default function ContactUs(){
                 id='contact-name'
                 name='contact-name'
                 placeholder={`${namesList[Math.floor(Math.random() * namesList.length)]}`}
-                // defaultValue={auth.currentUser ? auth.currentUser.displayName : null}
+                defaultValue={userName}
                 />
 
                 <label
@@ -269,7 +281,7 @@ export default function ContactUs(){
                 id='contact-email'
                 name='contact-email'
                 placeholder='firstname.lastname@email.com'
-                // defaultValue={auth.currentUser ? auth.currentUser.email : null}
+                defaultValue={userEmail}
                 required/>
 
                 <label
