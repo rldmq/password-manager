@@ -5,7 +5,7 @@ import { getApp } from 'firebase/app'
 import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage'
 import { getFirestore, doc, setDoc, collection, serverTimestamp } from 'firebase/firestore'
 
-import { app, generateId, showToast } from '../assets/utils'
+import { app, generateId, showToast, auth } from '../assets/utils'
 
 import { IoMdRemoveCircleOutline } from 'react-icons/io'
 
@@ -254,7 +254,9 @@ export default function ContactUs(){
                 type='text'
                 id='contact-name'
                 name='contact-name'
-                placeholder={`${namesList[Math.floor(Math.random() * namesList.length)]}`}/>
+                placeholder={`${namesList[Math.floor(Math.random() * namesList.length)]}`}
+                // defaultValue={auth.currentUser ? auth.currentUser.displayName : null}
+                />
 
                 <label
                 htmlFor='contact-email'
@@ -267,6 +269,7 @@ export default function ContactUs(){
                 id='contact-email'
                 name='contact-email'
                 placeholder='firstname.lastname@email.com'
+                // defaultValue={auth.currentUser ? auth.currentUser.email : null}
                 required/>
 
                 <label

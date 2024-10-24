@@ -56,6 +56,7 @@ export default function Header({ theme }){
     function handleSignOut(){
         try{
             clearSessionTimer()
+            localStorage.clear()
             signOut(auth).then(()=>navigate('/login'))
         }catch(err){
             console.error(err)

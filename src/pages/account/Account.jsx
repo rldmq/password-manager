@@ -1,9 +1,9 @@
 import React from 'react'
-import { Outlet, Link, useLoaderData, useActionData, useOutletContext, redirect } from 'react-router-dom'
+import { Outlet, Link, useLoaderData, useActionData, useOutletContext } from 'react-router-dom'
 import { getFirestore, collection, doc, setDoc, onSnapshot, serverTimestamp, deleteDoc, updateDoc } from 'firebase/firestore'
-import { app, auth, authRequired, autoLogout, generateId, showToast } from '../../assets/utils'
 
-import Sidebar from '../../components/Sidebar'
+import { app, auth, authRequired, autoLogout, showToast, encryptData, decryptData, generateId } from '../../assets/utils'
+
 import ModalAddPassword from '../../components/ModalAddPassword'
 import ModalEditDetails from '../../components/ModalEditDetails'
 import Toast from '../../toast/Toast'
@@ -22,7 +22,7 @@ export async function loader({ request }){
 }
 
 export async function action({ request }){
-
+    
     const userID = auth.currentUser.uid
 
     const db = getFirestore(app)
@@ -30,9 +30,9 @@ export async function action({ request }){
 
     const formData = await request.formData()
 
-    const purpose = formData.get('account-purpose')
-    const login = formData.get('login')
-    const password = formData.get('password')
+    const purpose = encryptData(formData.get('account-purpose'), 'add')
+    const login = encryptData(formData.get('login'),'add')
+    const password = encryptData(formData.get('password'),'add')
 
     const path = new URL(formData.get('url')).hash.slice(1)
 
@@ -123,6 +123,7 @@ export default function Account(){
     }
 
     const dataRender = sortedData?.map(item => {
+
         return (
             <div
             className={`account__item ${theme === 'light' ? 'light' : ''}`}
@@ -157,8 +158,8 @@ export default function Account(){
                         setEditItemDetails({
                             id: item.docID,
                             name: item.f,
-                            login: item.l,
-                            password: item.k
+                            login: decryptData(item.l),
+                            password: decryptData(item.k)
                         })
                         setEditModalVis(true)
                     }}><MdEdit className='item__symbol item__symbol_edit'/></button>
@@ -199,7 +200,16 @@ export default function Account(){
         onSnapshot(collection(db, 'userData', userID, 'saved'), (snapshot) => {
             setUserData([])
             snapshot.forEach(doc =>{
-                setUserData(prev => [...prev, {...doc.data(), docID : doc.id}])
+                // setUserData(prev => [...prev, {...doc.data(), docID : doc.id}])
+                setUserData(prev => {
+                    const f = decryptData(doc.data().f)
+                    const arr = [...prev]
+                    return [...arr, {
+                    ...doc.data(),
+                    f: f,
+                    docID : doc.id
+                }]
+            })
             })
         })
     },[])
