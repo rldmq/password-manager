@@ -36,40 +36,66 @@ function App(){
     const [theme, setTheme] = React.useState('dark')
 
     const router = createHashRouter(createRoutesFromElements(
-        <Route element={<Layout theme={theme}/>}>
-                    <Route path='/' element={<Home />}/>
-                    <Route path='about' element={<About />}/>
+        <Route element={<Layout theme={theme} />}>
+                    <Route
+                    path='/'
+                    element={<Home />}
+                    errorElement={<Error />}
+                    />
+                    <Route
+                    path='about'
+                    element={<About />}
+                    errorElement={<Error />}
+                    />
                     <Route
                     path='login'
                     element={<Login />}
                     action={loginAction}
                     loader={loginLoader}
+                    errorElement={<Error />}
                     />
-                    <Route path='signup' element={<Signup />}/>
-                    <Route path='recover' element={<ResetPassword />} action={resetPasswordAction}/>
+                    <Route
+                    path='signup'
+                    element={<Signup />}
+                    errorElement={<Error />}
+                    />
+                    <Route
+                    path='recover'
+                    element={<ResetPassword />}
+                    action={resetPasswordAction}
+                    errorElement={<Error />}
+                    />
                     <Route
                     path='account'
                     element={<Account />}
                     loader={accountLoader}
                     action={accountAction}
+                    errorElement={<Error />}
                     >
                         <Route path=':id'
                         element={<AccountDetails />}
                         loader={accountDetailsLoader}
+                        errorElement={<Error />}
                         />
                     </Route>
                     <Route
                     path='profile'
                     element={<Profile />}
                     loader={profileLoader}
-                    action={profileAction}/>
+                    action={profileAction}
+                    errorElement={<Error />}
+                    />
                     <Route
                     path='contact'
                     element={<ContactUs />}
-                    action={contactUsAction}/>
+                    action={contactUsAction}
+                    errorElement={<Error />}
+                    />
 
                     <Route path='*'
-                    element={<NotFound />} />
+                    element={<NotFound />}
+                    errorElement={<Error />}
+                    />
 
                 </Route>
     ))

@@ -28,6 +28,7 @@ const app = initializeApp(firebaseConfig);
 import React from 'react'
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth'
 import { redirect, useLocation, useNavigate } from 'react-router-dom'
+import CryptoJS from 'crypto-js';
 
 const auth = getAuth(app)
 
@@ -56,6 +57,7 @@ export function startSessionTimer(navigate, pathname){
   sessionTimer = setTimeout(()=>{
         signOut(auth)
           .then(()=> {
+            localStorage.clear()
             navigate(`/login?message=You%20have%20been%20signed%20out%20due%20to%20inactivity.${pathname ? `&redirect=${pathname}` : ''}`)
             })
           .catch((err)=>{
@@ -158,6 +160,35 @@ export function handlePasswordStrength(password){
     return true
   }else{
     return false
+  }
+}
+
+export function encryptData(password, type){
+  let key
+  if(type === 'login'){
+    key = auth.currentUser.uid
+  }
+  if(type === 'add'){
+    key = localStorage.getItem('pwm')
+  }
+  try{
+    const data = CryptoJS.AES.encrypt(JSON.stringify(password), key).toString()
+    return data
+  }catch(err){
+    console.log(err)
+    return err
+  }
+}
+
+export function decryptData(password){
+  try{
+    const key = localStorage.getItem('pwm')
+    const bytes = CryptoJS.AES.decrypt(password, key)
+    const data = JSON.parse(bytes.toString(CryptoJS.enc.Utf8))
+    return data
+  }catch(err){
+    console.log(err)
+    return err
   }
 }
 

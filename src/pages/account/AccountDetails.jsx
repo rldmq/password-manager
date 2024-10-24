@@ -1,7 +1,7 @@
 import React from 'react'
 import { useOutletContext, useLoaderData } from 'react-router-dom'
 
-import { authRequired, autoLogout, showToast } from '../../assets/utils'
+import { authRequired, autoLogout, showToast, decryptData } from '../../assets/utils'
 
 import { FaRegCopy } from 'react-icons/fa'
 
@@ -50,19 +50,19 @@ export default function AccountDetails(){
             <div className="account__details">
                 <p className={`details__container ${theme === 'light' ? 'light' : ''}`}>Login:{displayMode === 'mobile' ? <br /> : ''}
                 <button
-                onClick={()=>showToast('Copied to clipboard!', 'success', setToastList,data.l)}
+                onClick={()=>showToast('Copied to clipboard!', 'success', setToastList,decrypt(data.l))}
                 className={`details__l ${theme === 'light' ? 'light' : ''}`}
                 style={displayMode === 'mobile' ? {marginLeft: '0', marginTop: '0.5em'} : null}
                 >
-                    {`${data.l}`} 
+                    {`${decryptData(data.l)}`} 
                     <FaRegCopy className={`details__symbol ${theme === 'light' ? 'light' : ''}`}/>
                     </button></p>
                 <p className={`details__container ${theme === 'light' ? 'light' : ''}`}>Password:
                 {displayMode === 'mobile' ? <br /> : ''}<button
-                onClick={()=>showToast('Copied to clipboard!', 'success', setToastList,data.k)}
+                onClick={()=>showToast('Copied to clipboard!', 'success', setToastList,decryptData(data.k))}
                 className={`details__k ${theme === 'light' ? 'light' : ''}`}
                 style={displayMode === 'mobile' ? {marginLeft: '0', marginTop: '0.5em'} : null}
-                >{`${data.k}`} <FaRegCopy className={`details__symbol ${theme === 'light' ? 'light' : ''}`}/></button></p>
+                >{`${decryptData(data.k)}`} <FaRegCopy className={`details__symbol ${theme === 'light' ? 'light' : ''}`}/></button></p>
             </div>
             : ''}
         </>

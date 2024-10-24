@@ -2,7 +2,7 @@ import React from 'react'
 import { Link, Form, useActionData, useLoaderData, useNavigation, redirect, useOutletContext } from 'react-router-dom'
 
 import { signInWithEmailAndPassword } from 'firebase/auth'
-import { auth } from '../assets/utils'
+import { auth, encryptData } from '../assets/utils'
 import SecretToggleButton from '../components/SecretToggleButton'
 
 // when wanting to go to the same url (eg: user tries to go to a nested route that requires auth, use redirect with new URL in loader - use URL .pathname)
@@ -24,17 +24,21 @@ export async function action({ request }){
 
         const pathname = new URL(request.url).searchParams.get('redirect') || '/account'
 
+        const store = encryptData(password,'login')
+
+        localStorage.setItem('pwm',store)
+
         // setlocalstorage login?? firebase??
 
         return redirect(pathname)
     }catch(err){
         count++
         if(err.code === 'auth/invalid-email' || err.code === 'auth/invalid-credential'){
-            return `not found ${count}`
+            return `not-found-${count}`
         }else if(err.code === 'auth/too-many-requests'){
-            return `limit reached ${count}`
+            return `limit-reached-${count}`
         }else{
-            return `unknown ${count}`
+            return `unknown-${count}`
         }
     }
 }
@@ -73,9 +77,9 @@ export default function Login(){
     },[])
 
     React.useEffect(()=>{
-        if(error?.includes('not found')){
+        if(error?.includes('not-found')){
             setLoginError('Email/password combination not found.')
-        }else if(error?.includes('limit reached')){
+        }else if(error?.includes('limit-reached')){
             setLoginError('Firebase authentication limit reached. Please try again later.')
         }else if(error?.includes('unknown')){
             setLoginError('Unknown error. Please refresh the page.')
