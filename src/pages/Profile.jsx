@@ -277,7 +277,8 @@ export default function Profile(){
                     id='profile-firstname' 
                     name='profile-firstname' 
                     type='text'
-                    defaultValue={firstName}
+                    defaultValue={firstName ? firstName : ''}
+                    placeholder={'First Name'}
                     onChange={()=>handleChangedProfileInput()} />
 
                     <label htmlFor='profile-lastname'
@@ -287,7 +288,8 @@ export default function Profile(){
                     id='profile-lastname' 
                     name='profile-lastname' 
                     type='text'
-                    defaultValue={lastName}
+                    defaultValue={lastName ? lastName : ''}
+                    placeholder={'Last Name'}
                     onChange={()=>handleChangedProfileInput()} />
 
                     <div className='profile__container_btns'>
