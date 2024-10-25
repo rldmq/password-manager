@@ -17,6 +17,14 @@ export default function Sidebar(){
         transition: 'left 0.25s'
     }
 
+    React.useEffect(()=>{
+        if(theme === 'light'){
+            document.querySelectorAll('*').forEach(e => e.classList.add('light'))
+        }else{
+            document.querySelectorAll('*').forEach(e => e.classList.remove('light'))
+        }
+    })
+
     function handleSidebar(){
         if(sidebarState === 'collapsed'){
             setSidebarState('expanded')

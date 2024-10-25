@@ -194,7 +194,7 @@ export default function Account(){
         }else{
             document.querySelectorAll('*').forEach(e => e.classList.remove('light'))
         }
-    },[theme])
+    })
 
     React.useEffect(()=>{
         onSnapshot(collection(db, 'userData', userID, 'saved'), (snapshot) => {

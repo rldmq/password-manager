@@ -93,7 +93,7 @@ export default function ContactUs(){
         }else{
             document.querySelectorAll('*').forEach(e => e.classList.remove('light'))
         }
-    }, [theme])
+    })
 
     // Set the placeholder email based on placeholder name
     React.useEffect(()=>{
