@@ -143,6 +143,7 @@ export default function Profile(){
 
                 // Reset email form
                 setChangedEmailInput(false)
+                setDisableEmailSaveBtn(true)
 
                 // Reset password form
                 setDisablePasswordCancelBtn(true)
@@ -164,7 +165,8 @@ export default function Profile(){
     },[action])
 
     React.useEffect(()=>{
-        if(!emailMatchError && changedEmailInput){
+        const emptyEmailCheck = document.getElementById('profile-email').value
+        if(!emailMatchError && changedEmailInput && emptyEmailCheck){
             setDisableEmailSaveBtn(false)
         }else{
             setDisableEmailSaveBtn(true)
