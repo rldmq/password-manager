@@ -57,7 +57,7 @@ export function startSessionTimer(navigate, pathname){
   sessionTimer = setTimeout(()=>{
         signOut(auth)
           .then(()=> {
-            localStorage.clear()
+            sessionStorage.clear()
             navigate(`/login?message=You%20have%20been%20signed%20out%20due%20to%20inactivity.${pathname ? `&redirect=${pathname}` : ''}`)
             })
           .catch((err)=>{
