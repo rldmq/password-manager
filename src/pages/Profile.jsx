@@ -17,7 +17,7 @@ export async function loader({ request }){
 
 export async function action({ request }){
     // Consider redirects for email and password updates
-    if(auth.currentUser.uid = 'EE2sxfglLLZLVD1gn6qdCAfW3OE3'){
+    if(auth.currentUser.uid === 'EE2sxfglLLZLVD1gn6qdCAfW3OE3'){
         return `error-testacc-${Date.now()}`
     }
     try{
