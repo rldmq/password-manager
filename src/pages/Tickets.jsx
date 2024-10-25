@@ -91,7 +91,7 @@ export default function Tickets(){
         }else{
             document.querySelectorAll('*').forEach(e => e.classList.remove('light'))
         }
-    },[theme])
+    })
 
     React.useEffect(()=>{
         onSnapshot(collection(db,'contact'), (snapshot) =>{
