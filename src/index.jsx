@@ -10,6 +10,7 @@ import './assets/styles/signup.css'
 import './assets/styles/contact-us.css'
 import './assets/styles/reset-password.css'
 import './assets/styles/profile.css'
+import './assets/styles/tickets.css'
 import './assets/styles/account/account.css'
 import './assets/styles/account/modal-add-account.css'
 import './toast/toast.css'
@@ -27,6 +28,8 @@ import Profile, { loader as profileLoader, action as profileAction } from './pag
 
 import Account, { loader as accountLoader, action as accountAction } from './pages/account/Account'
 import AccountDetails, { loader as accountDetailsLoader } from './pages/account/AccountDetails'
+
+import Tickets from './pages/Tickets'
 
 import { MdDarkMode } from 'react-icons/md'
 import { MdOutlineLightMode } from 'react-icons/md'
@@ -89,6 +92,12 @@ function App(){
                     path='contact'
                     element={<ContactUs />}
                     action={contactUsAction}
+                    errorElement={<Error />}
+                    />
+
+                    <Route
+                    path='tickets'
+                    element={<Tickets />}
                     errorElement={<Error />}
                     />
 

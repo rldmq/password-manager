@@ -8,6 +8,7 @@
 }
 
 .contact__heading{
+    margin-top: 1em;
     font-size: 2rem;
 }
 
@@ -48,6 +49,7 @@
 #contact-message{
     max-width: 100%;
     min-height: 9em;
+    padding: 0.5em;
 }
 
 #drop-zone{

@@ -1,5 +1,5 @@
 import React from 'react'
-import { useOutletContext, Form, useNavigation, useActionData } from 'react-router-dom'
+import { useOutletContext, Form, useNavigation, useActionData, Link } from 'react-router-dom'
 
 import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage'
 import { getFirestore, doc, setDoc, collection, serverTimestamp } from 'firebase/firestore'
@@ -362,6 +362,7 @@ export default function ContactUs(){
                     {navigation.state === 'idle' ? 'Send' : 'Sending...'}
                 </button>
             </Form>
+            <Link to='/tickets' style={{fontSize: '0.75rem'}}>Ticket Data for Demo Purposes</Link>
             <Toast toastList={toastList} context={theme}/>
         </main>
     )

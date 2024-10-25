@@ -123,6 +123,14 @@ export default function Profile(){
     const firstName = displayName?.split(' ')[0]
     const lastName = displayName?.split(' ').slice(1).join(' ')
 
+    const hrStyle = {
+        backgroundColor: theme === 'dark' ? 'white' 
+        : 'var(--light-mode-text)',
+        display: 'block',
+        height: '2px',
+        border: 'none',
+    }
+
     React.useEffect(()=>{
         if(theme === 'light'){
             document.querySelectorAll('*').forEach(e => e.classList.add('light'))
@@ -322,7 +330,7 @@ export default function Profile(){
                     />
                 </Form>
             </section>
-            <hr />
+            <hr style={hrStyle}/>
             <section className='email__section'>
                 <h2 className='profile__subheading'>Change Email</h2>
                 <Form method='post' className='email__form'>
@@ -396,7 +404,7 @@ export default function Profile(){
                     />
                 </Form>
             </section>
-            <hr />
+            <hr style={hrStyle}/>
 
             <section className='password__section'>
                 <h2 className='profile__subheading'>Change Password</h2>

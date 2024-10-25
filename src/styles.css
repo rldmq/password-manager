@@ -416,3 +416,7 @@ body.light{
 .tester{
     z-index: 4;
 }
+
+.tickets__modal_background{
+    z-index: 5;
+}
