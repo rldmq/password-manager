@@ -122,6 +122,8 @@ export default function Account(){
         }
     }
 
+    console.log(theme)
+
     const dataRender = sortedData?.map(item => {
 
         return (
@@ -195,6 +197,8 @@ export default function Account(){
             document.querySelectorAll('*').forEach(e => e.classList.remove('light'))
         }
     })
+
+    console.log(theme)
 
     React.useEffect(()=>{
         onSnapshot(collection(db, 'userData', userID, 'saved'), (snapshot) => {

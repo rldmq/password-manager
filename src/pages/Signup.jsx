@@ -52,7 +52,7 @@ export default function Signup(){
         }else{
             document.querySelectorAll('*').forEach(e => e.classList.remove('light'))
         }
-    })
+    },[theme])
     
     // Focus on the first input field on load
     React.useEffect(()=>{

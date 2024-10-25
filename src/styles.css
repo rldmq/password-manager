@@ -417,6 +417,7 @@ body.light{
     z-index: 4;
 }
 
-.tickets__modal_background{
+.tickets__modal_background,
+.modal__background{
     z-index: 5;
 }

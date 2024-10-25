@@ -137,7 +137,7 @@ export default function Profile(){
         }else{
             document.querySelectorAll('*').forEach(e => e.classList.remove('light'))
         }
-    })
+    },[theme])
 
     React.useEffect(()=>{
         setUserInfo(auth.currentUser)
@@ -330,7 +330,7 @@ export default function Profile(){
                     />
                 </Form>
             </section>
-            <hr style={hrStyle}/>
+            <hr className='profile__hr' style={hrStyle}/>
             <section className='email__section'>
                 <h2 className='profile__subheading'>Change Email</h2>
                 <Form method='post' className='email__form'>
@@ -404,7 +404,7 @@ export default function Profile(){
                     />
                 </Form>
             </section>
-            <hr style={hrStyle}/>
+            <hr className='profile__hr' style={hrStyle}/>
 
             <section className='password__section'>
                 <h2 className='profile__subheading'>Change Password</h2>

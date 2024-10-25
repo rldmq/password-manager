@@ -23,7 +23,7 @@ export default function Sidebar(){
         }else{
             document.querySelectorAll('*').forEach(e => e.classList.remove('light'))
         }
-    })
+    },[theme])
 
     function handleSidebar(){
         if(sidebarState === 'collapsed'){

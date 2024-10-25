@@ -52,35 +52,35 @@ export default function Tickets(){
                     href={link}
                     key={index}
                     target='_blank'
-                    className='item__link'
+                    className={`item__link ${theme === 'light' ? 'light' : ''}`}
                     onClick={(e)=>handleOpenImageModal(e,link)}
                     >
                         <img
                         src={link}
-                        className='item__img'
+                        className={`item__img ${theme === 'light' ? 'light' : ''}`}
                         />
                     </a>
         }) : ''
 
         return(
-            <div className='tickets__item' key={index}>
-                <p className='item__name'>Name: {e.name}</p>
-                <p className='item__email'>Email: {e.email}</p>
-                <p className='item__date'>Date: {e.dateCreated.toDate().toString()}</p>
-                <p className='item__topic'>Topic: {e.topic.replace('-', ' ')}</p>
-                <div className='item__container_msg'>
+            <div className={`tickets__item ${theme === 'light' ? 'light' : ''}`} key={index}>
+                <p className={`item__name ${theme === 'light' ? 'light' : ''}`}>Name: {e.name}</p>
+                <p className={`item__email ${theme === 'light' ? 'light' : ''}`}>Email: {e.email}</p>
+                <p className={`item__date ${theme === 'light' ? 'light' : ''}`}>Date: {e.dateCreated.toDate().toString()}</p>
+                <p className={`item__topic ${theme === 'light' ? 'light' : ''}`}>Topic: {e.topic.replace('-', ' ')}</p>
+                <div className={`item__container_msg ${theme === 'light' ? 'light' : ''}`}>
                     <p>Message:</p>
-                    <pre className='item__msg' style={msgStyle}>{e.message}</pre>
+                    <pre className={`item__msg ${theme === 'light' ? 'light' : ''}`} style={msgStyle}>{e.message}</pre>
                 </div>
-                <div className='item__container_attachments'>
+                <div className={`item__container_attachments ${theme === 'light' ? 'light' : ''}`}>
                     <p>Attachments: {!attachments && 'No Attachments'}</p>
                     {attachments &&
-                    <div className='item__container_img'>
+                    <div className={`item__container_img ${theme === 'light' ? 'light' : ''}`}>
                         {attachments}
                     </div>}
                 </div>
                 {index !== sortedData.length-1 &&
-                <hr style={hrStyle} className='item__hr'/>}
+                <hr style={hrStyle} className={`item__hr ${theme === 'light' ? 'light' : ''}`}/>}
             </div>
         )
     })
@@ -91,7 +91,7 @@ export default function Tickets(){
         }else{
             document.querySelectorAll('*').forEach(e => e.classList.remove('light'))
         }
-    })
+    },[theme])
 
     React.useEffect(()=>{
         onSnapshot(collection(db,'contact'), (snapshot) =>{

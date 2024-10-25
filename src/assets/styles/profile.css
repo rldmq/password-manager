@@ -123,8 +123,9 @@
         grid-template-columns: 1fr 1fr;
     }
 
-    hr{
+    .profile__hr{
         display: none;
+        visibility: hidden;
     }
 
     .profile__section{

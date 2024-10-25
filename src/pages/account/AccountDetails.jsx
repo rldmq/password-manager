@@ -42,7 +42,7 @@ export default function AccountDetails(){
         }else{
             document.querySelectorAll('*').forEach(e => e.classList.remove('light'))
         }
-    })
+    },[theme])
 
     return (
         <>
@@ -50,7 +50,7 @@ export default function AccountDetails(){
             <div className="account__details">
                 <p className={`details__container ${theme === 'light' ? 'light' : ''}`}>Login:{displayMode === 'mobile' ? <br /> : ''}
                 <button
-                onClick={()=>showToast('Copied to clipboard!', 'success', setToastList,decrypt(data.l))}
+                onClick={()=>showToast('Copied to clipboard!', 'success', setToastList,decryptData(data.l))}
                 className={`details__l ${theme === 'light' ? 'light' : ''}`}
                 style={displayMode === 'mobile' ? {marginLeft: '0', marginTop: '0.5em'} : null}
                 >
