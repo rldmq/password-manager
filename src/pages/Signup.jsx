@@ -7,6 +7,9 @@ import signupImage from '../assets/images/signup/secure-vault-portrait.png'
 import successGif from '../assets/images/signup/icons8-success-green.gif'
 
 import SecretToggleButton from '../components/SecretToggleButton'
+import Toast from '../toast/Toast'
+
+import { showToast } from '../assets/utils'
 
 // Firebase
 import { app, handlePasswordStrength } from '../assets/utils'
@@ -23,20 +26,14 @@ export default function Signup(){
 
     const theme = useOutletContext()
 
-    React.useEffect(()=>{
-        if(theme === 'light'){
-            document.querySelectorAll('*').forEach(e => e.classList.add('light'))
-        }else{
-            document.querySelectorAll('*').forEach(e => e.classList.remove('light'))
-        }
-    },[theme])
-
+    const [signupErr, setSignupErr] = React.useState('')
+    
     const navigate = useNavigate()
-
+    
     const firstNameInput = React.useRef()
-
+    
     const [passwordless, setPasswordless] = React.useState(false)
-
+    
     const [signupFormData, setSignupFormData] = React.useState({
         firstname: '',
         lastname: '',
@@ -46,6 +43,29 @@ export default function Signup(){
         passwordCharCheck: false,
         passwordlessToggle: false,
     })
+
+    const [toastList, setToastList] = React.useState([])
+    
+    React.useEffect(()=>{
+        if(theme === 'light'){
+            document.querySelectorAll('*').forEach(e => e.classList.add('light'))
+        }else{
+            document.querySelectorAll('*').forEach(e => e.classList.remove('light'))
+        }
+    },[theme])
+    
+    // Focus on the first input field on load
+    React.useEffect(()=>{
+        setTimeout(()=>{
+            firstNameInput.current.focus()
+        }, 500)
+    },[])
+
+    React.useEffect(()=>{
+        if(signupErr.includes('exists')){
+            showToast('Email already exists.', 'error', setToastList)
+        }
+    },[signupErr])
 
     function handleSignupFormChanges(e){
 
@@ -110,10 +130,10 @@ export default function Signup(){
         }
     }
 
-    function handleSignupSubmit(){
+    async function handleSignupSubmit(){
 
+        // If user tries to submit with empty fields, add a shake animation to the *Required text
         const reviewEls = document.querySelectorAll('.input-field-error')
-
         if(!signupFormData.passwordlessToggle && (signupFormData.password !== signupFormData.confirmpassword || !signupFormData.passwordCharCheck)){
             shakeErrorEls(reviewEls)
         }else if(signupFormData.firstname.trim() === ''){
@@ -123,18 +143,8 @@ export default function Signup(){
         }
 
         else{
-            const overrideEl = document.querySelector('.signup__form')
-
-            overrideEl.classList.add('signup__success')
-
-            overrideEl.innerHTML = 
-            `
-            <img src=${successGif} class='success__img'/>
-
-            <h1 class='success__msg'>Success!</h1>`
-
+            // Passwordless disabled for now
             if(signupFormData.passwordlessToggle){
-
                 // !!!!!!!!!! update the url !!!!!!!!!!
                 const acs = {
                     url: 'https://save-my-timers.netlify.app/',
@@ -150,28 +160,56 @@ export default function Signup(){
                     // },
                     // dynamicLinkDomain: 'example.page.link'
                 }
-
                 // sendSignInLinkToEmail(auth, signupFormData.email, acs)
                 //     .then(()=>{
                 //         window.localStorage.setItem('emailForSignIn',email)
                 //     })
-
-                overrideEl.innerHTML += 
-                `<p>Please check your email for the sign-in link.</p>`
+                // overrideEl.innerHTML += 
+                // `<p>Please check your email for the sign-in link.</p>`
             }else{
-                createUserWithEmailAndPassword(auth, signupFormData.email, signupFormData.password)
-                    .then(()=>
-                        updateProfile(auth.currentUser, {
+                try{
+                    await createUserWithEmailAndPassword(auth, signupFormData.email, signupFormData.password)
+                    await updateProfile(auth.currentUser, {
                         displayName: `${signupFormData.firstname} ${signupFormData.lastname}`
                         })
-                        .then(()=>signOut(auth)))
-                
-                overrideEl.innerHTML += 
-                `<p>You will now be redirected to the login page.</p>`
+                    await signOut(auth)
+                    // Creating an element to replace the form, if submitting is successful (could have been useState)
+                    const overrideEl = document.querySelector('.signup__form')
+                    overrideEl.classList.add('signup__success')
+                    overrideEl.innerHTML = 
+                    `
+                    <img src=${successGif} class='success__img'/>
 
-                setTimeout(()=>{
-                    navigate('/login')
-                },2000)
+                    <h1 class='success__msg'>Success!</h1>`
+                    overrideEl.innerHTML += 
+                    `<p>You will now be redirected to the login page.</p>`
+                    setTimeout(()=>{
+                        navigate('/login')
+                    },2000)
+                }catch(err){
+                    console.log(err)
+                    setSignupErr(`exists-${Date.now()}`)
+                }
+                // createUserWithEmailAndPassword(auth, signupFormData.email, signupFormData.password)
+                //     .then(()=> {
+                //         updateProfile(auth.currentUser, {
+                //         displayName: `${signupFormData.firstname} ${signupFormData.lastname}`
+                //         })
+                //         // .then(()=>{
+                //             signOut(auth)
+                //             overrideEl.innerHTML += 
+                //             `<p>You will now be redirected to the login page.</p>`
+
+                //             setTimeout(()=>{
+                //                 navigate('/login')
+                //             },2000)
+                //         // }).catch(err => console.log(err))
+                //     })
+                //     .catch(err => {
+                //         console.log(err)
+                //         setSignupErr(`exists-${Date.now()}`)
+                //     })
+                
             }
         }
     }
@@ -250,13 +288,6 @@ export default function Signup(){
             </div>
         </>
     )
-
-    // Focus on the first input field on load
-    React.useEffect(()=>{
-        setTimeout(()=>{
-            firstNameInput.current.focus()
-        }, 500)
-    },[])
 
     // Unsure if it's worth converting form to React Router Form
     return (
@@ -352,7 +383,7 @@ export default function Signup(){
                 >
                     Use Passwordless E-mail Authentication
                     <div className='tooltip'>
-                        When logging in, instead of using a password, an e-mail will be sent to you containing a link that will give you access to your account.
+                        When logging in, instead of using a password, an e-mail will be sent to you containing a link that will give you access to your account. <span style={{color: 'red'}}>Currently disabled.</span>
                     </div>
                 </label>
 
@@ -366,6 +397,7 @@ export default function Signup(){
                     Sign up
                 </button>
             </form>
+            <Toast toastList={toastList} context={theme}/>
         </main>
     )
 }

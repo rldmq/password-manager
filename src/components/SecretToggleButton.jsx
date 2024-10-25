@@ -41,6 +41,7 @@ export default function SecretToggleButton({ inputId }){
         onTouchEnd={() => handleHideSecret(inputId)}
         onClick={e => e.preventDefault()}
         type='button'
+        tabIndex={'-1'}
         >
             {symbol}
         </button>

@@ -32,7 +32,10 @@ export async function action({ request }){
         return redirect(pathname)
     }catch(err){
         count++
-        if(err.code === 'auth/invalid-email' || err.code === 'auth/invalid-credential'){
+        if(err.code === 'auth/invalid-email'
+        || err.code === 'auth/invalid-credential'
+        || err.code === 'auth/wrong-password'
+        || err.code === 'auth/user-not-found'){
             return `not-found-${count}`
         }else if(err.code === 'auth/too-many-requests'){
             return `limit-reached-${count}`

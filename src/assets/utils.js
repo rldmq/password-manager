@@ -103,7 +103,7 @@ export function generateId(){
   return id
 }
 
-export function showToast(message, type, setterFn,copyData){
+export function showToast(message, type, setterFn, copyData){
   if(message.includes('clipboard')){
     navigator.clipboard.writeText(copyData)
   }
