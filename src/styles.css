@@ -66,21 +66,38 @@ body{
     flex-grow: 1;
 }
 
-.btn__theme{
+.btn__theme,
+.btn__linkedin,
+.btn__github{
     position: fixed;
-    bottom: 0.25em;
-    right: 0.25em;
     border: none;
     padding: 0.1em 0.25em;
     border-radius: 0.25em;
     cursor: pointer;
+    right: 0.25em;
 }
 
-.btn__theme:active{
+.btn__theme{
+    bottom: 0.25em;
+}
+
+.btn__linkedin{
+    bottom: 2.5em;
+}
+
+.btn__github{
+    bottom: 4.7em;
+}
+
+.btn__theme:active,
+.btn__linkedin,
+.btn__github{
     transform: translate(1px, 1px);
 }
 
-.btn__theme_text{
+.btn__theme_text,
+.btn__linkedin_text,
+.btn__github_text{
     fill: var(--light-mode-text);
     vertical-align: middle;
 }

@@ -31,8 +31,8 @@ import AccountDetails, { loader as accountDetailsLoader } from './pages/account/
 
 import Tickets from './pages/Tickets'
 
-import { MdDarkMode } from 'react-icons/md'
-import { MdOutlineLightMode } from 'react-icons/md'
+import { MdDarkMode, MdOutlineLightMode } from 'react-icons/md'
+import { FaGithub, FaLinkedin } from 'react-icons/fa'
 
 function App(){
 
@@ -123,6 +123,24 @@ function App(){
                 : null}
             onClick={()=>handleThemeChange()}>
                 {theme === 'dark' ? <MdOutlineLightMode className='btn__theme_text' /> : <MdDarkMode className='btn__theme_text' style={{fill: 'white'}}/>}
+            </button>
+            <button
+            className='btn__linkedin'
+            style={theme === 'light' ?
+                {backgroundColor: 'var(--dark-mode-primary-background)'}
+                : null}
+            onClick={()=> window.open('https://www.linkedin.com/in/rquiambao/')}
+            >
+                {theme === 'dark' ? <FaLinkedin className='btn__linkedin_text' /> : <FaLinkedin className='btn__linkedin_text' style={{fill: 'white'}}/>}
+            </button>
+            <button
+            className='btn__github'
+            style={theme === 'light' ?
+                {backgroundColor: 'var(--dark-mode-primary-background)'}
+                : null}
+            onClick={()=> window.open('https://github.com/rldmq')}
+            >
+                {theme === 'dark' ? <FaGithub className='btn__github_text' /> : <FaGithub className='btn__github_text' style={{fill: 'white'}}/>}
             </button>
         </>
     )
