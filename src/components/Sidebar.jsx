@@ -41,7 +41,7 @@ export default function Sidebar(){
         >
             <Link to='/profile' className='sidebar__link' onClick={()=>setSidebarState('collapsed')}><CgProfile className='link__symbol'/> Profile</Link>
             <Link to='/account' className='sidebar__link' onClick={()=>setSidebarState('collapsed')}><MdOutlinePassword className='link__symbol'/> Passwords</Link>
-            <Link to='/contact' className='sidebar__link sidebar__link_contact'>Contact Us <GrContact className='link__symbol'/></Link>
+            <Link to='/contact' className='sidebar__link sidebar__link_contact'>Contact Us <GrContact className='link__symbol' onClick={()=>setSidebarState('collapsed')}/></Link>
             <button
             className={`sidebar__toggle`}
             onClick={()=> handleSidebar()}
